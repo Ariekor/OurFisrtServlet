@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Catalogue", urlPatterns = {"/catalogue"})
 public class Catalogue extends HttpServlet {
 
+    /////a récupérer de session Tomcat...
+    boolean connecté = false;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,13 +37,14 @@ public class Catalogue extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            enteteHtml(out);
+            UtilHtml.enteteHtml(out);
             
             out.println("<body>");
-            out.println("<h1>Servlet Catalogue at " + request.getContextPath() + "</h1>");
+            out.println("<h1>The super duper Catalogue!!! </h1>");
+            UtilHtml.barreDeMenu(out, connecté);
             enteteCatalogue(out);            
             
-            //tableau affichage 
+            //tableau affichage mettre dans une méthode genererListeItems() prend 0,1 ou 2 params.
             out.println("     <table>"
                     + "         <!--Le tableau qui contient la liste-- "
                     + "         <tr> for each colonne: <td>titre colonne</td></tr>"
@@ -96,34 +99,23 @@ public class Catalogue extends HttpServlet {
     }// </editor-fold>
 
     
-    private void enteteHtml(PrintWriter out){    
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Catalogue É-Shop-pe</title>"); 
-        out.println("<meta charset=\"UTF-8\">");
-        out.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
-        out.println("<link href=\"testcss.css\" rel=\"stylesheet\" type=\"text/css\"/>");            
-        out.println("</head>");
-    }
+    
     private void enteteCatalogue(PrintWriter out){
-        
-        out.println("<div>");//Ligne de menu du haut
-        out.println("   <table>");
-        out.println("       <tr><td>LOGO</td>");
-        out.println("           <td><input type=\"button\" value=\"login ou profil\"/>"
-                                    + "<input type=\"text\" id=\"user\" value=\"nom usager\"/>"
-                                    + "<input type=\"text\" id=\"motdepasse\" value=\"mot de passe\"/></td>");
-        out.println("           <td><input type=\"button\" value=\"s'inscrire ou se déconnecter\"/></td>");
-        out.println("           <td><input type=\"button\" value=\"Inventaire\"/></td>");
-        out.println("       </tr> ");
-        out.println("   </table>"
-                + "     <table>"
+                
+        out.println("<form ><table>"
                 + "         <tr>"
-                + "             <td>drop down menu genre</td>"
-                + "             <td>bouton et champs recherche</td>"
-                + "             <td>Bouton ajouter au panier</td>"
+                + "             <td>Rechercher dans: <select name=\"genre\" /> "////remplir par méthode
+                + "                     <option selected>Tout le catalogue</option>" 
+                + "                     <option>Armes</option>"
+                + "                     <option>Armures</option>"                 
+                + "                     <option>Habiletés</option>" 
+                + "                     <option>Potions</option>" 
+                + "             </select> "
+                + "             </td>"
+                + "             <td>Mot clé: <input type=\"text\" id=\"nomCle\" />"
+                + "                 <input type=\"submit\" value=\"Afficher\"/></td>"
                 + "         </tr>"
-                + "     </table>");
+                + "</table></form>");
     }
 }
+    
