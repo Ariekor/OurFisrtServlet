@@ -98,8 +98,7 @@ public class Catalogue extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    
-    
+      
     private void enteteCatalogue(PrintWriter out){
                 
         out.println("<form ><table>"
