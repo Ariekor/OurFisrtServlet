@@ -35,13 +35,22 @@ public class Catalogue extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Catalogue</title>");            
-            out.println("</head>");
+            enteteHtml(out);
+            
             out.println("<body>");
             out.println("<h1>Servlet Catalogue at " + request.getContextPath() + "</h1>");
+            enteteCatalogue(out);            
+            
+            //tableau affichage 
+            out.println("     <table>"
+                    + "         <!--Le tableau qui contient la liste-- "
+                    + "         <tr> for each colonne: <td>titre colonne</td></tr>"
+                    + "           for each item"
+                    + "         <tr> for each colonne <td>titre colonne</td></tr>"
+                    + "     </table>"
+                    + "</div>");
+            
+            
             out.println("</body>");
             out.println("</html>");
         }
@@ -86,4 +95,35 @@ public class Catalogue extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    private void enteteHtml(PrintWriter out){    
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>Catalogue É-Shop-pe</title>"); 
+        out.println("<meta charset=\"UTF-8\">");
+        out.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
+        out.println("<link href=\"testcss.css\" rel=\"stylesheet\" type=\"text/css\"/>");            
+        out.println("</head>");
+    }
+    private void enteteCatalogue(PrintWriter out){
+        
+        out.println("<div>");//Ligne de menu du haut
+        out.println("   <table>");
+        out.println("       <tr><td>LOGO</td>");
+        out.println("           <td><input type=\"button\" value=\"login ou profil\"/>"
+                                    + "<input type=\"text\" id=\"user\" value=\"nom usager\"/>"
+                                    + "<input type=\"text\" id=\"motdepasse\" value=\"mot de passe\"/></td>");
+        out.println("           <td><input type=\"button\" value=\"s'inscrire ou se déconnecter\"/></td>");
+        out.println("           <td><input type=\"button\" value=\"Inventaire\"/></td>");
+        out.println("       </tr> ");
+        out.println("   </table>"
+                + "     <table>"
+                + "         <tr>"
+                + "             <td>drop down menu genre</td>"
+                + "             <td>bouton et champs recherche</td>"
+                + "             <td>Bouton ajouter au panier</td>"
+                + "         </tr>"
+                + "     </table>");
+    }
 }
