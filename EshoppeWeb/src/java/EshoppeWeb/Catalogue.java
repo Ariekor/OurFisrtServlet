@@ -141,8 +141,8 @@ public class Catalogue extends HttpServlet {
                 + "         <option>Habiletés</option>" 
                 + "         <option>Potions</option>" 
                 + "     </select> "
-                + "     Mot clé: <input type=\"text\" name=\"nomCle\"/>"
-                + "              <input type=\"submit\" value=\"Afficher\"/>"
+                + "     Mot clé: <input type=\"text\" name=\"nomCle\" />"
+                + "              <input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
                 + "</form>");
     }
     
