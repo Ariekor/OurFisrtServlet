@@ -8,6 +8,9 @@
             <web-module-libraries>
                 <library dirs="200">
                     <file>${file.reference.ojdbc6.jar-2}</file>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.ojdbc6.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>

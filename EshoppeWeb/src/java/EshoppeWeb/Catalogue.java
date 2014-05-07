@@ -85,7 +85,7 @@ public class Catalogue extends HttpServlet {
         try {    
             
             UtilHtml.enteteHtml(out);
-            ConnectionOracle oradb = new ConnectionOracle();
+            ConnectionOracle oradb = new ConnectionOracle();            
             oradb.connecter();
             
             String sql = "ecrire sql si pas de methode ou fonctio package";
