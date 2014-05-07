@@ -8,6 +8,8 @@ package EshoppeWeb;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,43 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 public class Catalogue extends HttpServlet {
 
     /////a récupérer de session Tomcat...
-    boolean connecté = false;
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            UtilHtml.enteteHtml(out);
-            
-            out.println("<body>");
-            out.println("<h1>The super duper Catalogue!!! </h1>");
-            UtilHtml.barreDeMenu(out, connecté);
-            enteteCatalogue(out);            
-            
-            //tableau affichage mettre dans une méthode genererListeItems() prend 0,1 ou 2 params.
-            out.println("     <table>"
-                    + "         <!--Le tableau qui contient la liste-- "
-                    + "         <tr> for each colonne: <td>titre colonne</td></tr>"
-                    + "           for each item"
-                    + "         <tr> for each colonne <td>titre colonne</td></tr>"
-                    + "     </table>"
-                    + "</div>");
-            
-            
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
+    boolean connecté = true;
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -71,7 +38,28 @@ public class Catalogue extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                
+        response.setContentType("text/html;charset=UTF-8");  
+        PrintWriter out = response.getWriter();
+        try {    
+            
+            UtilHtml.enteteHtml(out);
+            
+            out.println("<body>");
+            out.println("<h1>The super duper Catalogue!!! </h1>");
+            UtilHtml.barreDeMenu(out, connecté);
+            enteteCatalogue(out);            
+            
+            listeItems(out);
+            
+            barreNavigation(out);
+    
+            UtilHtml.piedsDePage(out);
+        }
+        finally
+        {
+           out.close();
+        } 
     }
 
     /**
@@ -85,7 +73,47 @@ public class Catalogue extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String user = request.getParameter("user");
+        String mdpasse = request.getParameter("motdepasse");
+        String genre = request.getParameter("genre");
+        String nomcle = request.getParameter("motcle");
+        
+        response.setContentType("text/html;charset=UTF-8");  
+        PrintWriter out = response.getWriter();
+        try {    
+            
+            UtilHtml.enteteHtml(out);
+            ConnectionOracle oradb = new ConnectionOracle();
+            oradb.connecter();
+            
+            String sql = "ecrire sql si pas de methode ou fonctio package";
+            try
+            {
+                //
+                PreparedStatement stmins =
+                      oradb.getConnection().prepareStatement( sql );
+
+                // on affecte les valeurs aux paramètres de la requête
+                stmins.setString( 1, user );
+                stmins.setString( 2, mdpasse );
+                stmins.executeUpdate();
+                //oradb.getConnexion().commit();
+                stmins.close();
+             }
+             catch( SQLException se ) 
+             {
+                System.err.println( se.getMessage() );
+             }    
+
+         // confirmation de l'insertion
+   //      out.println( "<p>Vous avez ajouté l'employé suivant:</p>" );
+   //      out.println( "<p>" + prenom + " " + nom + " (" + dep + ")</p>" );         
+      }
+      finally
+      {
+         out.close();
+      }    
+        
     }
 
     /**
@@ -115,6 +143,24 @@ public class Catalogue extends HttpServlet {
                 + "                 <input type=\"submit\" value=\"Afficher\"/></td>"
                 + "         </tr>"
                 + "</table></form>");
+    }
+    private void listeItems(PrintWriter out){
+        //tableau affichage mettre dans une méthode genererListeItems() prend 0,1 ou 2 params.
+            //doit afficher 10 ou 20 items à la fois
+            out.println("     <table>"
+                    + "         <!--Le tableau qui contient la liste-- "
+                    + "         <tr> for each colonne: <td>titre colonne</td></tr>"
+                    + "           for each item"
+                    + "         <tr> for each colonne <td>titre colonne</td></tr>"
+                    + "     </table>"
+                    + "</div>");
+    }
+    private void barreNavigation(PrintWriter out){
+            //ajouter barre de navigation href vers debut, précédent, suivent et fin
+            // exemple de barre de navigation
+      //   out.println( "<a href='insertion'>Insertion</a>" + " | " +
+      //         "<a href='recherche'>Recherche</a>" );
+          
     }
 }
     

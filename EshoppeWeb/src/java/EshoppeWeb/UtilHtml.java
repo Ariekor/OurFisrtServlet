@@ -23,7 +23,7 @@ public class UtilHtml {
         out.println("<title>Catalogue É-Shop-pe</title>"); 
         out.println("<meta charset=\"UTF-8\">");
         out.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
-        out.println("<link href=\"testcss.css\" rel=\"stylesheet\" type=\"text/css\"/>");            
+        out.println("<link href=\"EshoppeCSS.css\" rel=\"stylesheet\" type=\"text/css\"/>");            
         out.println("</head>");
     }
     static protected void barreDeMenu(PrintWriter out, boolean connecté ){
@@ -42,7 +42,8 @@ public class UtilHtml {
         out.println("           <td><input type=\"submit\" value=\"Profil\"/>"
                                  + "Alias du joueur connecté</td>");////récupérer la valeur réelle
         out.println("           <td><input type=\"submit\" value=\"Se déconnecter\"/></td>");
-        out.println("           <td><input type=\"submit\" value=\"Inventaire\"/></td>");        
+        out.println("           <td><input type=\"submit\" value=\"Inventaire\"/></td>");     
+        out.println("           <td><input type=\"submit\" value=\"Panier\"/></td>");   
     }
     static protected void enteteVisiteur(PrintWriter out){
         out.println("           <td><input type=\"submit\" value=\"Login\"/>"
@@ -51,4 +52,9 @@ public class UtilHtml {
         
         out.println("           <td><input type=\"submit\" value=\"S'inscrire\"/></td>");
     }
+    static protected void piedsDePage(PrintWriter out){
+        out.println("</body>");
+        out.println("</html>");
+    }
+    
 }
