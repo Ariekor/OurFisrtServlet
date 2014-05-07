@@ -10,7 +10,7 @@ and open the template in the editor.
 
 
 .b_submit {
-	background-color:#E0B888;
+	background-color:#BCAB8E;
 	-webkit-border-top-left-radius:0px;
 	-moz-border-radius-topleft:0px;
 	border-top-left-radius:0px;
@@ -30,23 +30,17 @@ and open the template in the editor.
 	font-size:14px;
 	font-weight:bold;
 	font-style:normal;
-	height:25px;
-	line-height:25px;
-	width:105px;
+	height:22px;
+	line-height:20px;
+	width:110px;
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #45340C;
         cursor: pointer;
-        
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: -moz-none;
-        -o-user-select: none;
-        user-select: none;
 }
 
 .b_submit:hover {
-	background-color: #937F5C; 
+	background-color: #86786B; 
 }
 
 .b_submit:active {
@@ -54,10 +48,14 @@ and open the template in the editor.
         top:2px;
 }
 
-/*input[type="submit"]{
-    color : transparent;
-    text-shadow : 0 0 0 #000;
+body {
+    margin: auto;
+    width: 60%;
+    height: 100%;
+    background-color: #D8CBB3;
+    text-align: center;
 }
-input[type="submit"]:focus{
-    outline : none;
-}*/
+
+head {
+    text-align: center;
+}

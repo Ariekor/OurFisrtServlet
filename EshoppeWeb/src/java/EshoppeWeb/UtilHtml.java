@@ -28,7 +28,6 @@ public class UtilHtml {
         out.println("<body>");
     }
     static protected void barreDeMenu(PrintWriter out, boolean connecté ){
-        out.println("<div>");//Ligne de menu du haut
         out.println("   <table>");
         out.println("       <tr><td>LOGO</td>");
         if(connecté)
@@ -40,11 +39,11 @@ public class UtilHtml {
     
     }
     static protected void enteteJoueur(PrintWriter out){
-        out.println("           <td><input type=\"submit\" value=\"Profil\"/>"
+        out.println("           <td><input type=\"submit\" value=\"Profil\" class=\"b_submit\" />"
                                  + "Alias du joueur connecté</td>");////récupérer la valeur réelle
-        out.println("           <td><input type=\"submit\" value=\"Se déconnecter\"/></td>");
-        out.println("           <td><input type=\"submit\" value=\"Inventaire\"/></td>");     
-        out.println("           <td><input type=\"submit\" value=\"Panier\"/></td>");   
+        out.println("           <td><input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" /></td>");
+        out.println("           <td><input type=\"submit\" value=\"Inventaire\" class=\"b_submit\" /></td>");     
+        out.println("           <td><input type=\"submit\" value=\"Panier\" class=\"b_submit\" /></td>");   
     }
     static protected void enteteVisiteur(PrintWriter out){
         out.println("           <td><input type=\"submit\" value=\"Login\"/>"
