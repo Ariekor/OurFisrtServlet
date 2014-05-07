@@ -28,14 +28,14 @@ public class UtilHtml {
         out.println("<body>");
     }
     static protected void barreDeMenu(PrintWriter out, boolean connecté ){
-        out.println("   <table>");
+        out.println("   <form>");
         out.println("       <tr><td>LOGO</td>");
         if(connecté)
             enteteJoueur(out);
         else
             enteteVisiteur(out);
         out.println("       </tr> ");
-        out.println("   </table>");
+        out.println("   </form>");
     
     }
     static protected void enteteJoueur(PrintWriter out){

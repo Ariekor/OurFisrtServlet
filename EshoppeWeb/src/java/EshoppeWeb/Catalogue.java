@@ -157,7 +157,7 @@ public class Catalogue extends HttpServlet {
             // connexion à la base de données
       ConnectionOracle oradb = new ConnectionOracle();
       oradb.connecter();  
-      out.println( "<table>" );
+      out.println( "<form>" );
          //entête
          out.println( "<tr><td>Nom d'item</td><td>Quantité</td><td>" 
                     + "Prix</td><td>Poids</td><td>Genre</td></tr>" );
@@ -193,7 +193,7 @@ public class Catalogue extends HttpServlet {
       {
          System.err.println( se );
       }
-      out.println( "</table>" );
+      out.println( "</form>" );
       oradb.deconnecter(); 
     }
     
