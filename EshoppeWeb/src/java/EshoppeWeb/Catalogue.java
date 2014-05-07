@@ -9,6 +9,7 @@ package EshoppeWeb;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -154,6 +155,52 @@ public class Catalogue extends HttpServlet {
                     + "         <tr> for each colonne <td>titre colonne</td></tr>"
                     + "     </table>"
                     + "</div>");
+            
+            
+            
+            
+            
+            // connexion à la base de données
+      ConnectionOracle oradb = new ConnectionOracle();
+      oradb.connecter();
+      
+      //
+      String sql= "select nom, prenom from employes e inner join " +
+            "departements d  on e.codedep = d.codedep where d.nomdep = ?";
+
+      try
+      {
+         // passer la requête par le PreparedStatement
+         PreparedStatement stm = oradb.getConnection().prepareStatement( sql );
+         // affecter la valeur "informatique" au paramètre de la requête sql
+         // le paramètre est représenté par le ?
+         stm.setString( 1, "informatique" );
+         ResultSet rst = stm.executeQuery();
+
+         // parcours du ResultSet
+         out.println( "<ol>" );
+         while( rst.next() )
+         {
+            String nom = rst.getString( "nom" );
+            String prenom = rst.getString( "prenom" );
+            out.println( "<li>" + nom + ", " +  prenom + "</li>" );
+         }
+         out.println( "</ol>" );
+                  
+         stm.close();
+         rst.close();    
+      }
+      catch( SQLException se ) 
+      {
+         System.err.println( se );
+      }    
+
+      oradb.deconnecter();
+            
+            
+            
+            
+            
     }
     private void barreNavigation(PrintWriter out){
             //ajouter barre de navigation href vers debut, précédent, suivent et fin

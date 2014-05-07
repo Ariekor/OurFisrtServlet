@@ -23,7 +23,7 @@ public class UtilHtml {
         out.println("<title>Catalogue É-Shop-pe</title>"); 
         out.println("<meta charset=\"UTF-8\">");
         out.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
-        out.println("<link href=\"EshoppeCSS.css\" rel=\"stylesheet\" type=\"text/css\"/>");            
+        out.println("<link href=\"../Web Pages/EshoppeCSS.css\" rel=\"stylesheet\" type=\"text/css\"/>");            
         out.println("</head>");
     }
     static protected void barreDeMenu(PrintWriter out, boolean connecté ){
