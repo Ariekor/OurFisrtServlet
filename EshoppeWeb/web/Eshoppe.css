@@ -9,13 +9,55 @@ and open the template in the editor.
 */
 
 
-td{
-    border: 1px solid black;
-}
-tr{
-    border: 2px solid black;
+.b_submit {
+	background-color:#E0B888;
+	-webkit-border-top-left-radius:0px;
+	-moz-border-radius-topleft:0px;
+	border-top-left-radius:0px;
+	-webkit-border-top-right-radius:0px;
+	-moz-border-radius-topright:0px;
+	border-top-right-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	-moz-border-radius-bottomright:0px;
+	border-bottom-right-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-moz-border-radius-bottomleft:0px;
+	border-bottom-left-radius:0px;
+	border:1px solid #634600;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Times New Roman;
+	font-size:14px;
+	font-weight:bold;
+	font-style:normal;
+	height:25px;
+	line-height:25px;
+	width:105px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #45340C;
+        cursor: pointer;
+        
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: -moz-none;
+        -o-user-select: none;
+        user-select: none;
 }
 
-h1{
-    color: red;
+.b_submit:hover {
+	background-color: #937F5C; 
 }
+
+.b_submit:active {
+	position:relative;
+        top:2px;
+}
+
+/*input[type="submit"]{
+    color : transparent;
+    text-shadow : 0 0 0 #000;
+}
+input[type="submit"]:focus{
+    outline : none;
+}*/
