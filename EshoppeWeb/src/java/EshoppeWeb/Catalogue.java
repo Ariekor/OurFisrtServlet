@@ -27,7 +27,7 @@ import oracle.jdbc.OracleTypes;
 public class Catalogue extends HttpServlet {
 
     /////a récupérer de session Tomcat...
-    boolean connecté = true;
+    boolean connecté = false;
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -114,18 +114,19 @@ public class Catalogue extends HttpServlet {
 
       
     private void enteteCatalogue(PrintWriter out){
-                
-        out.println("<form action='catalogue' method='post'>"
-                + "     Rechercher dans: <select name=\"genre\" /> "////remplir par méthode
-                + "         <option selected>Tout le catalogue</option>" 
-                + "         <option>Arme</option>"
-                + "         <option>Armure</option>"                 
-                + "         <option>Habileté</option>" 
-                + "         <option>Potion</option>" 
-                + "     </select> "
-                + "     Mot clé: <input type=\"text\" name=\"nomCle\" />"
-                + "              <input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
-                + "</form>");
+        out.println("<div class='entete_catalogue'>"
+                        + "<form action='catalogue' method='post'>"
+                        + "     Rechercher dans: <select name=\"genre\" /> "////remplir par méthode
+                        + "         <option selected>Tout le catalogue</option>" 
+                        + "         <option>Arme</option>"
+                        + "         <option>Armure</option>"                 
+                        + "         <option>Habileté</option>" 
+                        + "         <option>Potion</option>" 
+                        + "     </select> "
+                        + "     Mot clé: <input type=\"text\" name=\"nomCle\" />"
+                        + "              <input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
+                        + "</form>"
+                   + "</div>");
     }
     
     private void listeItems(PrintWriter out, String genre ){
