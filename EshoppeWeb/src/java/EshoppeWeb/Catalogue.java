@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -29,30 +30,32 @@ public class Catalogue extends HttpServlet {
     /////a récupérer de session Tomcat...
     boolean connecté = false;
     
-    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    ///debut du process cummun
+    protected void processRequestDebut(HttpServletRequest request, HttpServletResponse response, PrintWriter out)
             throws ServletException, IOException {
         
-        String user = request.getParameter("user");
-        String mdpasse = request.getParameter("motdepasse");
-        String genre = request.getParameter("genre");
-        String nomcle = request.getParameter("motcle");
+        response.setContentType("text/html;charset=UTF-8");         
+        try { 
+            UtilHtml.enteteHtml(out);
+            out.println("<h1>The super duper Catalogue!!! </h1>");
+            UtilHtml.barreDeMenu(out, connecté);            
+        }
+      //  catch()
+        finally
+        {
+            //on ne ferme pas tout de suite, il faut exécuter process reques fin
+       //    out.close();
+        } 
+    }
+    
+    //fin du process commun
+    ///debut du process cummun
+    protected void processRequestFin(HttpServletRequest request, HttpServletResponse response,PrintWriter out)
+            throws ServletException, IOException {
         
         response.setContentType("text/html;charset=UTF-8");  
-        PrintWriter out = response.getWriter();
-        try {    
-            
-            UtilHtml.enteteHtml(out);
-            
-            
-            out.println("<h1>The super duper Catalogue!!! </h1>");
-            UtilHtml.barreDeMenu(out, connecté);
-            menuRecherche(out, genre);            
-            
-            listeItems(out, "Tout le catalogue");//////////////////
-            
-            barreNavigation(out);
-    
+        try {        
+            barreNavigation(out);    
             UtilHtml.piedsDePage(out);
         }
       //  catch()
@@ -73,10 +76,16 @@ public class Catalogue extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            
-        processRequest(request,response);
+        PrintWriter out = response.getWriter();
+        processRequestDebut(request,response, out);
         
+        menuRecherche(out, "Tout le catalogue"); 
+        listeItems(out, "Tout le catalogue"); 
+        
+        processRequestFin(request, response, out);        
     }
+    
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -89,9 +98,16 @@ public class Catalogue extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         
+        String genre = request.getParameter("genre");
         
-        processRequest(request,response);
+        processRequestDebut(request,response, out);
+        
+        menuRecherche(out, genre); 
+        listeItems(out, genre);   
+        
+        processRequestFin(request, response, out);
         
     }
 
@@ -111,7 +127,7 @@ public class Catalogue extends HttpServlet {
         out.print("<div class='entete_catalogue'>"
                         + "<form action='catalogue' method='post'>"
                         + "     Rechercher dans:  ");
-        out.println(genrerListeGenres());
+        out.println(genrerListeGenres(g));
         
         out.println("     Mot clé: <input type=\"text\" name=\"nomCle\" />"
                         + "              <input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
@@ -119,29 +135,37 @@ public class Catalogue extends HttpServlet {
                    + "</div>");
     }
     
-    private String genrerListeGenres(){
-        
-        /* try
+    private String genrerListeGenres(String genre){
+        String SQLGenre = "Select Distinct Genre From Catalogue";
+        String liste ="<select name=\"genre\" />";
+        String g;
+        try
         {
-            Statement stm = conn.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            rst = stm.executeQuery(SQLGenre);
-            CB_Genre.removeAllItems();
-            while(rst.next())
-            {
-                CB_Genre.addItem(rst.getString("genre"));
+            ConnectionOracle oradb = new ConnectionOracle();
+            oradb.setConnection("kellylea", "oracle2");
+            oradb.connecter();  
+            Statement stm = oradb.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rst = stm.executeQuery(SQLGenre); 
+            
+            if(!genre.equals("Tout le catalogue")){
+                liste += "<option>"+"Tout le catalogue"+"</option>";
             }
+            else{
+                liste += "<option selected>"+"Tout le catalogue"+"</option>";
+            }
+            
+            while(rst.next()){
+                g = rst.getString("genre");
+                if(g.equals(genre)){                
+                    liste += "<option selected>"+g+"</option>";
+                }
+                else{
+                    liste += "<option>"+g+"</option>";
+                }
+            }
+            liste += "</select>";
         }
         catch (SQLException e){}
-        
-        private String SQLGenre = "Select Distinct Genre From Catalogue";*/
-        String liste ="<select name=\"genre\" />"
-                        + "<option selected>Tout le catalogue</option>" 
-                        + "         <option>Arme</option>"
-                        + "         <option>Armure</option>"                 
-                        + "         <option>Habileté</option>" 
-                        + "         <option>Potion</option>" 
-                        + "     </select> ";
-        
         
         return liste;
     }
