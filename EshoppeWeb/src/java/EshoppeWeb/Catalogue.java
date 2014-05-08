@@ -29,19 +29,15 @@ public class Catalogue extends HttpServlet {
     /////a récupérer de session Tomcat...
     boolean connecté = false;
     
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
+        
+        String user = request.getParameter("user");
+        String mdpasse = request.getParameter("motdepasse");
+        String genre = request.getParameter("genre");
+        String nomcle = request.getParameter("motcle");
+        
         response.setContentType("text/html;charset=UTF-8");  
         PrintWriter out = response.getWriter();
         try {    
@@ -65,6 +61,22 @@ public class Catalogue extends HttpServlet {
            out.close();
         } 
     }
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+            
+        processRequest(request,response);
+        
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -77,28 +89,9 @@ public class Catalogue extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String user = request.getParameter("user");
-        String mdpasse = request.getParameter("motdepasse");
-        String genre = request.getParameter("genre");
-        String nomcle = request.getParameter("motcle");
         
-        response.setContentType("text/html;charset=UTF-8");  
-        PrintWriter out = response.getWriter();
-        try {    
-            
-            UtilHtml.enteteHtml(out);
-           
-            
-            listeItems(out, genre);
-            
-            barreNavigation(out);
-    
-            UtilHtml.piedsDePage(out);  
-      }
-      finally
-      {
-         out.close();
-      }    
+        
+        processRequest(request,response);
         
     }
 
