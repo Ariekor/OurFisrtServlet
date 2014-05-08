@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -85,28 +86,8 @@ public class Catalogue extends HttpServlet {
         try {    
             
             UtilHtml.enteteHtml(out);
-            ConnectionOracle oradb = new ConnectionOracle();            
-            oradb.connecter();
+           
             
-            String sql = "ecrire sql si pas de methode ou fonctio package";
-            
-            try
-            {
-                //
-                PreparedStatement stmins =
-                      oradb.getConnection().prepareStatement( sql );
-
-                // on affecte les valeurs aux paramètres de la requête
-                stmins.setString( 1, user );
-                stmins.setString( 2, mdpasse );
-                stmins.executeUpdate();
-                //oradb.getConnexion().commit();
-                stmins.close();
-             }
-             catch( SQLException se ) 
-             {
-                System.err.println( se.getMessage() );
-             }
             listeItems(out, genre);
             
             barreNavigation(out);
@@ -164,14 +145,12 @@ public class Catalogue extends HttpServlet {
 
       try
       {
-         CallableStatement stm = oradb.getConnection().prepareCall("{call ? = Gestion_Catalogue.listercatalogue(?)}" );
-         stm.registerOutParameter(1, java.sql.Types.VARCHAR);
+         CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Catalogue.listercatalogue(?)}",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY );
          stm.setString( 2, genre );
-         ResultSet rst = stm.executeQuery();
+         stm.execute();
+         ResultSet rst = (ResultSet)stm.getObject(1);
 
          // parcours du ResultSet
-         
-         
          while( rst.next() )
          {
              /*NOMITEM, QUANTITE, PRIX, POIDS, GENRE*/
