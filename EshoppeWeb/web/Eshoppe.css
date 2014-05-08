@@ -19,7 +19,7 @@ and open the template in the editor.
 	font-weight:bold;
 	font-style:normal;
         padding: auto;
-	width:200px;
+	width:15%;
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #45340C;
@@ -38,12 +38,23 @@ and open the template in the editor.
 .entete_catalogue
 {
     background-color: #BFB19B;
-    width: 100%;
+    width: 50%;
+    // float:left;
+    left: -15%;
     padding: 5px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 5px;
     position: relative;
+}
+
+.entete_generale {
+    background-color: #BFB19B;
+    width: 80%;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative
 }
 
 body {
