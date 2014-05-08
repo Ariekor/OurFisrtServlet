@@ -184,7 +184,7 @@ public class Catalogue extends HttpServlet {
                     
                     out.println( "<td class='zeCatalogueCell'>" + nomitem + "</td><td class='zeCatalogueCell'>" +  qte + "</td><td class='zeCatalogueCell'>"
                             +  prix + "</td><td class='zeCatalogueCell'>" +  poids + "</td><td class='zeCatalogueCell'>" +  genreItem + "</td><td class='zeCatalogueCell'>"
-                            + "<input type=\"text\" ></td>" );
+                            + "<input type=\"text\" name='qte' size='10' ></td>" );
                     out.println( "</tr>" );
                 }  }
          rst.close();    
