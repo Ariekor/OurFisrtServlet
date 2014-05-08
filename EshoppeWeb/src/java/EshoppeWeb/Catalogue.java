@@ -114,7 +114,7 @@ public class Catalogue extends HttpServlet {
       
     private void enteteCatalogue(PrintWriter out){
                 
-        out.println("<form action='catalogue' method='post'>"
+        out.println("<form class='entete_catalogue' action='catalogue' method='post'>"
                 + "     Rechercher dans: <select name=\"genre\" /> "////remplir par méthode
                 + "         <option selected>Tout le catalogue</option>" 
                 + "         <option>Armes</option>"
