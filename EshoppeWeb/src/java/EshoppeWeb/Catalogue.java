@@ -27,7 +27,7 @@ import oracle.jdbc.OracleTypes;
 public class Catalogue extends HttpServlet {
 
     /////a récupérer de session Tomcat...
-    boolean connecté = true;
+    boolean connecté = false;
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -59,6 +59,7 @@ public class Catalogue extends HttpServlet {
     
             UtilHtml.piedsDePage(out);
         }
+      //  catch()
         finally
         {
            out.close();
@@ -113,18 +114,19 @@ public class Catalogue extends HttpServlet {
 
       
     private void enteteCatalogue(PrintWriter out){
-                
-        out.println("<form action='catalogue' method='post'>"
-                + "     Rechercher dans: <select name=\"genre\" /> "////remplir par méthode
-                + "         <option selected>Tout le catalogue</option>" 
-                + "         <option>Armes</option>"
-                + "         <option>Armures</option>"                 
-                + "         <option>Habiletés</option>" 
-                + "         <option>Potions</option>" 
-                + "     </select> "
-                + "     Mot clé: <input type=\"text\" name=\"nomCle\" />"
-                + "              <input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
-                + "</form>");
+        out.println("<div class='entete_catalogue'>"
+                        + "<form action='catalogue' method='post'>"
+                        + "     Rechercher dans: <select name=\"genre\" /> "////remplir par méthode
+                        + "         <option selected>Tout le catalogue</option>" 
+                        + "         <option>Arme</option>"
+                        + "         <option>Armure</option>"                 
+                        + "         <option>Habileté</option>" 
+                        + "         <option>Potion</option>" 
+                        + "     </select> "
+                        + "     Mot clé: <input type=\"text\" name=\"nomCle\" />"
+                        + "              <input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
+                        + "</form>"
+                   + "</div>");
     }
     
     private void listeItems(PrintWriter out, String genre ){
@@ -137,42 +139,43 @@ public class Catalogue extends HttpServlet {
           
             // connexion à la base de données
       ConnectionOracle oradb = new ConnectionOracle();
+      oradb.setConnection("kellylea", "oracle2");
       oradb.connecter();  
-      out.println( "<form>" );
+      out.println( "<form><table>" );
          //entête
          out.println( "<tr><td>Nom d'item</td><td>Quantité</td><td>" 
-                    + "Prix</td><td>Poids</td><td>Genre</td></tr>" );
+                    + "Prix</td><td>Poids</td><td>Genre</td></tr></br></br>" );
 
       try
       {
-         CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Catalogue.listercatalogue(?)}",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY );
-         stm.setString( 2, genre );
-         stm.execute();
-         ResultSet rst = (ResultSet)stm.getObject(1);
-
-         // parcours du ResultSet
-         while( rst.next() )
-         {
-             /*NOMITEM, QUANTITE, PRIX, POIDS, GENRE*/
-            out.println( "<tr>" ); 
-            nomitem = rst.getString( "NOMITEM" );
-            qte = ((Integer)rst.getInt("QUANTITE")).toString();
-            prix = ((Integer)rst.getInt("PRIX")).toString();
-            poids = ((Integer)rst.getInt("POIDS")).toString();
-            genreItem = rst.getString( "GENRE" );
-            
-            out.println( "<td>" + nomitem + "</td><td>" +  qte + "</td><td>" 
-                    +  prix + "</td><td>" +  poids + "</td><td>" +  genreItem + "</td>" );
-            out.println( "</tr>" );
-         }    
-         stm.close();
+          ResultSet rst;
+            try (CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Catalogue.listercatalogue(?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY )) {
+                stm.registerOutParameter(1, OracleTypes.CURSOR);
+                stm.setString( 2, genre );
+                stm.execute();
+                rst = (ResultSet)stm.getObject(1);
+                // parcours du ResultSet
+                while( rst.next() )
+                {
+                    /*NOMITEM, QUANTITE, PRIX, POIDS, GENRE*/
+                    out.println( "<tr>" );
+                    nomitem = rst.getString( "NOMITEM" );
+                    qte = ((Integer)rst.getInt("QUANTITE")).toString();
+                    prix = ((Integer)rst.getInt("PRIX")).toString();
+                    poids = ((Integer)rst.getInt("POIDS")).toString();
+                    genreItem = rst.getString( "GENRE" );
+                    
+                    out.println( "<td>" + nomitem + "</td><td>" +  qte + "</td><td>"
+                            +  prix + "</td><td>" +  poids + "</td><td>" +  genreItem + "</td>" );
+                    out.println( "</tr>" );
+                }  }
          rst.close();    
       }
       catch( SQLException se ) 
       {
-         System.err.println( se );
+         out.println( se.getMessage() );
       }
-      out.println( "</form>" );
+      out.println( "</table></form>" );
       oradb.deconnecter(); 
     }
     

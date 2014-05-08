@@ -7,32 +7,26 @@ and open the template in the editor.
     Created on : 2014-05-07, 11:51:44
     Author     : Isabelle
 */
+td{
+    border: 1px #634600;
+}
 
+table{
+    text-align: center;
+    position: relative;
+}
 
 .b_submit {
 	background-color:#BCAB8E;
-	-webkit-border-top-left-radius:0px;
-	-moz-border-radius-topleft:0px;
-	border-top-left-radius:0px;
-	-webkit-border-top-right-radius:0px;
-	-moz-border-radius-topright:0px;
-	border-top-right-radius:0px;
-	-webkit-border-bottom-right-radius:0px;
-	-moz-border-radius-bottomright:0px;
-	border-bottom-right-radius:0px;
-	-webkit-border-bottom-left-radius:0px;
-	-moz-border-radius-bottomleft:0px;
-	border-bottom-left-radius:0px;
 	border:1px solid #634600;
 	display:inline-block;
 	color:#ffffff;
 	font-family:Times New Roman;
-	font-size:14px;
+	font-size:20px;
 	font-weight:bold;
 	font-style:normal;
-	height:22px;
-	line-height:20px;
-	width:110px;
+        padding: auto;
+	width:15%;
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #45340C;
@@ -48,10 +42,31 @@ and open the template in the editor.
         top:2px;
 }
 
+.entete_catalogue
+{
+    background-color: #BFB19B;
+    width: 50%;
+    // float:left;
+    left: -15%;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    position: relative;
+}
+
+.entete_generale {
+    background-color: #BFB19B;
+    width: 80%;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative
+}
+
 body {
     margin: auto;
-    width: 60%;
-    height: 100%;
+    width: 100%;
     background-color: #D8CBB3;
     text-align: center;
 }

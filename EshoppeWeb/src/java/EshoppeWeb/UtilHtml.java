@@ -28,6 +28,7 @@ public class UtilHtml {
         out.println("<body>");
     }
     static protected void barreDeMenu(PrintWriter out, boolean connecté ){
+        out.println("<div class='entete_generale'>");
         out.println("   <form>");
         out.println("       <tr><td>LOGO</td>");
         if(connecté)
@@ -36,7 +37,7 @@ public class UtilHtml {
             enteteVisiteur(out);
         out.println("       </tr> ");
         out.println("   </form>");
-    
+        out.println("</div>");    
     }
     static protected void enteteJoueur(PrintWriter out){
         out.println("           <td><input type=\"submit\" value=\"Profil\" class=\"b_submit\" />"
@@ -46,11 +47,11 @@ public class UtilHtml {
         out.println("           <td><input type=\"submit\" value=\"Panier\" class=\"b_submit\" /></td>");   
     }
     static protected void enteteVisiteur(PrintWriter out){
-        out.println("           <td><input type=\"submit\" value=\"Login\"/>"
+        out.println("           <td><input type=\"submit\" value=\"Login\" class=\"b_submit\"/>"
                                     + " Alias: <input type=\"text\" name=\"user\" value=\"nom usager\"/>"
                                     + " Mot de passe: <input type=\"password\" name=\"motdepasse\"/></td>");
         
-        out.println("           <td><input type=\"submit\" value=\"S'inscrire\"/></td>");
+        out.println("           <td><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\" /></td>");
     }
     static protected void piedsDePage(PrintWriter out){
         out.println("</body>");
