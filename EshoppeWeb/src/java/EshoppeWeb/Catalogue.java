@@ -175,15 +175,15 @@ public class Catalogue extends HttpServlet {
                 while( rst.next() )
                 {
                     /*NOMITEM, QUANTITE, PRIX, POIDS, GENRE*/
-                    out.println( "<tr>" );
+                    out.println( "<tr class='zeCatalogueRow'>" );
                     nomitem = rst.getString( "NOMITEM" );
                     qte = ((Integer)rst.getInt("QUANTITE")).toString();
                     prix = ((Integer)rst.getInt("PRIX")).toString();
                     poids = ((Integer)rst.getInt("POIDS")).toString();
                     genreItem = rst.getString( "GENRE" );
                     
-                    out.println( "<td>" + nomitem + "</td><td>" +  qte + "</td><td>"
-                            +  prix + "</td><td>" +  poids + "</td><td>" +  genreItem + "</td>" );
+                    out.println( "<td class='zeCatalogueCell'>" + nomitem + "</td><td class='zeCatalogueCell'>" +  qte + "</td><td class='zeCatalogueCell'>"
+                            +  prix + "</td><td class='zeCatalogueCell'>" +  poids + "</td><td class='zeCatalogueCell'>" +  genreItem + "</td>" );
                     out.println( "</tr>" );
                 }  }
          rst.close();    

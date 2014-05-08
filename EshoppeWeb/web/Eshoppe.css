@@ -50,12 +50,11 @@ table{
     margin-right: auto;
 }
 #zeCatable{
-    font-size:20px;
+    font-size:18px;
     border-collapse: separate;
     margin: auto;
     text-align: left;
     border: 5px #000000 solid;
-    
 }
 .entete_catalogue
 {
@@ -84,4 +83,16 @@ body {
     width: 100%;
     background-color: #D8CBB3;
     text-align: center;
+}
+
+.zeCatalogueRow{
+
+}
+
+.zeCatalogueCell{
+    border-top: 2px #000000 solid;
+    border-left: 2px #000000 solid;
+    padding: 3%;
+    margin-left: 3%;
+    
 }
