@@ -136,7 +136,7 @@ public class Catalogue extends HttpServlet {
       ConnectionOracle oradb = new ConnectionOracle();
       oradb.setConnection("kellylea", "oracle2");
       oradb.connecter();  
-      out.println( "<div><table>" );
+      out.println( "<div id='zeCatalogueDiv'><table id='zeCatable'>" );
          //entête
          out.println( "<tr><td>Nom d'item</td><td>Quantité</td><td>" 
                     + "Prix</td><td>Poids</td><td>Genre</td></tr></br></br>" );
