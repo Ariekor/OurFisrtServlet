@@ -47,7 +47,7 @@ public class Catalogue extends HttpServlet {
             
             out.println("<h1>The super duper Catalogue!!! </h1>");
             UtilHtml.barreDeMenu(out, connecté);
-            enteteCatalogue(out);            
+            menuRecherche(out);            
             
             listeItems(out, "Tout le catalogue");//////////////////
             
@@ -106,11 +106,13 @@ public class Catalogue extends HttpServlet {
     }// </editor-fold>
 
       
-    private void enteteCatalogue(PrintWriter out){
+    private void menuRecherche(PrintWriter out, String g){
+        
         out.println("<div class='entete_catalogue'>"
                         + "<form action='catalogue' method='post'>"
-                        + "     Rechercher dans: <select name=\"genre\" /> "////remplir par méthode
-                        + "         <option selected>Tout le catalogue</option>" 
+                        + "     Rechercher dans: <select name=\"genre\" /> ");////remplir par méthode
+        
+        out.println(      "         <option selected>Tout le catalogue</option>" 
                         + "         <option>Arme</option>"
                         + "         <option>Armure</option>"                 
                         + "         <option>Habileté</option>" 
@@ -134,7 +136,7 @@ public class Catalogue extends HttpServlet {
       ConnectionOracle oradb = new ConnectionOracle();
       oradb.setConnection("kellylea", "oracle2");
       oradb.connecter();  
-      out.println( "<form><table>" );
+      out.println( "<div><table>" );
          //entête
          out.println( "<tr><td>Nom d'item</td><td>Quantité</td><td>" 
                     + "Prix</td><td>Poids</td><td>Genre</td></tr></br></br>" );
@@ -168,7 +170,7 @@ public class Catalogue extends HttpServlet {
       {
          out.println( se.getMessage() );
       }
-      out.println( "</table></form>" );
+      out.println( "</table></div>" );
       oradb.deconnecter(); 
     }
     
