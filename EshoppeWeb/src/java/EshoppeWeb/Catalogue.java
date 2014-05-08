@@ -160,8 +160,8 @@ public class Catalogue extends HttpServlet {
       oradb.connecter();  
       out.println( "<div id='zeCatalogueDiv'><table id='zeCatable'>" );
          //entête
-         out.println( "<tr><td>Nom d'item</td><td>Quantité</td><td>" 
-                    + "Prix</td><td>Poids</td><td>Genre</td></tr></br></br>" );
+         out.println( "<tr><td class='zeCatEntete'>Nom d'item</td><td class='zeCatEntete'>En stock</td><td class='zeCatEntete'>" 
+                    + "Prix</td><td class='zeCatEntete'>Poids</td><td class='zeCatEntete'>Genre</td><td class='zeCatEntete'>Quantité voulu</td></tr>" );
 
       try
       {
@@ -183,7 +183,8 @@ public class Catalogue extends HttpServlet {
                     genreItem = rst.getString( "GENRE" );
                     
                     out.println( "<td class='zeCatalogueCell'>" + nomitem + "</td><td class='zeCatalogueCell'>" +  qte + "</td><td class='zeCatalogueCell'>"
-                            +  prix + "</td><td class='zeCatalogueCell'>" +  poids + "</td><td class='zeCatalogueCell'>" +  genreItem + "</td>" );
+                            +  prix + "</td><td class='zeCatalogueCell'>" +  poids + "</td><td class='zeCatalogueCell'>" +  genreItem + "</td><td class='zeCatalogueCell'>"
+                            + "<input type=\"text\" ></td>" );
                     out.println( "</tr>" );
                 }  }
          rst.close();    
