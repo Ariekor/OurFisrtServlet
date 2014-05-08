@@ -108,20 +108,42 @@ public class Catalogue extends HttpServlet {
       
     private void menuRecherche(PrintWriter out, String g){
         
-        out.println("<div class='entete_catalogue'>"
+        out.print("<div class='entete_catalogue'>"
                         + "<form action='catalogue' method='post'>"
-                        + "     Rechercher dans: <select name=\"genre\" /> ");////remplir par méthode
+                        + "     Rechercher dans:  ");
+        out.println(genrerListeGenres());
         
-        out.println(      "         <option selected>Tout le catalogue</option>" 
+        out.println("     Mot clé: <input type=\"text\" name=\"nomCle\" />"
+                        + "              <input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
+                        + "</form>"
+                   + "</div>");
+    }
+    
+    private String genrerListeGenres(){
+        
+        /* try
+        {
+            Statement stm = conn.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rst = stm.executeQuery(SQLGenre);
+            CB_Genre.removeAllItems();
+            while(rst.next())
+            {
+                CB_Genre.addItem(rst.getString("genre"));
+            }
+        }
+        catch (SQLException e){}
+        
+        private String SQLGenre = "Select Distinct Genre From Catalogue";*/
+        String liste ="<select name=\"genre\" />"
+                        + "<option selected>Tout le catalogue</option>" 
                         + "         <option>Arme</option>"
                         + "         <option>Armure</option>"                 
                         + "         <option>Habileté</option>" 
                         + "         <option>Potion</option>" 
-                        + "     </select> "
-                        + "     Mot clé: <input type=\"text\" name=\"nomCle\" />"
-                        + "              <input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
-                        + "</form>"
-                   + "</div>");
+                        + "     </select> ";
+        
+        
+        return liste;
     }
     
     private void listeItems(PrintWriter out, String genre ){
