@@ -47,7 +47,7 @@ public class Catalogue extends HttpServlet {
             
             out.println("<h1>The super duper Catalogue!!! </h1>");
             UtilHtml.barreDeMenu(out, connecté);
-            menuRecherche(out);            
+            menuRecherche(out, genre);            
             
             listeItems(out, "Tout le catalogue");//////////////////
             
