@@ -141,16 +141,16 @@ public class Catalogue extends HttpServlet {
       ConnectionOracle oradb = new ConnectionOracle();
       oradb.setConnection("kellylea", "oracle2");
       oradb.connecter();  
-      out.println( "<form>" );
+      out.println( "<form><table>" );
          //entête
          out.println( "<tr><td>Nom d'item</td><td>Quantité</td><td>" 
-                    + "Prix</td><td>Poids</td><td>Genre</td></tr>" );
+                    + "Prix</td><td>Poids</td><td>Genre</td></tr></br></br>" );
 
       try
       {
           ResultSet rst;
             try (CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Catalogue.listercatalogue(?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY )) {
-                stm.registerOutParameter(1, OracleTypes.OTHER);
+                stm.registerOutParameter(1, OracleTypes.CURSOR);
                 stm.setString( 2, genre );
                 stm.execute();
                 rst = (ResultSet)stm.getObject(1);
@@ -173,9 +173,9 @@ public class Catalogue extends HttpServlet {
       }
       catch( SQLException se ) 
       {
-         System.out.println( se.getMessage() );
+         out.println( se.getMessage() );
       }
-      out.println( "</form>" );
+      out.println( "</table></form>" );
       oradb.deconnecter(); 
     }
     
