@@ -80,7 +80,7 @@ public class Catalogue extends HttpServlet {
         processRequestDebut(request,response, out);
         
         menuRecherche(out, "Tout le catalogue"); 
-        listeItems(out, "Tout le catalogue"); 
+        listeItems(out, "Tout le catalogue",""); 
         
         processRequestFin(request, response, out);        
     }
@@ -101,11 +101,12 @@ public class Catalogue extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         String genre = request.getParameter("genre");
+        String motCle = request.getParameter("nomCle");
         
         processRequestDebut(request,response, out);
         
         menuRecherche(out, genre); 
-        listeItems(out, genre);   
+        listeItems(out, genre, motCle);   
         
         processRequestFin(request, response, out);
         
@@ -129,8 +130,8 @@ public class Catalogue extends HttpServlet {
                         + "     Rechercher dans:  ");
         out.println(genrerListeGenres(g));
         
-        out.println("     Mot clé: <input type=\"text\" name=\"nomCle\" />"
-                        + "              <input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
+        out.println("Mot clé: <input type=\"text\" name=\"nomCle\" />"
+                        + "<input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
                         + "</form>"
                    + "</div>");
     }
@@ -170,13 +171,14 @@ public class Catalogue extends HttpServlet {
         return liste;
     }
     
-    private void listeItems(PrintWriter out, String genre ){
-        
+    private void listeItems(PrintWriter out, String genre, String cle ){
+        String numitem;
         String nomitem;
         String qte ;
         String prix;
         String poids ;
         String genreItem ;
+        
           
             // connexion à la base de données
       ConnectionOracle oradb = new ConnectionOracle();
@@ -184,15 +186,20 @@ public class Catalogue extends HttpServlet {
       oradb.connecter();  
       out.println( "<div id='zeCatalogueDiv'><table id='zeCatable'>" );
          //entête
-         out.println( "<tr><td class='zeCatEntete'>Nom d'item</td><td class='zeCatEntete'>En stock</td><td class='zeCatEntete'>" 
-                    + "Prix</td><td class='zeCatEntete'>Poids</td><td class='zeCatEntete'>Genre</td><td class='zeCatEntete'>Quantité voulu</td></tr>" );
+         out.println( "<tr><td class='zeCatEntete'>Nom d'item</td>"
+                    + "<td class='zeCatEntete'>En stock</td>"
+                    + "<td class='zeCatEntete'>Prix</td>"
+                    + "<td class='zeCatEntete'>Poids</td>"
+                    + "<td class='zeCatEntete'>Genre</td>"
+                    + "<td class='zeCatEntete'>Ajouter au panier</td></tr>" );
 
       try
       {
           ResultSet rst;
-            try (CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Catalogue.listercatalogue(?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY )) {
+            try (CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Catalogue.recherchecatalogue(?,?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY )) {
                 stm.registerOutParameter(1, OracleTypes.CURSOR);
                 stm.setString( 2, genre );
+                stm.setString(3, cle+"%");
                 stm.execute();
                 rst = (ResultSet)stm.getObject(1);
                 // parcours du ResultSet
@@ -200,15 +207,22 @@ public class Catalogue extends HttpServlet {
                 {
                     /*NOMITEM, QUANTITE, PRIX, POIDS, GENRE*/
                     out.println( "<tr class='zeCatalogueRow'>" );
+                    numitem = ((Integer)rst.getInt("NUMITEM")).toString();
                     nomitem = rst.getString( "NOMITEM" );
                     qte = ((Integer)rst.getInt("QUANTITE")).toString();
                     prix = ((Integer)rst.getInt("PRIX")).toString();
                     poids = ((Integer)rst.getInt("POIDS")).toString();
                     genreItem = rst.getString( "GENRE" );
                     
-                    out.println( "<td class='zeCatalogueCell'>" + nomitem + "</td><td class='zeCatalogueCell'>" +  qte + "</td><td class='zeCatalogueCell'>"
-                            +  prix + "</td><td class='zeCatalogueCell'>" +  poids + "</td><td class='zeCatalogueCell'>" +  genreItem + "</td><td class='zeCatalogueCell'>"
-                            + "<input type=\"text\" name='qte' size='10' ></td>" );
+                    out.println( "<input type=\"hidden\" name=\"numitem\" value=\"" 
+                            + numitem + "\"/><td class='zeCatalogueCell'>" 
+                            + nomitem + "</td><td class='zeCatalogueCell'>" 
+                            + qte + "</td><td class='zeCatalogueCell'>"
+                            + prix + "</td><td class='zeCatalogueCell'>" 
+                            + poids + "</td><td class='zeCatalogueCell'>" 
+                            + genreItem + "</td><td class='zeCatalogueCell'>"
+                            + "<input type=\"text\" name='qte' size='2' >"
+                            + "<input type=\"submit\" value=\"Ajouter\" class=\"b_submit\"/></td>" );
                     out.println( "</tr>" );
                 }  }
          rst.close();    
