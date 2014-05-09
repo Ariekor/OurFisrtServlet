@@ -18,9 +18,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Isabelle
  */
-@WebServlet(name = "login", urlPatterns = {"/login"})
-public class login extends HttpServlet {
+@WebServlet(name = "Inscription", urlPatterns = {"/inscription"})
+public class Inscription extends HttpServlet {
 
+    // callable:  gestion_users.insertion(?,?,?,?,?)
+    // avec dans l'ordre: NOMUSAGER, MOTDEPASSE, NOM, PRENOM, CAPITAL
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,41 +37,25 @@ public class login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        /*  infos du ppt du prof...
-        // création de la session
-        HttpSession session = request.getSession();
-        // identification de la session (pas vraiment nécessaire!)
-        String id = session.getId();
-        writer.println( "id = " + id + "<br />");
-        ...
-        // annulation de la session
-        session.invalidate();
-        
-        // truc pour savoir si une session est déjà en cours
-        HttpSession session = request.getSession( false );
-        if( session == null ) // pas de session en cours
-        {
-            writer.println(
-            "création d'une nouvelle session<br />" );
-            session = request.getSession( true );
+        try (PrintWriter out = response.getWriter()) {
+            
+            UtilHtml.enteteHtml(out);
+            UtilHtml.barreDeMenu(out, false);
+            
+            
+            out.println("<h1>Page d'inscription</h1>");
+            //si clic bouton envoyer, doit retourner à catalogue avec  
+            // les champs de login user rempli mais pas mot depasse.  Pas encore logué.
+            out.println("<form action='catalogue' method='post'>");
+            
+            
+            out.println("</form>");
+            
+            
+            
+            UtilHtml.piedsDePage(out);
         }
-        else
-            writer.println( "session déjà en cours<br />" );
-        
-        // manipulation d'un attribut
-        Panier panier = ( Panier )session.getAttribute( "panierAchats" );
-        if( panier != null ) // on peut accéder au contenu
-        {
-         ...
-        }
-        else // le panier n'existe pas
-        {
-         panier = new Panier();
-         session.setAttribute( "panierAchats", panier );
-         ...
-        }
-        */
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

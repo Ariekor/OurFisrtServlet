@@ -153,8 +153,7 @@ public class Catalogue extends HttpServlet {
             }
             else{
                 liste += "<option selected>"+"Tout le catalogue"+"</option>";
-            }
-            
+            }            
             while(rst.next()){
                 g = rst.getString("genre");
                 if(g.equals(genre)){                
@@ -166,8 +165,7 @@ public class Catalogue extends HttpServlet {
             }
             liste += "</select>";
         }
-        catch (SQLException e){}
-        
+        catch (SQLException e){/*faire quelquechose ici*/}        
         return liste;
     }
     
@@ -179,32 +177,31 @@ public class Catalogue extends HttpServlet {
         String poids ;
         String genreItem ;
         
-          
-            // connexion à la base de données
-      ConnectionOracle oradb = new ConnectionOracle();
-      oradb.setConnection("kellylea", "oracle2");
-      oradb.connecter();  
-      out.println( "<div id='zeCatalogueDiv'><table id='zeCatable'>" );
-         //entête
-         out.println( "<tr><td class='zeCatEntete'>Nom d'item</td>"
-                    + "<td class='zeCatEntete'>En stock</td>"
-                    + "<td class='zeCatEntete'>Prix</td>"
-                    + "<td class='zeCatEntete'>Poids</td>"
-                    + "<td class='zeCatEntete'>Genre</td>"
-                    + "<td class='zeCatEntete'>Ajouter au panier</td></tr>" );
+        // connexion à la base de données
+        ConnectionOracle oradb = new ConnectionOracle();
+        oradb.setConnection("kellylea", "oracle2");
+        oradb.connecter();  
+        out.println( "<div id='zeCatalogueDiv'><table id='zeCatable'>" );
+           //entête
+        out.println( "<tr><td class='zeCatEntete'>Nom d'item</td>"
+                   + "<td class='zeCatEntete'>En stock</td>"
+                   + "<td class='zeCatEntete'>Prix</td>"
+                   + "<td class='zeCatEntete'>Poids</td>"
+                   + "<td class='zeCatEntete'>Genre</td>"
+                   + "<td class='zeCatEntete'>Ajouter au panier</td></tr>" );
 
-      try
-      {
-          ResultSet rst;
-            try (CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Catalogue.recherchecatalogue(?,?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY )) {
-                stm.registerOutParameter(1, OracleTypes.CURSOR);
-                stm.setString( 2, genre );
-                stm.setString(3, cle+"%");
-                stm.execute();
-                rst = (ResultSet)stm.getObject(1);
-                // parcours du ResultSet
-                while( rst.next() )
-                {
+        try
+        {
+            ResultSet rst;
+              try (CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Catalogue.recherchecatalogue(?,?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY )) {
+                  stm.registerOutParameter(1, OracleTypes.CURSOR);
+                  stm.setString( 2, genre );
+                  stm.setString(3, cle+"%");
+                  stm.execute();
+                  rst = (ResultSet)stm.getObject(1);
+                  // parcours du ResultSet
+                  while( rst.next() )
+                  {
                     /*NOMITEM, QUANTITE, PRIX, POIDS, GENRE*/
                     out.println( "<tr class='zeCatalogueRow'>" );
                     numitem = ((Integer)rst.getInt("NUMITEM")).toString();
@@ -213,7 +210,7 @@ public class Catalogue extends HttpServlet {
                     prix = ((Integer)rst.getInt("PRIX")).toString();
                     poids = ((Integer)rst.getInt("POIDS")).toString();
                     genreItem = rst.getString( "GENRE" );
-                    
+
                     out.println( "<input type=\"hidden\" name=\"numitem\" value=\"" 
                             + numitem + "\"/><td class='zeCatalogueCell'>" 
                             + nomitem + "</td><td class='zeCatalogueCell'>" 
@@ -224,15 +221,16 @@ public class Catalogue extends HttpServlet {
                             + "<input type=\"text\" name='qte' size='2' >"
                             + "<input type=\"submit\" value=\"Ajouter\" class=\"b_submit\"/></td>" );
                     out.println( "</tr>" );
-                }  }
-         rst.close();    
-      }
-      catch( SQLException se ) 
-      {
-         out.println( se.getMessage() );
-      }
-      out.println( "</table></div>" );
-      oradb.deconnecter(); 
+                }  
+            }
+            rst.close();    
+        }
+        catch( SQLException se ) 
+        {
+           out.println( se.getMessage() );
+        }
+        out.println( "</table></div>" );
+        oradb.deconnecter(); 
     }
     
     

@@ -40,18 +40,26 @@ public class UtilHtml {
         out.println("</div>");    
     }
     static protected void enteteJoueur(PrintWriter out){
-        out.println("           <td><input type=\"submit\" value=\"Profil\" class=\"b_submit\" />"
-                                 + "Alias du joueur connecté</td>");////récupérer la valeur réelle
-        out.println("           <td><input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" /></td>");
-        out.println("           <td><input type=\"submit\" value=\"Inventaire\" class=\"b_submit\" /></td>");     
-        out.println("           <td><input type=\"submit\" value=\"Panier\" class=\"b_submit\" /></td>");   
+        
+        out.println("<td><form action='profil' method='post'><input type=\"submit\" value=\"Profil\" class=\"b_submit\" /></form>"
+                  + "Alias du joueur connecté</td>");////récupérer la valeur réelle
+        //mettre form ici pour déconnecter (session.invalidate() et appel catalogue avec connecté == false
+        out.println("<td><input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" /></td>");
+        
+        /*<form action='inventaire' method='post'>*/
+        out.println("<td><input type=\"submit\" value=\"Inventaire\" class=\"b_submit\" /></td>");
+        
+        /*<form action='panier' method='post'>*/
+        out.println("<td><input type=\"submit\" value=\"Panier\" class=\"b_submit\" /></td>");   
     }
     static protected void enteteVisiteur(PrintWriter out){
-        out.println("           <td><input type=\"submit\" value=\"Login\" class=\"b_submit\"/>"
-                                    + " Alias: <input type=\"text\" name=\"user\" value=\"nom usager\"/>"
-                                    + " Mot de passe: <input type=\"password\" name=\"motdepasse\"/></td>");
         
-        out.println("           <td><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\" /></td>");
+        /*<form action='login' method='post'>*/
+        out.println("<td><input type=\"submit\" value=\"Login\" class=\"b_submit\"/>"
+                  + " Alias: <input type=\"text\" name=\"user\" value=\"nom usager\"/>"
+                  + " Mot de passe: <input type=\"password\" name=\"motdepasse\"/></td>");
+        /*<form action='inscription' method='post'>*/
+        out.println("<td><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\" /></td>");
     }
     static protected void piedsDePage(PrintWriter out){
         out.println("</body>");
