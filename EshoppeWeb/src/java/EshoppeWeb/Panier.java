@@ -47,13 +47,13 @@ public class Panier extends HttpServlet {
             UtilHtml.barreDeMenu(out, true);
                         
             out.println("<h1>Panier</h1>");
-            out.println("<form action='catalogue' method='post'>");                    
+            out.println("<form action='catalogue' method='post'><div>");                    
             
             listeItems(out);// bouton retirer item inclus
             
             menuPanier(out); //colonne de droite, menu        
                         
-            out.println("</form>");
+            out.println("</div></form>");
             
             UtilHtml.piedsDePage(out);
         }
@@ -107,7 +107,7 @@ public class Panier extends HttpServlet {
         int prixUnitaire;
         int prixCalcule ;        
                  
-        out.println( "<div id='zeCatalogueDiv'><table id='zeCatable'>" );
+        out.println( "<div id='listePanier' class='zeCatalogueDiv'><table class='zeCatable'>" );
         //entête panier
         out.println( "<tr><td class='zeCatEntete'>Nom d'item</td>"
                    + "<td class='zeCatEntete'>Qté au panier</td>"
@@ -175,24 +175,22 @@ public class Panier extends HttpServlet {
     
     private void menuPanier(PrintWriter out)
     {
-        out.println("<div id='menuPanier'class='zeCatalogueCell'><table>");            
-            out.println("<tr><td>Votre capital:</td></tr>"
-                    + "<tr><td><input type='text' name='cap' value='"+capUser+"'></td></tr>"
-                    + "<tr><td></td></tr>"
-                    + "<tr><td></td></tr>"
-                    + "<tr><td></td></tr>"
-                    + "<tr><td></td></tr>"
-                    + "<tr><td>Total panier:</td></tr>"
-                    + "<tr><td><input type='text' name='total' value='"+total+"'></td></tr>"
-                    + "<tr><td></td></tr>"
-                    + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Mettre à jour\" name=\"update\" /></td></tr>"
-                    + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Acheter\" name=\"achat\" /></td></tr>"
-                    + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Vider\" name=\"vider\" /></td></tr>"
-                    + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Fermer\" name=\"fermer\" /></td></tr>");
-            
-            out.println("<table></td>");
-            out.println("</tr>"
-                    + "</table>"
-                    + "</div>");
+        out.println("<div id='menuPanier' class='zeCatalogueDiv'><table class='zeCatable'>");            
+        out.println("<tr><td>Votre capital:</td></tr>"
+                + "<tr><td><input type='text' name='cap' value='"+capUser+"'></td></tr>"
+                + "<tr><td></td></tr>"
+                + "<tr><td></td></tr>"
+                + "<tr><td></td></tr>"
+                + "<tr><td></td></tr>"
+                + "<tr><td>Total panier:</td></tr>"
+                + "<tr><td><input type='text' name='total' value='"+total+"'></td></tr>"
+                + "<tr><td></td></tr>"
+                + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Mettre à jour\" name=\"update\" /></td></tr>"
+                + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Acheter\" name=\"achat\" /></td></tr>"
+                + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Vider\" name=\"vider\" /></td></tr>"
+                + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Fermer\" name=\"fermer\" /></td></tr>");
+
+        out.println("</table>"
+                + "</div>");
     }
 }
