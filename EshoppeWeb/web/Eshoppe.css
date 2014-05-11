@@ -90,6 +90,7 @@ table{
     margin-right: auto;
     background: #666666;
 }
+
 .zeCatable{
     font-size:18px;
     border-collapse: separate;
@@ -101,9 +102,9 @@ table{
 .entete_catalogue
 {
     background-color: #BFB19B;
-    width: 50%;
+    width: 80%;
     // float:left;
-    left: -15%;
+//    left: -15%;
     padding: 5px;
     margin-left: auto;
     margin-right: auto;
@@ -111,14 +112,30 @@ table{
     position: relative;
     border-radius: 1px;
 }
-
+///barre menu
 .entete_generale {
     background-color: #BFB19B;
     width: 80%;
     padding: 5px;
     margin-left: auto;
     margin-right: auto;
-    position: relative
+    position: relative;
+    
+    font-size:18px;
+    text-align: center;
+}
+/////logo, login et inscription = 3 div de barre menu visiteur
+#logo{
+    width: 15%;
+    float: left;
+}
+#login{
+    width: 50%;
+    display: inline;
+}
+#inscription{
+    width: 15%;
+    float: right;
 }
 
 body {
