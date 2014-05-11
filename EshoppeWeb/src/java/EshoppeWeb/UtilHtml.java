@@ -32,7 +32,8 @@ public class UtilHtml {
     static protected void barreDeMenu(PrintWriter out, boolean connecté ){
         out.println("<div class='entete_catalogue'>");
         out.println("  <div id='logo'><a href=\"http://localhost:8080/eshoppeweb/catalogue\" "
-                             + "target=\"_parent\">LOGO</a></div>");
+                             + "target=\"_parent\">LOGO</a>"
+                    + "</div>");
         if(connecté)
             enteteJoueur(out);
         else
@@ -41,17 +42,18 @@ public class UtilHtml {
     }
     static protected void enteteJoueur(PrintWriter out){
         
-        out.println("<form action='profil' method='post'><input type=\"submit\" value=\"Profil\" class=\"b_submit\" />"
-                  + "  Joueur connecté </form>");////récupérer la valeur réelle pour le joueur
+        out.println("<div id='profil'><form action='profil' method='post'>"
+                        + "<input type=\"submit\" value=\"Profil\" class=\"b_submit\" />"
+                        + "  Joueur connecté </form>"
+                 + "</div>");////récupérer la valeur réelle pour le joueur
         
         //mettre form ici pour déconnecter (session.invalidate() et appel catalogue avec connecté == false
-        out.println("<input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" />");
-        
-        /*<form action='inventaire' method='post'>*/
-        out.println("<input type=\"submit\" value=\"Inventaire\" class=\"b_submit\" />");
+        out.println("<div id='deconnecter'><input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" />"
+                  + "</div>");
         
         /*<form action='panier' method='post'>*/
-        out.println("<input type=\"submit\" value=\"Panier\" class=\"b_submit\" />");   
+        out.println("\"<div id='panier'><input type=\"submit\" value=\"Panier\" class=\"b_submit\" />"
+                  + "</div>");   
     }
     static protected void enteteVisiteur(PrintWriter out){
         
