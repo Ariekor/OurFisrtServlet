@@ -12,6 +12,24 @@ td{
     border: 1px #634600;
 }
 
+#zeInscritpion{
+    border: 5px #000000 solid;
+    width: 60%;
+    margin: auto;
+}
+#zeTitreTabInscription{
+    width: 10%;
+    float: left;
+}
+#zeTitreTabInscriptionFiller{
+    width: 90%;
+}
+#mainInscriptionDiv{
+    margin: auto;
+    text-align: center;
+    width: 80%;
+}
+
 table{
     text-align: center;
     position: relative;

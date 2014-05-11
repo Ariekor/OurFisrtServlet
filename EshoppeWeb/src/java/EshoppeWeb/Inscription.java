@@ -38,17 +38,48 @@ public class Inscription extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            UtilHtml.enteteHtml(out,"Inscription");
-       //     UtilHtml.barreDeMenu(out, false);  non applicable
-            
-            
-            out.println("<h1>Page d'inscription</h1>");
-            //si clic bouton envoyer, doit retourner à catalogue avec  
-            // les champs de login user rempli mais pas mot depasse.  Pas encore logué.
             out.println("<form action='catalogue' method='post'>");
-            
-            
+            UtilHtml.enteteHtml(out, "Catalogue");
+                out.println("<div id='mainInscriptionDiv'>");
+                    out.println("<table id='zeInscritpion'>");
+
+                        out.println("<tr>");
+                            out.println("<td id='zeTitreTabInscription'>Inscription </td>");
+                            out.println("<td id='zeTitreTabInscriptionFiller'> </td>");
+                        out.println("</tr>");
+
+                        out.println("<tr>");
+                            out.println("<td >Inscription </td>");
+                            out.println("<td > </td>");
+                        out.println("</tr>");
+
+                        out.println("<tr>");
+                            out.println("<td >Inscription </td>");
+                            out.println("<td > </td>");
+                        out.println("</tr>");
+
+                        out.println("<tr>");
+                            out.println("<td >Inscription </td>");
+                            out.println("<td > </td>");
+                        out.println("</tr>");
+
+                        out.println("<tr>");
+                            out.println("<td >Inscription </td>");
+                            out.println("<td > </td>");
+                        out.println("</tr>");
+
+                        out.println("<tr>");
+                            out.println("<td >Inscription </td>");
+                            out.println("<td > </td>");
+                        out.println("</tr>");
+
+                        out.println("<tr>");
+                            out.println("<td >Inscription </td>");
+                            out.println("<td > </td>");
+                        out.println("</tr>");
+
+                    out.println("</table>");
+                out.println("</div>");
             out.println("</form>");
             
             
@@ -56,6 +87,22 @@ public class Inscription extends HttpServlet {
             UtilHtml.piedsDePage(out);
         }
        
+    }
+    
+    protected void processRequestDebut(HttpServletRequest request, HttpServletResponse response, PrintWriter out)
+            throws ServletException, IOException {
+        
+        response.setContentType("text/html;charset=UTF-8");         
+        try { 
+            UtilHtml.enteteHtml(out, "Catalogue");//serait bien de récupérer le webServlet name            
+            UtilHtml.barreDeMenu(out, false);            
+        }
+      //  catch()
+        finally
+        {
+            //on ne ferme pas tout de suite, il faut exécuter process reques fin
+       //    out.close();
+        } 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
