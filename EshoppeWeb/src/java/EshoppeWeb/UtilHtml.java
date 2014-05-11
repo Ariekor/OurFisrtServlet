@@ -26,13 +26,14 @@ public class UtilHtml {
         out.println("<link rel=\"stylesheet\" href=\"Eshoppe.css\"  type=\"text/css\"/>");            
         out.println("</head>");
         out.println("<body>");
-        out.println("<a href=\"http://localhost:8080/eshoppeweb/catalogue\" target=\"_parent\">Accueil</a>"//essaie lin accueil
-                + "<h1>The super duper Catalogue!!! </h1>");//////////a changer
+        out.println("<a href=\"http://localhost:8080/eshoppeweb/catalogue\" "
+                + "target=\"_parent\"><h1>image ici</h1></a>");//////////a changer
     }
     static protected void barreDeMenu(PrintWriter out, boolean connecté ){
         out.println("<div class='entete_generale'>");
         out.println("   <form>");
-        out.println("       <tr><td>LOGO</td>");
+        out.println("       <tr><td><a href=\"http://localhost:8080/eshoppeweb/catalogue\" "
+                + "target=\"_parent\">LOGO</a></td>");
         if(connecté)
             enteteJoueur(out);
         else
