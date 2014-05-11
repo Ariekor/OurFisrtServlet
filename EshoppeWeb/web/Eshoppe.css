@@ -21,11 +21,18 @@ td{
 #zeTitreTabInscription{
     width: 10%;
     float: left;
-    border: 1px #000000 solid;
+    border: 2px #000000 solid;
+    font-weight: bold;
+    font-style: oblique;
 }
 #zeTitreTabInscriptionFiller{
     width: 90%;
     
+}
+
+.inscriptionLabelRow{
+    font-size: 18px;
+    font-style: italic;
 }
 
 #zePresentationRowInscritpion{
