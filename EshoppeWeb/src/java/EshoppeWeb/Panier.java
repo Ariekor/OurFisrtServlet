@@ -115,30 +115,45 @@ public class Panier extends HttpServlet {
                    + "<td class='zeCatEntete'>Prix calculé</td>"
                    + "<td class='zeCatEntete'>Retirer du panier</td>");
         
-        try(ResultSet panier = recupererPanier(out))/////?????
+        try/*(ResultSet panier = recupererPanier(out))*//////?????
         { 
+            // connexion à la base de données
+            ConnectionOracle oradb = new ConnectionOracle();
+            oradb.setConnection("kellylea", "oracle2");
+            oradb.connecter();
+        
+            ResultSet panier;
+            try (CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Panier.lister(?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY )) {
+                stm.registerOutParameter(1, OracleTypes.CURSOR);
+                stm.setString( 2, nomUser );                  
+                stm.execute();
+                panier = (ResultSet)stm.getObject(1);    
+            }                            
+               
+            oradb.deconnecter();
+            
             // parcours du ResultSet
             while( panier.next() )
             {
-              //récupérer les valeurs de chaque ligne
-              out.println( "<tr class='zeCatalogueRow'>" );
-              numitem = ((Integer)panier.getInt("NUMITEM")).toString();
-              nomitem = panier.getString( "NOMITEM" );
-              qte = (Integer)panier.getInt("QUANTITEITEM");
-              prixUnitaire = (Integer)panier.getInt("PRIX");
-              prixCalcule =  ((Integer)panier.getInt("QUANTITEITEM"))*((Integer)panier.getInt("PRIX"));                    
-              //chaqueligne est un form qui permet de retirer un objet du panier
-              out.println("<form action='panier' method='post'>");            
-              out.println( "<input type=\"hidden\" name=\"numitem\" value=\"" 
-                      + numitem + "\"/><td class='zeCatalogueCell'>" 
-                      + nomitem + "</td><td class='zeCatalogueCell'>" 
-                      + "<input type=\"text\" name='qte' value =\""+qte+"\" size='3'></td><td class='zeCatalogueCell'>"
-                      + prixUnitaire + "</td><td class='zeCatalogueCell'>" 
-                      + prixCalcule + "</td><td class='zeCatalogueCell'>" 
-                      + "<input type=\"submit\" value=\"X\" class=\"b_submit\"/></td>" );////doit appeler supprimer item/panier
+                //récupérer les valeurs de chaque ligne
+                out.println( "<tr class='zeCatalogueRow'>" );
+                numitem = ((Integer)panier.getInt("NUMITEM")).toString();
+                nomitem = panier.getString( "NOMITEM" );
+                qte = (Integer)panier.getInt("QUANTITEITEM");
+                prixUnitaire = (Integer)panier.getInt("PRIX");
+                prixCalcule =  ((Integer)panier.getInt("QUANTITEITEM"))*((Integer)panier.getInt("PRIX"));                    
+                //chaqueligne est un form qui permet de retirer un objet du panier
+                out.println("<form action='panier' method='post'>");            
+                out.println( "<input type=\"hidden\" name=\"numitem\" value=\"" 
+                        + numitem + "\"/><td class='zeCatalogueCell'>" 
+                        + nomitem + "</td><td class='zeCatalogueCell'>" 
+                        + "<input type=\"text\" name='qte' value =\""+qte+"\" size='3'></td><td class='zeCatalogueCell'>"
+                        + prixUnitaire + "</td><td class='zeCatalogueCell'>" 
+                        + prixCalcule + "</td><td class='zeCatalogueCell'>" 
+                        + "<input type=\"submit\" value=\"X\" class=\"b_submit\"/></td>" );////doit appeler supprimer item/panier
 
-              out.println("</form>");
-              out.println( "</tr>" );
+                out.println("</form>");
+                out.println( "</tr>" );
             }  
             panier.close();
         }

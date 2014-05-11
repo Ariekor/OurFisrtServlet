@@ -44,16 +44,18 @@ public class UtilHtml {
     }
     static protected void enteteJoueur(PrintWriter out){
         
-        out.println("<td><form action='profil' method='post'><input type=\"submit\" value=\"Profil\" class=\"b_submit\" /></form>"
-                  + "Alias du joueur connecté</td>");////récupérer la valeur réelle
+        out.println("<td>"
+                  + "<form action='profil' method='post'><input type=\"submit\" value=\"Profil\" class=\"b_submit\" />"
+                  + "  Joueur connecté </form>");////récupérer la valeur réelle pour le joueur
+        
         //mettre form ici pour déconnecter (session.invalidate() et appel catalogue avec connecté == false
-        out.println("<td><input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" /></td>");
+        out.println("<input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" />");
         
         /*<form action='inventaire' method='post'>*/
-        out.println("<td><input type=\"submit\" value=\"Inventaire\" class=\"b_submit\" /></td>");
+        out.println("<input type=\"submit\" value=\"Inventaire\" class=\"b_submit\" />");
         
         /*<form action='panier' method='post'>*/
-        out.println("<td><input type=\"submit\" value=\"Panier\" class=\"b_submit\" /></td>");   
+        out.println("<input type=\"submit\" value=\"Panier\" class=\"b_submit\" /></td>");   
     }
     static protected void enteteVisiteur(PrintWriter out){
         
