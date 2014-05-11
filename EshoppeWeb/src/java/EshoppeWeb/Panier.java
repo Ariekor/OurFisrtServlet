@@ -47,7 +47,7 @@ public class Panier extends HttpServlet {
             UtilHtml.barreDeMenu(out, true);
                         
             out.println("<h1>Panier</h1>");
-            out.println("<form action='catalogue' method='post'><div>");                    
+            out.println("<form action='catalogue' method='post'><div class='zeCatalogueDiv'>");                    
             
             listeItems(out);// bouton retirer item inclus
             
@@ -107,7 +107,7 @@ public class Panier extends HttpServlet {
         int prixUnitaire;
         int prixCalcule ;        
                  
-        out.println( "<div id='listePanier' class='zeCatalogueDiv'><table class='zeCatable'>" );
+        out.println( "<div id='listePanier'><table class='zeCatable'>" );
         //entête panier
         out.println( "<tr><td class='zeCatEntete'>Nom d'item</td>"
                    + "<td class='zeCatEntete'>Qté au panier</td>"
@@ -175,7 +175,7 @@ public class Panier extends HttpServlet {
     
     private void menuPanier(PrintWriter out)
     {
-        out.println("<div id='menuPanier' class='zeCatalogueDiv'><table class='zeCatable'>");            
+        out.println("<div id='menuPanier'><table class='zeCatable'>");            
         out.println("<tr><td>Votre capital:</td></tr>"
                 + "<tr><td><input type='text' name='cap' value='"+capUser+"'></td></tr>"
                 + "<tr><td></td></tr>"
