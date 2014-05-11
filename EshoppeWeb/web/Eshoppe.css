@@ -53,7 +53,7 @@ table{
 	font-weight:bold;
 	font-style:normal;
         padding: auto;
-	width:15%;
+	//width: 15%
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #45340C;
@@ -69,13 +69,13 @@ table{
         top:2px;
 }
 
-#zeCatalogueDiv{
+.zeCatalogueDiv{
     font-size:20px;
     width:80%;
     margin-left: auto;
     margin-right: auto;
 }
-#zeCatable{
+.zeCatable{
     font-size:18px;
     border-collapse: separate;
     margin: auto;

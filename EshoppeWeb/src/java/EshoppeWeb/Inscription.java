@@ -45,37 +45,44 @@ public class Inscription extends HttpServlet {
 
                         out.println("<tr id='zePresentationRowInscritpion'>");
                             out.println("<td id='zeTitreTabInscription'>Inscription </td>");
-                            out.println("<td id='zeTitreTabInscriptionFiller'> </td>");
+                            out.println("<td id='zeTitreTabInscriptionFiller' colspan='2'> </td>");
                         out.println("</tr>");
 
                         out.println("<tr class='zeOtherRow'>");
-                            out.println("<td >Inscription </td>");
-                            out.println("<td > </td>");
+                            out.println("<td colspan='2'>Inscription </td>");
+                            out.println("<td colspan='2'> </td>");
+
                         out.println("</tr>");
 
                         out.println("<tr class='zeOtherRow'>");
-                            out.println("<td >Inscription </td>");
-                            out.println("<td > </td>");
+                            out.println("<td colspan='2'>Inscription </td>");
+                            out.println("<td colspan='2'> </td>");
+
                         out.println("</tr>");
 
                         out.println("<tr class='zeOtherRow'>");
-                            out.println("<td >Inscription </td>");
-                            out.println("<td > </td>");
+                            out.println("<td colspan='2'>Inscription </td>");
+                            out.println("<td colspan='2'> </td>");
+
                         out.println("</tr>");
 
                         out.println("<tr class='zeOtherRow'>");
-                            out.println("<td >Inscription </td>");
-                            out.println("<td > </td>");
+                            out.println("<td colspan='2'>Inscription </td>");
+                            out.println("<td colspan='2'> </td>");
+
                         out.println("</tr>");
 
                         out.println("<tr class='zeOtherRow'>");
-                            out.println("<td >Inscription </td>");
-                            out.println("<td > </td>");
+                            out.println("<td colspan='2'>Inscription </td>");
+                            out.println("<td colspan='2'> </td>");
+
                         out.println("</tr>");
 
                         out.println("<tr class='zeOtherRow'>");
-                            out.println("<td >Inscription </td>");
                             out.println("<td > </td>");
+                            out.println("<td > </td>");
+                            out.println("<td> </td>");
+                            out.println("<td><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\"/> </td>");
                         out.println("</tr>");
 
                     out.println("</table>");
