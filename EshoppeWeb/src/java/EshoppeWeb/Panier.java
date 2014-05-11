@@ -42,37 +42,18 @@ public class Panier extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            
             UtilHtml.enteteHtml(out,"Panier");
             UtilHtml.barreDeMenu(out, true);
-            
-            
+                        
             out.println("<h1>Panier</h1>");
-            out.println("<form action='catalogue' method='post'>"
-                    + "<table>"
-                    + "<tr class='zeCatalogueRow'>");
-            out.println("<td id='listePanier' class='zeCatalogueCell'>");
+            out.println("<form action='catalogue' method='post'>");                    
+            
             listeItems(out);// bouton retirer item inclus
-            out.println("</td>");
             
-            //colonne de droite, menu
-            out.println("<td id='menuPanier'class='zeCatalogueCell'><table>");
-            //////////// a faire   ////////////////
-            out.println("<tr><td>Votre capital:</td></tr>"
-                    + "<tr><td><input type='text' name='cap' value='"+capUser+"'></td></tr>"
-                    + "<tr></tr><tr></tr><tr></tr><tr></tr>"
-                    + "<tr><td>Total panier:</td></tr>"
-                    + "<tr><td><input type='text' name='total' value='"+total+"'></td></tr>"
-                    + "<tr></tr>"
-                    + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Mettre à jour\" name=\"update\" /></td></tr>"
-                    + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Acheter\" name=\"achat\" /></td></tr>"
-                    + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Vider\" name=\"vider\" /></td></tr>"
-                    + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Fermer\" name=\"fermer\" /></td></tr>");
-            
-            
-            out.println("<table></td>");
-            out.println("</tr>"
-                    + "</table>"
-                    + "</form>");
+            menuPanier(out); //colonne de droite, menu        
+                        
+            out.println("</form>");
             
             UtilHtml.piedsDePage(out);
         }
@@ -190,5 +171,28 @@ public class Panier extends HttpServlet {
         }        
         oradb.deconnecter();
         return null;
+    }
+    
+    private void menuPanier(PrintWriter out)
+    {
+        out.println("<div id='menuPanier'class='zeCatalogueCell'><table>");            
+            out.println("<tr><td>Votre capital:</td></tr>"
+                    + "<tr><td><input type='text' name='cap' value='"+capUser+"'></td></tr>"
+                    + "<tr><td></td></tr>"
+                    + "<tr><td></td></tr>"
+                    + "<tr><td></td></tr>"
+                    + "<tr><td></td></tr>"
+                    + "<tr><td>Total panier:</td></tr>"
+                    + "<tr><td><input type='text' name='total' value='"+total+"'></td></tr>"
+                    + "<tr><td></td></tr>"
+                    + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Mettre à jour\" name=\"update\" /></td></tr>"
+                    + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Acheter\" name=\"achat\" /></td></tr>"
+                    + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Vider\" name=\"vider\" /></td></tr>"
+                    + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Fermer\" name=\"fermer\" /></td></tr>");
+            
+            out.println("<table></td>");
+            out.println("</tr>"
+                    + "</table>"
+                    + "</div>");
     }
 }
