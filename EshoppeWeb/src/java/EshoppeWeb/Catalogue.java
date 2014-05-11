@@ -36,8 +36,7 @@ public class Catalogue extends HttpServlet {
         
         response.setContentType("text/html;charset=UTF-8");         
         try { 
-            UtilHtml.enteteHtml(out);
-            out.println("<h1>The super duper Catalogue!!! </h1>");
+            UtilHtml.enteteHtml(out, "Catalogue");//serait bien de récupérer le webServlet name            
             UtilHtml.barreDeMenu(out, connecté);            
         }
       //  catch()

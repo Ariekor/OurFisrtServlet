@@ -39,8 +39,8 @@ public class Inscription extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            UtilHtml.enteteHtml(out);
-            UtilHtml.barreDeMenu(out, false);
+            UtilHtml.enteteHtml(out,"Inscription");
+       //     UtilHtml.barreDeMenu(out, false);  non applicable
             
             
             out.println("<h1>Page d'inscription</h1>");

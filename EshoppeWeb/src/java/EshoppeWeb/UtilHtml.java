@@ -16,16 +16,18 @@ public class UtilHtml {
     //méthodes statiques
     
     
-    static public void enteteHtml(PrintWriter out){    
+    static public void enteteHtml(PrintWriter out, String page){    
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println("<head>");
-        out.println("<title>Catalogue É-Shop-pe</title>"); 
+        out.println("<title>É-Shop-pe : "+page+"</title>"); 
         out.println("<meta charset=\"UTF-8\">");
         out.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");   
         out.println("<link rel=\"stylesheet\" href=\"Eshoppe.css\"  type=\"text/css\"/>");            
         out.println("</head>");
         out.println("<body>");
+        out.println("<a href=\"http://localhost:8080/eshoppeweb/catalogue\" target=\"_parent\">Accueil</a>"//essaie lin accueil
+                + "<h1>The super duper Catalogue!!! </h1>");//////////a changer
     }
     static protected void barreDeMenu(PrintWriter out, boolean connecté ){
         out.println("<div class='entete_generale'>");

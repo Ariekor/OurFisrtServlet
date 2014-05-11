@@ -34,16 +34,19 @@ public class Panier extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Panier</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Panier at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            UtilHtml.enteteHtml(out,"Panier");
+            UtilHtml.barreDeMenu(out, true);
+            
+            
+            out.println("<h1>Panier</h1>");
+            //si clic bouton envoyer, doit retourner à catalogue avec  
+            // les champs de login user rempli mais pas mot depasse.  Pas encore logué.
+            out.println("<form action='catalogue' method='post'>");
+            
+            
+            out.println("</form>");
+            
+            UtilHtml.piedsDePage(out);
         }
     }
 
