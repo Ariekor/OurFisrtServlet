@@ -67,6 +67,5 @@ public class UtilHtml {
     static protected void piedsDePage(PrintWriter out){
         out.println("</body>");
         out.println("</html>");
-    }
-    
+    }    
 }
