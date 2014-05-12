@@ -10,14 +10,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import oracle.jdbc.OracleTypes;
 
 /**
@@ -27,12 +28,16 @@ import oracle.jdbc.OracleTypes;
 @WebServlet(name = "Catalogue", urlPatterns = {"/catalogue"})
 public class Catalogue extends HttpServlet {
 
+    
     /////a récupérer de session Tomcat...
     boolean connecté = false;
     
     ///debut du process cummun
     protected void processRequestDebut(HttpServletRequest request, HttpServletResponse response, PrintWriter out)
             throws ServletException, IOException {
+        
+        // création de la session
+        HttpSession session = request.getSession();
         
         response.setContentType("text/html;charset=UTF-8");         
         try { 

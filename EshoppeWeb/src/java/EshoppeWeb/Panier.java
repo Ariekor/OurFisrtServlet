@@ -115,7 +115,7 @@ public class Panier extends HttpServlet {
                    + "<td class='zeCatEntete'>Prix calculé</td>"
                    + "<td class='zeCatEntete'>Retirer du panier</td>");
         
-        try/*(ResultSet panier = recupererPanier(out))*//////?????
+        try
         { 
             // connexion à la base de données
             ConnectionOracle oradb = new ConnectionOracle();
@@ -130,7 +130,7 @@ public class Panier extends HttpServlet {
                 panier = (ResultSet)stm.getObject(1);    
             }                            
                
-            oradb.deconnecter();
+            
             
             // parcours du ResultSet
             while( panier.next() )
@@ -156,6 +156,7 @@ public class Panier extends HttpServlet {
                 out.println( "</tr>" );
             }  
             panier.close();
+            oradb.deconnecter();
         }
         catch( SQLException se ) 
         {

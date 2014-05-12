@@ -28,6 +28,8 @@ public class UtilHtml {
         out.println("<body>");
         out.println("<a href=\"http://localhost:8080/eshoppeweb/catalogue\" "
                 + "target=\"_parent\"><h1>image ici</h1></a>");//////////a changer
+        
+        
     }
     static protected void barreDeMenu(PrintWriter out, boolean connecté ){
         out.println("<div class='entete_catalogue'>");

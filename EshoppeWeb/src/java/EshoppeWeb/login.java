@@ -37,6 +37,7 @@ public class login extends HttpServlet {
         /*  infos du ppt du prof...
         // création de la session
         HttpSession session = request.getSession();
+        
         // identification de la session (pas vraiment nécessaire!)
         String id = session.getId();
         writer.println( "id = " + id + "<br />");
