@@ -24,7 +24,8 @@ public class UtilHtml {
         out.println("<title>É-Shop-pe : "+page+"</title>"); 
         out.println("<meta charset=\"UTF-8\">");
         out.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");   
-        out.println("<link rel=\"stylesheet\" href=\"Eshoppe.css\"  type=\"text/css\"/>");            
+        out.println("<link rel=\"stylesheet\" href=\"Eshoppe.css\"  type=\"text/css\"/>");
+        out.println("<script type=\"text/javascript\" src=\"./FiltresChamp.js\"></script>");
         out.println("</head>");
         out.println("<body>");
         out.println("<a href=\"http://localhost:8080/eshoppeweb/catalogue\" "
