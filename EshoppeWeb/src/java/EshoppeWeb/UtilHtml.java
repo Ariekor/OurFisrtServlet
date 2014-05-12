@@ -66,11 +66,14 @@ public class UtilHtml {
     static protected void enteteVisiteur(PrintWriter out){
         
         /*<form action='login' method='post'>*/
-        out.println("<td id='login' >Alias: <input type=\"text\" name=\"user\" value=\"nom usager\" class='marge' />"
-                  + " Mot de passe: <input type=\"password\" class='marge' name=\"motdepasse\"/>"
-                  + "<input type=\"submit\" value=\"Login\" class=\"b_submit\"/></td>");
+        out.println("<td id='login' ><form action='login' method='post'>"
+                + "Alias: <input type=\"text\" name=\"user\" value=\"nom usager\" class='marge' />"
+                + " Mot de passe: <input type=\"password\" class='marge' name=\"motdepasse\"/>"
+                + "<input type=\"submit\" value=\"Login\" class=\"b_submit\"/>"
+                + "</form></td>");
         /*<form action='inscription' method='post'>*/
-        out.println("<td id='inscription'><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\" /></td>");
+        out.println("<td id='inscription'><form action='inscription' method='get'>"
+                + "<input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\" /></form></td>");
     }
     static protected void piedsDePage(PrintWriter out){
         out.println("</body>");
