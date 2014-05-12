@@ -141,7 +141,7 @@ public class Catalogue extends HttpServlet {
                         + "     Rechercher dans:  ");
         out.println(genrerListeGenres(g));
         
-        out.println("Mot clé: <input type=\"text\" name=\"nomCle\" id=\"marge\" />"
+        out.println("Mot clé: <input type=\"text\" name=\"nomCle\" class=\"marge\" />"
                         + "<input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
                         + "</form>"
                    + "</div>");
@@ -229,7 +229,7 @@ public class Catalogue extends HttpServlet {
                             + prix + "</td><td class='zeCatalogueCell'>" 
                             + poids + "</td><td class='zeCatalogueCell'>" 
                             + genreItem + "</td><td class='zeCatalogueCell'>"
-                            + "<input type=\"text\" name='qte' size='2' >"
+                            + "<input type=\"text\" name='qte' size='2' class='marge' >"
                             + "<input type=\"submit\" value=\"Ajouter\" class=\"b_submit\"/></td>" );
                     out.println( "</tr>" );
                 }  
