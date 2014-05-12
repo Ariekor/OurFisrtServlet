@@ -178,7 +178,7 @@ public class Inscription extends HttpServlet {
             stm.setInt(5, departSolde);
             stm.executeUpdate();
         }
-        catch(SQLException sqe){Error += "\n " +  sqe.getMessage() + "\n";}
+        catch(SQLException sqe){Error += "\n Le nom d'utilisateur existe déjà utilisez en un autre SVP \n";}
         return Error;
     }
     
