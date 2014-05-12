@@ -48,27 +48,27 @@ public class Inscription extends HttpServlet {
                             out.println("<td id='zeTitreTabInscription' colspan='4'>Inscription </td>");
                         out.println("</tr>");
 
-                        out.println("<tr class='zeOtherRow'>");
+                        out.println("<tr>");
                             out.println("<td colspan='2' class='inscriptionLabelRow'>Nom Usager : </td>");
-                            out.println("<td colspan='2'><input type=\"text\" name=\"Username\" value=\"votre pseudo\"/></td>");
+                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Username\" value=\"votre pseudo\"/></td>");
 
                         out.println("</tr>");
 
-                        out.println("<tr class='zeOtherRow'>");
+                        out.println("<tr>");
                             out.println("<td colspan='2' class='inscriptionLabelRow'>Mot de passe : </td>");
-                            out.println("<td colspan='2'><input type=\"text\" name=\"MotDePasse\" value=\"votre mot de passe\"/> </td>");
+                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"MotDePasse\" value=\"votre mot de passe\"/> </td>");
 
                         out.println("</tr>");
 
-                        out.println("<tr class='zeOtherRow'>");
+                        out.println("<tr>");
                             out.println("<td colspan='2' class='inscriptionLabelRow'>Nom : </td>");
-                            out.println("<td colspan='2'><input type=\"text\" name=\"Nom\" value=\"votre nom\"/> </td>");
+                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Nom\" value=\"votre nom\"/> </td>");
 
                         out.println("</tr>");
 
-                        out.println("<tr class='zeOtherRow'>");
+                        out.println("<tr>");
                             out.println("<td colspan='2' class='inscriptionLabelRow'>Prénom : </td>");
-                            out.println("<td colspan='2'><input type=\"text\" name=\"Prenom\" value=\"votre prénom\"/> </td>");
+                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Prenom\" value=\"votre prénom\"/> </td>");
 
                         out.println("</tr>");
 
@@ -76,7 +76,7 @@ public class Inscription extends HttpServlet {
                             out.println("<td > </td>");
                             out.println("<td > </td>");
                             out.println("<td> </td>");
-                            out.println("<td><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\"/> </td>");
+                            out.println("<td class='zeChampTexteInsc'><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\"/> </td>");
                         out.println("</tr>");
 
                     out.println("</table>");
