@@ -66,7 +66,7 @@ public class UtilHtml {
     static protected void enteteVisiteur(PrintWriter out){
         
         /*<form action='login' method='post'>*/
-        out.println("<td id='login' ><form action='login' method='post'>"
+        out.println("<td id='login'><form action='login' method='post'>"
                 + "Alias: <input type=\"text\" name=\"user\" value=\"nom usager\" class='marge' />"
                 + " Mot de passe: <input type=\"password\" class='marge' name=\"motdepasse\"/>"
                 + "<input type=\"submit\" value=\"Login\" class=\"b_submit\"/>"
