@@ -115,8 +115,11 @@ public class login extends HttpServlet {
             oradb.setConnection("kellylea", "oracle2");
             oradb.connecter();  
             Statement stm = oradb.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            //ResultSet rst = stm.executeQuery(sqlLogin);
-            valide = stm.execute(sqlLogin);      
+            ResultSet rst = stm.executeQuery(sqlLogin);
+            if(rst.first())
+            {
+                valide = true;
+            }
             oradb.deconnecter();
         }
         catch (SQLException e){/*faire quelquechose ici*/} 
