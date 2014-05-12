@@ -31,13 +31,20 @@ public class Catalogue extends HttpServlet {
     
     /////a récupérer de session Tomcat...
     boolean connecté = false;
+    String nomUser;
+    HttpSession session;
     
     ///debut du process cummun
     protected void processRequestDebut(HttpServletRequest request, HttpServletResponse response, PrintWriter out)
             throws ServletException, IOException {
         
         // création de la session
-        HttpSession session = request.getSession();
+        session = request.getSession();// session ne sera jamais null
+        nomUser = (String)session.getAttribute( "Nom_Joueur" );
+        if(nomUser != null)
+        {
+            connecté = true;
+        }
         
         response.setContentType("text/html;charset=UTF-8");         
         try { 
