@@ -39,6 +39,13 @@ public class Inscription extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            generatePage(out, "");
+        }
+       
+    }
+    
+    protected void generatePage(PrintWriter out, String Erreur) throws ServletException , IOException{
+       
             out.println("<form action='inscription' method='post'>");
             UtilHtml.enteteHtml(out, "Catalogue");
                 out.println("<div id='mainInscriptionDiv'>");
@@ -82,16 +89,14 @@ public class Inscription extends HttpServlet {
                     out.println("</table>");
                     out.println("<div id='zePreContenant>");
                         out.println("<pre id='zeError'>");
+                            out.println(Erreur);
                         out.println("</pre>");
                     out.println("</div>");
                 out.println("</div>");
             out.println("</form>");
-            
-            
-            
+           
             UtilHtml.piedsDePage(out);
-        }
-       
+        
     }
     
     protected void processRequestDebut(HttpServletRequest request, HttpServletResponse response, PrintWriter out)
@@ -122,7 +127,10 @@ public class Inscription extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            generatePage(out, "");
+        }
     }
 
     /**
