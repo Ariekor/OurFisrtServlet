@@ -11,12 +11,14 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.accessibility.AccessibleRole;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -57,6 +59,7 @@ public class login extends HttpServlet {
         else 
         {
             //retourner à catalogue avec login non valide.
+            JOptionPane.showMessageDialog(null,"Désolé, nom d'usager ou  mot de passe non valide.");
             response.sendRedirect("http://localhost:8080/eshoppeweb/catalogue");
         }
         
