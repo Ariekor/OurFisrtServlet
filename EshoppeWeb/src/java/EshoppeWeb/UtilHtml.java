@@ -34,7 +34,6 @@ public class UtilHtml {
     }
     
     static protected void barreDeMenu(PrintWriter out, HttpSession session ){
-        // out.println("<div class='entete_catalogue'>");
             out.println("<table class='entete_catalogue'>");
                 out.println("  <tr><td id='logo'><a href=\"http://localhost:8080/eshoppeweb/catalogue\" "
                              + "target=\"_parent\">LOGO</a>"

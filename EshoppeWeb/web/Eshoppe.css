@@ -13,7 +13,9 @@ td{
 }
 
 #zeInscritpion{
-    border: 5px #594E30 solid;
+    border: 5px #9c9276 solid;
+    border-radius: 5px;
+    background-color: #ddccae;
     width: 40%;
     margin: auto;
     height:80%;
@@ -98,34 +100,23 @@ table{
     border-collapse: separate;
     margin: auto;
     margin-top: 10px;
+    margin-bottom: 10px;
     text-align: left;
-    border: 5px #594E30 solid;
+    border: 5px #9c9276 solid;
+    border-radius: 5px;
+    background-color: #ddccae;
     width: 80%;
 }
 .entete_catalogue
 {
     background-color: #BFB19B;
+    border-radius: 5px;
     width: 80%;
-    // float:left;
-//    left: -15%;
     padding: 5px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 5px;
     position: relative;
-    border-radius: 1px;
-}
-///barre menu
-.entete_generale {
-    background-color: #BFB19B;
-    width: 80%;
-    padding: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    
-    font-size:18px;
-    text-align: center;
 }
 
 /////logo, login et inscription = 3 div de barre menu visiteur
@@ -142,13 +133,15 @@ table{
 
 #inscription{
     width: 15%;
-    float: right;
+    text-align: right;
 }
 
 body {
     margin: auto;
     width: 100%;
-    background-color: #D8CBB3;
+    height: 100%;
+    background-image: url(background2.jpg);
+    background-attachment: fixed;
     text-align: center;
     font-size: 18px;
     font-style: italic;
@@ -166,7 +159,7 @@ body {
     font-size: 25px;
     font-style: oblique;
     text-align: center;
-    background-color: #8A7D70;
+    background-color: #b6a089;
 }
 
 .zeChampTexteInsc {

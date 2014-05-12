@@ -230,7 +230,7 @@ public class Catalogue extends HttpServlet {
                             + poids + "</td><td class='zeCatalogueCell'>" 
                             + genreItem + "</td><td class='zeCatalogueCell'>"
                             + "<input type=\"text\" name='qte' size='2' class='marge' >"
-                            + "<input type=\"submit\" value=\"Ajouter\" class=\"b_submit\"/></td>" );
+                            + "<input type=\"submit\" value=\"Ajouter\" class=\"b_submit\" onkeyup='ConstrainToDigit'/></td>" );
                     out.println( "</tr>" );
                 }  
             }
