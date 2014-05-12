@@ -214,3 +214,9 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 /EshoppeWeb/nbproject/private/
+
+########################
+##Net beans
+########################
+/EshoppeWeb/nbproject/build-impl.xml
+/EshoppeWeb/nbproject/genfiles.properties
