@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,6 +24,8 @@ public class Inscription extends HttpServlet {
 
     // callable:  gestion_users.insertion(?,?,?,?,?)
     // avec dans l'ordre: NOMUSAGER, MOTDEPASSE, NOM, PRENOM, CAPITAL
+    
+    HttpSession session;
     
     
     
@@ -102,10 +105,13 @@ public class Inscription extends HttpServlet {
     protected void processRequestDebut(HttpServletRequest request, HttpServletResponse response, PrintWriter out)
             throws ServletException, IOException {
         
+        session = request.getSession();// session ne sera jamais null
+        //nomUser = (String)session.getAttribute( "Nom_Joueur" );
+        
         response.setContentType("text/html;charset=UTF-8");         
         try { 
             UtilHtml.enteteHtml(out, "Catalogue");//serait bien de récupérer le webServlet name            
-            UtilHtml.barreDeMenu(out, false);            
+            UtilHtml.barreDeMenu(out, session);            
         }
       //  catch()
         finally

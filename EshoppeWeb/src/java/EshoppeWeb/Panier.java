@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import oracle.jdbc.OracleTypes;
 
 /**
@@ -29,6 +30,7 @@ public class Panier extends HttpServlet {
     private String nomUser = "zazer";
     private int capUser = 100;
     private int total = 0;
+    HttpSession session;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,10 +43,13 @@ public class Panier extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        session = request.getSession();// session ne sera jamais null
+        //nomUser = (String)session.getAttribute( "Nom_Joueur" );
+        
         try (PrintWriter out = response.getWriter()) {
             
             UtilHtml.enteteHtml(out,"Panier");
-            UtilHtml.barreDeMenu(out, true);
+            UtilHtml.barreDeMenu(out, session);
                         
             out.println("<h1>Panier</h1>");
             out.println("<form action='catalogue' method='post'><div class='zeCatalogueDiv'>");                    
