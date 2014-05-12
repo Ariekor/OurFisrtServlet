@@ -29,10 +29,9 @@ public class Inscription extends HttpServlet {
     // callable:  gestion_users.insertion(?,?,?,?,?)
     // avec dans l'ordre: NOMUSAGER, MOTDEPASSE, NOM, PRENOM, CAPITAL
     
-    HttpSession session;
+    private HttpSession session;
     final int departSolde = 1000;
-    
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -138,6 +137,7 @@ public class Inscription extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        session = request.getSession();
         try (PrintWriter out = response.getWriter()) {
             generatePage(out, "");
         }
@@ -212,6 +212,7 @@ public class Inscription extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        session = request.getSession();
         List<String> param = new ArrayList();
         param.add(request.getParameter("Username"));
         param.add(request.getParameter("MotDePasse"));
@@ -229,6 +230,7 @@ public class Inscription extends HttpServlet {
         }       
         else
         {
+            session.setAttribute("Nom_Joueur", param.get(0));
             response.sendRedirect("http://localhost:8080/eshoppeweb/catalogue");
         }
     }
