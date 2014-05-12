@@ -8,11 +8,15 @@ package EshoppeWeb;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -21,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "login", urlPatterns = {"/login"})
 public class login extends HttpServlet {
 
+    private String nomUser;
+    private String motDePasse;
+    private HttpSession session;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,42 +41,25 @@ public class login extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        /*  infos du ppt du prof...
-        // création de la session
-        HttpSession session = request.getSession();
         
-        // identification de la session (pas vraiment nécessaire!)
-        String id = session.getId();
-        writer.println( "id = " + id + "<br />");
-        ...
-        // annulation de la session
-        session.invalidate();
+        session = request.getSession();// session ne sera jamais null
         
-        // truc pour savoir si une session est déjà en cours
-        HttpSession session = request.getSession( false );
-        if( session == null ) // pas de session en cours
-        {
-            writer.println(
-            "création d'une nouvelle session<br />" );
-            session = request.getSession( true );
-        }
-        else
-            writer.println( "session déjà en cours<br />" );
+        //valider user
+        nomUser = request.getParameter( "user" );
+        motDePasse = request.getParameter("motdepasse");
         
-        // manipulation d'un attribut
-        Panier panier = ( Panier )session.getAttribute( "panierAchats" );
-        if( panier != null ) // on peut accéder au contenu
+        if (validerJoueur(nomUser, motDePasse))
         {
-         ...
-        }
-        else // le panier n'existe pas
+            // si valide, set.
+            session.setAttribute( "Nom_Joueur", nomUser );
+        } 
+        else 
         {
-         panier = new Panier();
-         session.setAttribute( "panierAchats", panier );
-         ...
+            //retourner à catalogue avec login non valide.
         }
-        */
+        
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -110,4 +100,22 @@ public class login extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private boolean validerJoueur(String nom, String mdp)
+    {
+        boolean valide = false;
+        String sqlLogin = "select nomusager from joueursrpg where nomusager = '"+nom+"' and motdepasse = '"+mdp+"'";
+        try
+        {        
+            ConnectionOracle oradb = new ConnectionOracle();
+            oradb.setConnection("kellylea", "oracle2");
+            oradb.connecter();  
+            Statement stm = oradb.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            //ResultSet rst = stm.executeQuery(sqlLogin);
+            valide = stm.execute(sqlLogin);      
+            oradb.deconnecter();
+        }
+        catch (SQLException e){/*faire quelquechose ici*/} 
+        
+        return valide;
+    }
 }

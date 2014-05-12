@@ -8,13 +8,6 @@
             <web-module-libraries>
                 <library dirs="200">
                     <file>${file.reference.ojdbc6.jar}</file>
-<<<<<<< HEAD
-=======
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.ojdbc6.jar-3}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
->>>>>>> Fond d'écran rajouté !
                 </library>
                 <library dirs="200">
                     <file>${file.reference.ojdbc6.jar-2}</file>

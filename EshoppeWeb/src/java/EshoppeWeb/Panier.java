@@ -25,12 +25,14 @@ import oracle.jdbc.OracleTypes;
  */
 @WebServlet(urlPatterns = {"/panier"})
 public class Panier extends HttpServlet {
-
+    
+    private HttpSession session;
     //à récupérer du cookie
-    private String nomUser = "zazer";
+    
+    private String nomUser;
     private int capUser = 100;
     private int total = 0;
-    HttpSession session;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,7 +46,7 @@ public class Panier extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         session = request.getSession();// session ne sera jamais null
-        //nomUser = (String)session.getAttribute( "Nom_Joueur" );
+        nomUser = (String)session.getAttribute( "Nom_Joueur" );
         
         try (PrintWriter out = response.getWriter()) {
             
@@ -108,7 +110,7 @@ public class Panier extends HttpServlet {
         ///////est-ce qu'on devrait faire un genre de struct et mettre tous dans un array ou vecteur??????
         String numitem;
         String nomitem;
-        int qte ;
+        int qte;
         int prixUnitaire;
         int prixCalcule ;        
                  
@@ -128,14 +130,12 @@ public class Panier extends HttpServlet {
             oradb.connecter();
         
             ResultSet panier;
-            try (CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Panier.lister(?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY )) {
-                stm.registerOutParameter(1, OracleTypes.CURSOR);
-                stm.setString( 2, nomUser );                  
-                stm.execute();
-                panier = (ResultSet)stm.getObject(1);    
-            }                            
-               
-            
+                         
+                CallableStatement stmP = oradb.getConnection().prepareCall("{ ? = call Gestion_Panier.lister(?)}" );
+                stmP.registerOutParameter(1, OracleTypes.CURSOR);
+                stmP.setString( 2, nomUser );                  
+                stmP.execute();
+                panier = (ResultSet)stmP.getObject(1);    
             
             // parcours du ResultSet
             while( panier.next() )
@@ -147,7 +147,7 @@ public class Panier extends HttpServlet {
                 qte = (Integer)panier.getInt("QUANTITEITEM");
                 prixUnitaire = (Integer)panier.getInt("PRIX");
                 prixCalcule =  ((Integer)panier.getInt("QUANTITEITEM"))*((Integer)panier.getInt("PRIX"));                    
-                //chaqueligne est un form qui permet de retirer un objet du panier
+                //chaque ligne est un form qui permet de retirer un objet du panier
                 out.println("<form action='panier' method='post'>");            
                 out.println( "<input type=\"hidden\" name=\"numitem\" value=\"" 
                         + numitem + "\"/><td class='zeCatalogueCell'>" 
@@ -160,7 +160,7 @@ public class Panier extends HttpServlet {
                 out.println("</form>");
                 out.println( "</tr>" );
             }  
-            panier.close();
+            //panier.close();
             oradb.deconnecter();
         }
         catch( SQLException se ) 
@@ -169,31 +169,7 @@ public class Panier extends HttpServlet {
         }
         out.println( "</table></div>" );         
     }    
-    
-    protected ResultSet recupererPanier(PrintWriter out){
-        // connexion à la base de données
-        ConnectionOracle oradb = new ConnectionOracle();
-        oradb.setConnection("kellylea", "oracle2");
-        oradb.connecter();
-        try
-        {
-            ResultSet rst;
-            try (CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Panier.lister(?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY )) {
-                stm.registerOutParameter(1, OracleTypes.CURSOR);
-                stm.setString( 2, nomUser );                  
-                stm.execute();
-                rst = (ResultSet)stm.getObject(1);    
-            }
-            return rst;                
-        }
-        catch( SQLException se ) 
-        {
-           out.println( se.getMessage() );
-        }        
-        oradb.deconnecter();
-        return null;
-    }
-    
+ 
     private void menuPanier(PrintWriter out)
     {
         out.println("<div id='menuPanier'><table class='zeCatable'>");            
