@@ -218,5 +218,7 @@ pip-log.txt
 ########################
 ##Net beans
 ########################
-/EshoppeWeb/nbproject/build-impl.xml
-/EshoppeWeb/nbproject/genfiles.properties
+.xml
+.properties
+*.properties
+*.xml
