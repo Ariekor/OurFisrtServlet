@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
  * @author Isabelle
@@ -26,7 +27,7 @@ public class Inscription extends HttpServlet {
     // avec dans l'ordre: NOMUSAGER, MOTDEPASSE, NOM, PRENOM, CAPITAL
     
     HttpSession session;
-    
+    final int departSolde = 1000;
     
     
     /**
@@ -60,25 +61,25 @@ public class Inscription extends HttpServlet {
 
                         out.println("<tr>");
                             out.println("<td colspan='2' class='inscriptionLabelRow'>Nom Usager : </td>");
-                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Username\" value=\"votre pseudo\"/></td>");
+                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Username\" value=\"\"/></td>");
 
                         out.println("</tr>");
 
                         out.println("<tr>");
                             out.println("<td colspan='2' class='inscriptionLabelRow'>Mot de passe : </td>");
-                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"MotDePasse\" value=\"votre mot de passe\"/> </td>");
+                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"MotDePasse\" value=\"\"/> </td>");
 
                         out.println("</tr>");
 
                         out.println("<tr>");
                             out.println("<td colspan='2' class='inscriptionLabelRow'>Nom : </td>");
-                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Nom\" value=\"votre nom\"/> </td>");
+                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Nom\" value=\"\"/> </td>");
 
                         out.println("</tr>");
 
                         out.println("<tr>");
                             out.println("<td colspan='2' class='inscriptionLabelRow'>Prénom : </td>");
-                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Prenom\" value=\"votre prénom\"/> </td>");
+                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Prenom\" value=\"\"/> </td>");
 
                         out.println("</tr>");
 
@@ -138,6 +139,49 @@ public class Inscription extends HttpServlet {
             generatePage(out, "");
         }
     }
+    
+    private String accomplirRequete(String Error, List<String> param)
+    {
+        for ( int i = 0 ; i < param.size(); ++i)
+        {
+            if (param.get(i).equals("") )
+            {
+                Error += "\n -Le champs : "+ getNomChamp(i) +" est vide \n";
+            }
+            if (param.get(i).length() > 20 )
+            {
+                Error += "\n -Le champs : " + getNomChamp(i) + " ne doit pas comprendre plus de 20 caracteres \n";
+            }
+            
+        }
+        if ( Error.equals(""))
+        {
+            Error = JDBCPart(Error);
+        }
+        return Error;
+    }
+    private String JDBCPart(String Error)
+    {
+        return Error;
+    }
+    
+    private String getNomChamp(int index)
+    {
+        String nomChamp = "";
+        switch(index){
+            case 0 : nomChamp = "Nom usager";
+                break;
+            case 1 : nomChamp = "Mot de passe";
+                break;
+            case 2 : nomChamp = "Nom";
+                break;
+            case 3 : nomChamp = "Prenom";
+                break;
+            default : nomChamp = "";
+                break;
+        }
+        return nomChamp;
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -151,8 +195,20 @@ public class Inscription extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            generatePage(out, "");
+        List<String> param = new ArrayList();
+        param.add(request.getParameter("Username"));
+        param.add(request.getParameter("MotDePasse"));
+        param.add(request.getParameter("Nom"));
+        param.add(request.getParameter("Prenom"));
+        String Error = "";
+        boolean Reussi = false;
+        Error = accomplirRequete(Error , param);
+        Reussi = Error.equals("");
+        if(Reussi == false )
+        {
+            try (PrintWriter out = response.getWriter()) {
+                generatePage(out, Error);
+            }
         }
     }
 
