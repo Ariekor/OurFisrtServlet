@@ -25,6 +25,7 @@ public class Inscription extends HttpServlet {
     // avec dans l'ordre: NOMUSAGER, MOTDEPASSE, NOM, PRENOM, CAPITAL
     
     
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,37 +39,36 @@ public class Inscription extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            out.println("<form action='catalogue' method='post'>");
+            out.println("<form action='inscription' method='post'>");
             UtilHtml.enteteHtml(out, "Catalogue");
                 out.println("<div id='mainInscriptionDiv'>");
                     out.println("<table id='zeInscritpion'>");
 
                         out.println("<tr id='zePresentationRowInscritpion'>");
-                            out.println("<td id='zeTitreTabInscription'>Inscription </td>");
-                            out.println("<td id='zeTitreTabInscriptionFiller' colspan='2'> </td>");
+                            out.println("<td id='zeTitreTabInscription' colspan='4'>Inscription </td>");
                         out.println("</tr>");
 
-                        out.println("<tr class='zeOtherRow'>");
+                        out.println("<tr>");
                             out.println("<td colspan='2' class='inscriptionLabelRow'>Nom Usager : </td>");
-                            out.println("<td colspan='2'><input type=\"text\" name=\"Username\" value=\"votre pseudo\"/></td>");
+                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Username\" value=\"votre pseudo\"/></td>");
 
                         out.println("</tr>");
 
-                        out.println("<tr class='zeOtherRow'>");
+                        out.println("<tr>");
                             out.println("<td colspan='2' class='inscriptionLabelRow'>Mot de passe : </td>");
-                            out.println("<td colspan='2'><input type=\"text\" name=\"MotDePasse\" value=\"votre mot de passe\"/> </td>");
+                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"MotDePasse\" value=\"votre mot de passe\"/> </td>");
 
                         out.println("</tr>");
 
-                        out.println("<tr class='zeOtherRow'>");
+                        out.println("<tr>");
                             out.println("<td colspan='2' class='inscriptionLabelRow'>Nom : </td>");
-                            out.println("<td colspan='2'><input type=\"text\" name=\"Nom\" value=\"votre nom\"/> </td>");
+                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Nom\" value=\"votre nom\"/> </td>");
 
                         out.println("</tr>");
 
-                        out.println("<tr class='zeOtherRow'>");
+                        out.println("<tr>");
                             out.println("<td colspan='2' class='inscriptionLabelRow'>Prénom : </td>");
-                            out.println("<td colspan='2'><input type=\"text\" name=\"Prenom\" value=\"votre prénom\"/> </td>");
+                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Prenom\" value=\"votre prénom\"/> </td>");
 
                         out.println("</tr>");
 
@@ -76,10 +76,14 @@ public class Inscription extends HttpServlet {
                             out.println("<td > </td>");
                             out.println("<td > </td>");
                             out.println("<td> </td>");
-                            out.println("<td><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\"/> </td>");
+                            out.println("<td class='zeChampTexteInsc'><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\"/> </td>");
                         out.println("</tr>");
 
                     out.println("</table>");
+                    out.println("<div id='zePreContenant>");
+                        out.println("<pre id='zeError'>");
+                        out.println("</pre>");
+                    out.println("</div>");
                 out.println("</div>");
             out.println("</form>");
             
