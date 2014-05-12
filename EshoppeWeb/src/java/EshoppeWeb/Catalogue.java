@@ -134,7 +134,7 @@ public class Catalogue extends HttpServlet {
                         + "     Rechercher dans:  ");
         out.println(genrerListeGenres(g));
         
-        out.println("Mot clé: <input type=\"text\" name=\"nomCle\" />"
+        out.println("Mot clé: <input type=\"text\" name=\"nomCle\" id=\"marge\" />"
                         + "<input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
                         + "</form>"
                    + "</div>");

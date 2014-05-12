@@ -171,3 +171,7 @@ body {
 .zeChampTexteInsc {
     text-align: left;
 }
+
+#marge {
+    margin-right: 5px;
+}
