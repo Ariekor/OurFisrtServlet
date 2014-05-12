@@ -1,6 +1,7 @@
 package EshoppeWeb;
 
 import java.io.PrintWriter;
+import javax.servlet.http.HttpSession;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -31,25 +32,27 @@ public class UtilHtml {
         
         
     }
-    static protected void barreDeMenu(PrintWriter out, boolean connecté ){
+    
+    static protected void barreDeMenu(PrintWriter out, HttpSession session ){
         // out.println("<div class='entete_catalogue'>");
             out.println("<table class='entete_catalogue'>");
                 out.println("  <tr><td id='logo'><a href=\"http://localhost:8080/eshoppeweb/catalogue\" "
                              + "target=\"_parent\">LOGO</a>"
                             + "</td>");
-        if(connecté)
-            enteteJoueur(out);
+        String nomUser = (String)session.getAttribute("Nom_Joueur");
+        if(nomUser != null)
+            enteteJoueur(out, nomUser);
         else
             enteteVisiteur(out);
         
         out.println("</tr>");
         out.println("</table>");    
     }
-    static protected void enteteJoueur(PrintWriter out){
+    static protected void enteteJoueur(PrintWriter out, String nomUser){
         
         out.println("<td id='profil'><form action='profil' method='post'>"
                         + "<input type=\"submit\" value=\"Profil\" class=\"b_submit\" />"
-                        + "  Joueur connecté </form>"
+                        + nomUser +"</form>"
                  + "</td>");////récupérer la valeur réelle pour le joueur
         
         //mettre form ici pour déconnecter (session.invalidate() et appel catalogue avec connecté == false
@@ -63,9 +66,9 @@ public class UtilHtml {
     static protected void enteteVisiteur(PrintWriter out){
         
         /*<form action='login' method='post'>*/
-        out.println("<td id='login'><input type=\"submit\" value=\"Login\" class=\"b_submit\"/>"
-                  + " Alias: <input type=\"text\" name=\"user\" value=\"nom usager\"/>"
-                  + " Mot de passe: <input type=\"password\" name=\"motdepasse\"/></td>");
+        out.println("<td id='login' Alias: <input type=\"text\" name=\"user\" value=\"nom usager\"/>"
+                  + " Mot de passe: <input type=\"password\" id='marge' name=\"motdepasse\"/>"
+                  + "<input type=\"submit\" value=\"Login\" class=\"b_submit\"/></td>");
         /*<form action='inscription' method='post'>*/
         out.println("<td id='inscription'><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\" /></td>");
     }
