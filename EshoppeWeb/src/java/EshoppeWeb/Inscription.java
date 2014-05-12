@@ -25,6 +25,7 @@ public class Inscription extends HttpServlet {
     // avec dans l'ordre: NOMUSAGER, MOTDEPASSE, NOM, PRENOM, CAPITAL
     
     
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,14 +39,13 @@ public class Inscription extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            out.println("<form action='catalogue' method='post'>");
+            out.println("<form action='inscription' method='post'>");
             UtilHtml.enteteHtml(out, "Catalogue");
                 out.println("<div id='mainInscriptionDiv'>");
                     out.println("<table id='zeInscritpion'>");
 
                         out.println("<tr id='zePresentationRowInscritpion'>");
-                            out.println("<td id='zeTitreTabInscription'>Inscription </td>");
-                            out.println("<td id='zeTitreTabInscriptionFiller' colspan='2'> </td>");
+                            out.println("<td id='zeTitreTabInscription' colspan='4'>Inscription </td>");
                         out.println("</tr>");
 
                         out.println("<tr class='zeOtherRow'>");
@@ -80,6 +80,7 @@ public class Inscription extends HttpServlet {
                         out.println("</tr>");
 
                     out.println("</table>");
+                    out.println("<div")
                 out.println("</div>");
             out.println("</form>");
             
