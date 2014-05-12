@@ -53,6 +53,10 @@ public class login extends HttpServlet {
             // si valide, set.
             session.setAttribute( "Nom_Joueur", nomUser );
         } 
+        else 
+        {
+            //retourner à catalogue avec login non valide.
+        }
         
     }
     
@@ -99,7 +103,7 @@ public class login extends HttpServlet {
     private boolean validerJoueur(String nom, String mdp)
     {
         boolean valide = false;
-        String sqlLogin = "select nomusager from joueursrpg where nomusager = 'zazer' and motdepasse = 'carotte'";
+        String sqlLogin = "select nomusager from joueursrpg where nomusager = '"+nom+"' and motdepasse = '"+mdp+"'";
         try
         {        
             ConnectionOracle oradb = new ConnectionOracle();
