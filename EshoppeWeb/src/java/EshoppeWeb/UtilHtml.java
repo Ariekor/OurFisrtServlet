@@ -32,39 +32,42 @@ public class UtilHtml {
         
     }
     static protected void barreDeMenu(PrintWriter out, boolean connecté ){
-        out.println("<div class='entete_catalogue'>");
-        out.println("  <div id='logo'><a href=\"http://localhost:8080/eshoppeweb/catalogue\" "
+        // out.println("<div class='entete_catalogue'>");
+            out.println("<table class='entete_catalogue'>");
+                out.println("  <tr><td id='logo'><a href=\"http://localhost:8080/eshoppeweb/catalogue\" "
                              + "target=\"_parent\">LOGO</a>"
-                    + "</div>");
+                            + "</td>");
         if(connecté)
             enteteJoueur(out);
         else
             enteteVisiteur(out);
-        out.println("</div>");    
+        
+        out.println("</tr>");
+        out.println("</table>");    
     }
     static protected void enteteJoueur(PrintWriter out){
         
-        out.println("<div id='profil'><form action='profil' method='post'>"
+        out.println("<td id='profil'><form action='profil' method='post'>"
                         + "<input type=\"submit\" value=\"Profil\" class=\"b_submit\" />"
                         + "  Joueur connecté </form>"
-                 + "</div>");////récupérer la valeur réelle pour le joueur
+                 + "</td>");////récupérer la valeur réelle pour le joueur
         
         //mettre form ici pour déconnecter (session.invalidate() et appel catalogue avec connecté == false
-        out.println("<div id='deconnecter'><input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" />"
-                  + "</div>");
+        out.println("<td id='deconnecter'><input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" />"
+                  + "</td>");
         
         /*<form action='panier' method='post'>*/
-        out.println("\"<div id='panier'><input type=\"submit\" value=\"Panier\" class=\"b_submit\" />"
-                  + "</div>");   
+        out.println("\"<td id='panier'><input type=\"submit\" value=\"Panier\" class=\"b_submit\" />"
+                  + "</td>");   
     }
     static protected void enteteVisiteur(PrintWriter out){
         
         /*<form action='login' method='post'>*/
-        out.println("<div id='login'><input type=\"submit\" value=\"Login\" class=\"b_submit\"/>"
+        out.println("<td id='login'><input type=\"submit\" value=\"Login\" class=\"b_submit\"/>"
                   + " Alias: <input type=\"text\" name=\"user\" value=\"nom usager\"/>"
-                  + " Mot de passe: <input type=\"password\" name=\"motdepasse\"/></div>");
+                  + " Mot de passe: <input type=\"password\" name=\"motdepasse\"/></td>");
         /*<form action='inscription' method='post'>*/
-        out.println("<div id='inscription'><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\" /></div>");
+        out.println("<td id='inscription'><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\" /></td>");
     }
     static protected void piedsDePage(PrintWriter out){
         out.println("</body>");

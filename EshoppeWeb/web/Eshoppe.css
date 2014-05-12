@@ -131,7 +131,8 @@ table{
 /////logo, login et inscription = 3 div de barre menu visiteur
 #logo{
     width: 15%;
-    float: left;
+    /*float: left;*/
+    display: inline;
 }
 
 #login{
