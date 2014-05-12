@@ -95,9 +95,10 @@ table{
     font-size:18px;
     border-collapse: separate;
     margin: auto;
+    margin-top: 10px;
     text-align: left;
-    border: 5px #000000 solid;
-    width: 90%;
+    border: 5px #594E30 solid;
+    width: 80%;
 }
 .entete_catalogue
 {
@@ -124,15 +125,18 @@ table{
     font-size:18px;
     text-align: center;
 }
+
 /////logo, login et inscription = 3 div de barre menu visiteur
 #logo{
     width: 15%;
     float: left;
 }
+
 #login{
     width: 50%;
-    display: inline;
+    display: inline-block;
 }
+
 #inscription{
     width: 15%;
     float: right;
@@ -157,11 +161,10 @@ body {
     padding: 0.5%;
     margin-left: 3%;
     border-radius: 1px;
-    
 }
 
 .zeCatEntete{
     font-size: 25px;
     font-style: oblique;
-    background-color: #86786B;
+    background-color: #8A7D70;
 }

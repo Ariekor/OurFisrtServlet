@@ -80,7 +80,7 @@ public class Inscription extends HttpServlet {
                         out.println("</tr>");
 
                     out.println("</table>");
-                    out.println("<div")
+                    out.println("<div");
                 out.println("</div>");
             out.println("</form>");
             
