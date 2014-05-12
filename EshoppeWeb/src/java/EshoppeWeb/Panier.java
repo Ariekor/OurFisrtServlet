@@ -1,10 +1,10 @@
 package EshoppeWeb;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -52,20 +52,20 @@ public class Panier extends HttpServlet {
             
             UtilHtml.enteteHtml(out,"Panier");
             UtilHtml.barreDeMenu(out, session);
-                        
+            
             out.println("<h1>Panier</h1>");
-            out.println("<form action='catalogue' method='post'><div class='zeCatalogueDiv'>");                    
+            out.println("<form action='catalogue' method='post'><div class='zeCatalogueDiv'>");
             
             listeItems(out);// bouton retirer item inclus
             
-            menuPanier(out); //colonne de droite, menu        
-                        
+            menuPanier(out); //colonne de droite, menu
+            
             out.println("</div></form>");
             
             UtilHtml.piedsDePage(out);
         }
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -80,7 +80,7 @@ public class Panier extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -94,7 +94,7 @@ public class Panier extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    
     /**
      * Returns a short description of the servlet.
      *
@@ -104,7 +104,7 @@ public class Panier extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
     private void listeItems(PrintWriter out){
         
         ///////est-ce qu'on devrait faire un genre de struct et mettre tous dans un array ou vecteur??????
@@ -112,30 +112,30 @@ public class Panier extends HttpServlet {
         String nomitem;
         int qte;
         int prixUnitaire;
-        int prixCalcule ;        
-                 
+        int prixCalcule ;
+        
         out.println( "<div id='listePanier'><table class='zeCatable'>" );
         //entête panier
         out.println( "<tr><td class='zeCatEntete'>Nom d'item</td>"
-                   + "<td class='zeCatEntete'>Qté au panier</td>"
-                   + "<td class='zeCatEntete'>Prix unitaire</td>"
-                   + "<td class='zeCatEntete'>Prix calculé</td>"
-                   + "<td class='zeCatEntete'>Retirer du panier</td>");
+                + "<td class='zeCatEntete'>Qté au panier</td>"
+                + "<td class='zeCatEntete'>Prix unitaire</td>"
+                + "<td class='zeCatEntete'>Prix calculé</td>"
+                + "<td class='zeCatEntete'>Retirer du panier</td>");
         
         try
-        { 
+        {
             // connexion à la base de données
             ConnectionOracle oradb = new ConnectionOracle();
             oradb.setConnection("kellylea", "oracle2");
             oradb.connecter();
-        
+            
             ResultSet panier;
-                         
-                CallableStatement stmP = oradb.getConnection().prepareCall("{ ? = call Gestion_Panier.lister(?)}" );
-                stmP.registerOutParameter(1, OracleTypes.CURSOR);
-                stmP.setString( 2, nomUser );                  
-                stmP.execute();
-                panier = (ResultSet)stmP.getObject(1);    
+            
+            CallableStatement stmP = oradb.getConnection().prepareCall("{ ? = call Gestion_Panier.lister(?)}" );
+            stmP.registerOutParameter(1, OracleTypes.CURSOR);
+            stmP.setString( 2, nomUser );
+            stmP.execute();
+            panier = (ResultSet)stmP.getObject(1);
             
             // parcours du ResultSet
             while( panier.next() )
@@ -146,33 +146,33 @@ public class Panier extends HttpServlet {
                 nomitem = panier.getString( "NOMITEM" );
                 qte = (Integer)panier.getInt("QUANTITEITEM");
                 prixUnitaire = (Integer)panier.getInt("PRIX");
-                prixCalcule =  ((Integer)panier.getInt("QUANTITEITEM"))*((Integer)panier.getInt("PRIX"));                    
+                prixCalcule =  ((Integer)panier.getInt("QUANTITEITEM"))*((Integer)panier.getInt("PRIX"));
                 //chaque ligne est un form qui permet de retirer un objet du panier
-                out.println("<form action='panier' method='post'>");            
-                out.println( "<input type=\"hidden\" name=\"numitem\" value=\"" 
-                        + numitem + "\"/><td class='zeCatalogueCell'>" 
-                        + nomitem + "</td><td class='zeCatalogueCell'>" 
+                out.println("<form action='panier' method='post'>");
+                out.println( "<input type=\"hidden\" name=\"numitem\" value=\""
+                        + numitem + "\"/><td class='zeCatalogueCell'>"
+                        + nomitem + "</td><td class='zeCatalogueCell'>"
                         + "<input type=\"text\" name='qte' value =\""+qte+"\" size='3'></td><td class='zeCatalogueCell'>"
-                        + prixUnitaire + "</td><td class='zeCatalogueCell'>" 
-                        + prixCalcule + "</td><td class='zeCatalogueCell'>" 
+                        + prixUnitaire + "</td><td class='zeCatalogueCell'>"
+                        + prixCalcule + "</td><td class='zeCatalogueCell'>"
                         + "<input type=\"submit\" value=\"X\" class=\"b_submit\"/></td>" );////doit appeler supprimer item/panier
-
+                
                 out.println("</form>");
                 out.println( "</tr>" );
-            }  
-            //panier.close();
+            }
+            panier.close();
             oradb.deconnecter();
         }
-        catch( SQLException se ) 
+        catch( SQLException se )
         {
-           out.println( se.getMessage() + "  Panier vide."  );
+            out.println( se.getMessage() + "  Panier vide."  );
         }
-        out.println( "</table></div>" );         
-    }    
- 
+        out.println( "</table></div>" );
+    }
+    
     private void menuPanier(PrintWriter out)
     {
-        out.println("<div id='menuPanier'><table class='zeCatable'>");            
+        out.println("<div id='menuPanier'><table class='zeCatable'>");
         out.println("<tr><td>Votre capital:</td></tr>"
                 + "<tr><td><input type='text' name='cap' value='"+capUser+"'></td></tr>"
                 + "<tr><td></td></tr>"
@@ -186,7 +186,7 @@ public class Panier extends HttpServlet {
                 + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Acheter\" name=\"achat\" /></td></tr>"
                 + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Vider\" name=\"vider\" /></td></tr>"
                 + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Fermer\" name=\"fermer\" /></td></tr>");
-
+        
         out.println("</table>"
                 + "</div>");
     }

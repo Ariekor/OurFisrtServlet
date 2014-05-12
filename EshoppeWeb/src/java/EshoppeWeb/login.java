@@ -52,10 +52,12 @@ public class login extends HttpServlet {
         {
             // si valide, set.
             session.setAttribute( "Nom_Joueur", nomUser );
+            response.sendRedirect("http://localhost:8080/eshoppeweb/catalogue");
         } 
         else 
         {
             //retourner à catalogue avec login non valide.
+            response.sendRedirect("http://localhost:8080/eshoppeweb/catalogue");
         }
         
     }
