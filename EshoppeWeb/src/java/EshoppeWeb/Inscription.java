@@ -80,7 +80,10 @@ public class Inscription extends HttpServlet {
                         out.println("</tr>");
 
                     out.println("</table>");
-                    out.println("<div");
+                    out.println("<div id='zePreContenant>");
+                        out.println("<pre id='zeError'>");
+                        out.println("</pre>");
+                    out.println("</div>");
                 out.println("</div>");
             out.println("</form>");
             
