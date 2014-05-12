@@ -8,14 +8,17 @@ package EshoppeWeb;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.CallableStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.ArrayList;
 /**
  *
  * @author Isabelle
@@ -156,12 +159,26 @@ public class Inscription extends HttpServlet {
         }
         if ( Error.equals(""))
         {
-            Error = JDBCPart(Error);
+            Error = JDBCPart(Error, param);
         }
         return Error;
     }
-    private String JDBCPart(String Error)
+    private String JDBCPart(String Error , List<String> param)
     {
+        try{
+            ConnectionOracle odc = new ConnectionOracle();
+            odc.setConnection("kellylea", "oracle2");
+            odc.connecter();
+            
+            CallableStatement stm = odc.getConnection().prepareCall("{call GESTION_USERS.INSERTION( ? , ? , ? , ? , ? )}");
+            stm.setString(1, param.get(0));
+            stm.setString(2, param.get(1));
+            stm.setString(3, param.get(2));
+            stm.setString(4, param.get(3));
+            stm.setInt(5, departSolde);
+            stm.executeUpdate();
+        }
+        catch(SQLException sqe){Error += "\n " +  sqe.getMessage() + "\n";}
         return Error;
     }
     
@@ -209,6 +226,10 @@ public class Inscription extends HttpServlet {
             try (PrintWriter out = response.getWriter()) {
                 generatePage(out, Error);
             }
+        }       
+        else
+        {
+            response.sendRedirect("http://localhost:8080/eshoppeweb/catalogue");
         }
     }
 
