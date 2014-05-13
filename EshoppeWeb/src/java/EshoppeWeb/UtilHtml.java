@@ -55,7 +55,7 @@ public class UtilHtml {
                  + "</td>");////récupérer la valeur réelle pour le joueur
         
         //mettre form ici pour déconnecter (session.invalidate() et appel catalogue avec connecté == false
-        out.println("<td id='deconnecter'><input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" />"
+        out.println("<td id='deconnecter'><form action='logout' method='post'><input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" /></form>"
                   + "</td>");
         
         /*<form action='panier' method='post'>*/

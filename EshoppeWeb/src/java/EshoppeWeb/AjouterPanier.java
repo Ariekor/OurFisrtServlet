@@ -8,28 +8,19 @@ package EshoppeWeb;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.accessibility.AccessibleRole;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.swing.JOptionPane;
 
 /**
  *
- * @author Isabelle
+ * @author Simon
  */
-@WebServlet(name = "login", urlPatterns = {"/login"})
-public class login extends HttpServlet {
+@WebServlet(name = "AjouterPanier", urlPatterns = {"/ajouterpanier"})
+public class AjouterPanier extends HttpServlet {
 
-    private String nomUser;
-    private String motDePasse;
-    private HttpSession session;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,29 +33,19 @@ public class login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
-        session = request.getSession();// session ne sera jamais null
-        
-        //valider user
-        nomUser = request.getParameter( "user" );
-        motDePasse = request.getParameter("motdepasse");
-        
-        if (validerJoueur(nomUser, motDePasse))
-        {
-            // si valide, set.
-            session.setAttribute( "Nom_Joueur", nomUser );
-            response.sendRedirect("http://localhost:8080/eshoppeweb/catalogue");
-        } 
-        else 
-        {
-            //retourner à catalogue avec login non valide.
-            JOptionPane.showMessageDialog(null,"Désolé, nom d'usager ou  mot de passe non valide.");
-            response.sendRedirect("http://localhost:8080/eshoppeweb/catalogue");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AjouterPanier</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AjouterPanier at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -78,7 +59,7 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("http://localhost:8080/eshoppeweb/catalogue");
     }
 
     /**
@@ -105,25 +86,4 @@ public class login extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private boolean validerJoueur(String nom, String mdp)
-    {
-        boolean valide = false;
-        String sqlLogin = "select nomusager from joueursrpg where nomusager = '"+nom+"' and motdepasse = '"+mdp+"'";
-        try
-        {        
-            ConnectionOracle oradb = new ConnectionOracle();
-            oradb.setConnection("kellylea", "oracle2");
-            oradb.connecter();  
-            Statement stm = oradb.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rst = stm.executeQuery(sqlLogin);
-            if(rst.first())
-            {
-                valide = true;
-            }
-            oradb.deconnecter();
-        }
-        catch (SQLException e){/*faire quelquechose ici*/} 
-        
-        return valide;
-    }
 }

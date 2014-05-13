@@ -30,7 +30,6 @@ public class Catalogue extends HttpServlet {
 
     
     /////a récupérer de session Tomcat...
-    boolean connecté = false;
     String nomUser;
     HttpSession session;
     
@@ -41,11 +40,7 @@ public class Catalogue extends HttpServlet {
         // création de la session
         session = request.getSession();// session ne sera jamais null
         nomUser = (String)session.getAttribute( "Nom_Joueur" );
-        if(nomUser != null)
-        {
-            connecté = true;
-        }
-        
+                
         response.setContentType("text/html;charset=UTF-8");         
         try { 
             UtilHtml.enteteHtml(out, "Catalogue");//serait bien de récupérer le webServlet name            
