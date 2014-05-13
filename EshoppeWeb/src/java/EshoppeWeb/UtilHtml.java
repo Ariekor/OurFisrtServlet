@@ -28,8 +28,9 @@ public class UtilHtml {
         out.println("<script type=\"text/javascript\" src=\"./FiltresChamp.js\"></script>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<a href=\"http://localhost:8080/eshoppeweb/catalogue\" "
-                + "target=\"_parent\"><h1>BANNIERE</h1></a>");//////////a changer
+        out.println("<a href='http://localhost:8080/eshoppeweb/catalogue' target='_parent'>"//laisser ce href pour lier au catalogue
+                + "<h1>BANNIERE</h1>" //////////a changer
+                + "</a>");  //a laisser là...
     }
     static protected void afficherErreurPage(PrintWriter out, HttpSession session)
     {   
@@ -44,10 +45,10 @@ public class UtilHtml {
                 out.println("  <tr><td id='logo'><a href='http://localhost:8080/eshoppeweb/catalogue' target='_parent'>"
                         + "<img src=\"logo.png\" alt=\"\" /></a></td>");
         String nomUser = (String)session.getAttribute("Nom_Joueur");
-        if(nomUser != null)
-            enteteJoueur(out, nomUser);
+        if(nomUser != null) //est fonction du cookie session...
+        {    enteteJoueur(out, nomUser);}
         else
-            enteteVisiteur(out);
+        {    enteteVisiteur(out);       }
         
         out.println("</tr>");
         out.println("</table>");    
