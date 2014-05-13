@@ -13,6 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 /**
  *
@@ -73,7 +75,29 @@ public class AjouterPanier extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String retourUrl = "http://localhost:8080/eshoppeweb/panier";
+        HttpSession session = request.getSession();
+        if ( session == null || session.getAttribute("Nom_Joueur") != null)
+        {
+            session.setAttribute("Erreur", "Impossible d'éffectuer d'ajouter au panier si vous n'êtes pas connecter");
+            retourUrl = "http://localhost:8080/eshoppeweb/catalogue";
+        }
+        else
+        {
+            try
+            {
+                int numItem = Integer.parseInt(request.getParameter("numitem"));
+                int quantite = Integer.parseInt(request.getParameter("qte"));
+            }
+            catch(NumberFormatException E){
+                    session.setAttribute("Erreur", "Il faut entrer une quantité au bouton ajouter correspondant");
+                    retourUrl = "http://localhost:8080/eshoppeweb/catalogue";
+            }
+
+        }
+        response.sendRedirect(retourUrl);
+        
+        
     }
 
     /**

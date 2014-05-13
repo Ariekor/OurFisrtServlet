@@ -210,11 +210,13 @@ public class Catalogue extends HttpServlet {
                   stm.setString(3, cle+"%");
                   stm.execute();
                   rst = (ResultSet)stm.getObject(1);
+                  int i = 0;
                   // parcours du ResultSet
                   while( rst.next() )
                   {
                     /*NOMITEM, QUANTITE, PRIX, POIDS, GENRE*/
                     out.println( "<tr class='zeCatalogueRow'>" );
+                    out.println("<form action='ajouterpanier' method='post'>");
                     numitem = ((Integer)rst.getInt("NUMITEM")).toString();
                     nomitem = rst.getString( "NOMITEM" );
                     qte = ((Integer)rst.getInt("QUANTITE")).toString();
@@ -223,7 +225,7 @@ public class Catalogue extends HttpServlet {
                     genreItem = rst.getString( "GENRE" );
 
                     out.println( "<input type=\"hidden\" name=\"numitem\" value=\"" 
-                            + numitem + "\"/><td class='zeCatalogueCell'>" 
+                            + numitem + "\"/><td class='zeCatalogueCell' >" 
                             + nomitem + "</td><td class='zeCatalogueCell'>" 
                             + qte + "</td><td class='zeCatalogueCell'>"
                             + prix + "</td><td class='zeCatalogueCell'>" 
@@ -231,7 +233,9 @@ public class Catalogue extends HttpServlet {
                             + genreItem + "</td><td class='zeCatalogueCell'>"
                             + "<input type=\"text\" name='qte' size='2' class='marge' onkeyup=\"ConstrainToDigit(event);\" >"
                             + "<input type=\"submit\" value=\"Ajouter\" class=\"b_submit\"/></td>" );
+                    out.println("</form>");
                     out.println( "</tr>" );
+                    ++i;
                 }  
                   stm.close();
             }
