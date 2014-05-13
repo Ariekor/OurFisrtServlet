@@ -34,9 +34,9 @@ public class UtilHtml {
     static protected void afficherErreurPage(PrintWriter out, HttpSession session)
     {   
         String message = (String)session.getAttribute("Erreur");
-        if(!message.equals(""))
+        if(message != null && !message.equals(""))
         {
-            out.println("Erreur: " + session.getAttribute("Erreur"));
+            out.println("<span class='erreur'>Erreur: " + session.getAttribute("Erreur")+"</span>");
         }
     }
     static protected void barreDeMenu(PrintWriter out, HttpSession session ){
@@ -53,18 +53,16 @@ public class UtilHtml {
         out.println("</table>");    
     }
     static protected void enteteJoueur(PrintWriter out, String nomUser){
-        
+        //Section menu donnant acces au profil
         out.println("<td id='profil'><form action='profil' method='post'>"
                         + "<input type=\"submit\" value=\"Profil\" class=\"b_submit\" />"
                         + nomUser +"</form>"
-                 + "</td>");////récupérer la valeur réelle pour le joueur
-        
-        //mettre form ici pour déconnecter (session.invalidate() et appel catalogue avec connecté == false
+                 + "</td>");
+        //Section menu permettant la validation du membre du catalogue
         out.println("<td id='deconnecter'><form action='logout' method='post'>"
                 + "<input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" /></form>"
                   + "</td>");
-        
-        /*<form action='panier' method='post'>*/
+        //Section menu donnant accès au panier.
         out.println("\"<td id='panier'><form action='panier' method='post'>"
                 + "<input type=\"submit\" value=\"Panier\" class=\"b_submit\" /></form>"
                   + "</td>");   

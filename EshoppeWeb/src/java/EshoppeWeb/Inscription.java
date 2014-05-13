@@ -46,8 +46,7 @@ public class Inscription extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             generatePage(out, "");
-        }
-       
+        }       
     }
     
     protected void generatePage(PrintWriter out, String Erreur) throws ServletException , IOException{

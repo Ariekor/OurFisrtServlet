@@ -86,6 +86,7 @@ public class Catalogue extends HttpServlet {
         PrintWriter out = response.getWriter();
         processRequestDebut(request,response, out);
         
+        UtilHtml.afficherErreurPage(out, session);//affiche erreur si une dans le cookie session
         menuRecherche(out, "Tout le catalogue"); 
         listeItems(out, "Tout le catalogue",""); 
         
