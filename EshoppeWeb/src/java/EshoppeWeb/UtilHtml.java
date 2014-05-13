@@ -41,8 +41,8 @@ public class UtilHtml {
     }
     static protected void barreDeMenu(PrintWriter out, HttpSession session ){
             out.println("<table class='entete_catalogue'>");
-                out.println("  <tr><td id='logo'><img src=\"logo.png\" alt=\"\" />"
-                            + "</td>");
+                out.println("  <tr><td id='logo'><a href='http://localhost:8080/eshoppeweb/catalogue' target='_parent'>"
+                        + "<img src=\"logo.png\" alt=\"\" /></a></td>");
         String nomUser = (String)session.getAttribute("Nom_Joueur");
         if(nomUser != null)
             enteteJoueur(out, nomUser);
