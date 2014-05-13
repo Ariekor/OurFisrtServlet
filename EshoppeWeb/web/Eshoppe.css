@@ -11,6 +11,13 @@ and open the template in the editor.
 td{
     border: 1px #634600;
 }
+/*bande de message d'erreur entre baniere et barre menu*/
+.erreur{
+    background-color: black;
+    color: red;  
+    font-size: 35px;
+    
+}
 
 #zeInscritpion{
     border: 5px #9c9276 solid;

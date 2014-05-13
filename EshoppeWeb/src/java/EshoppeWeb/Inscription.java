@@ -46,8 +46,7 @@ public class Inscription extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             generatePage(out, "");
-        }
-       
+        }       
     }
     
     protected void generatePage(PrintWriter out, String Erreur) throws ServletException , IOException{
@@ -101,7 +100,7 @@ public class Inscription extends HttpServlet {
                 out.println("</div>");
             out.println("</form>");
            
-            UtilHtml.piedsDePage(out);
+            UtilHtml.piedsDePage(out, session);
         
     }
     
