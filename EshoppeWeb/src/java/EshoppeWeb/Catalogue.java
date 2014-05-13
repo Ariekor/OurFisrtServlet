@@ -235,7 +235,7 @@ public class Catalogue extends HttpServlet {
                   stm.close();
             }
             rst.close(); 
-            
+            //oradb deconnct plus bas...
         }
         catch( SQLException se ) 
         {
