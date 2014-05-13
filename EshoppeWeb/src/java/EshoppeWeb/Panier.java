@@ -62,7 +62,7 @@ public class Panier extends HttpServlet {
             
             out.println("</div></form>");
             
-            UtilHtml.piedsDePage(out);
+            UtilHtml.piedsDePage(out, session);
         }
     }
     
@@ -158,9 +158,10 @@ public class Panier extends HttpServlet {
                         + "<input type=\"submit\" value=\"X\" class=\"b_submit\"/></td>" );////doit appeler supprimer item/panier
                 
                 out.println("</form>");
-                out.println( "</tr>" );
+                out.println( "</tr>" );                
             }
-            panier.close();
+            panier.close(); 
+            stmP.close();
             oradb.deconnecter();
         }
         catch( SQLException se )

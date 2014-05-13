@@ -59,7 +59,7 @@ public class login extends HttpServlet {
         else 
         {
             //retourner à catalogue avec login non valide.
-            JOptionPane.showMessageDialog(null,"Désolé, nom d'usager ou  mot de passe non valide.");
+            session.setAttribute("Erreur","Désolé, nom d'usager ou  mot de passe non valide.");
             response.sendRedirect("http://localhost:8080/eshoppeweb/catalogue");
         }
         
@@ -120,6 +120,8 @@ public class login extends HttpServlet {
             {
                 valide = true;
             }
+            rst.close();
+            stm.close();
             oradb.deconnecter();
         }
         catch (SQLException e){/*faire quelquechose ici*/} 

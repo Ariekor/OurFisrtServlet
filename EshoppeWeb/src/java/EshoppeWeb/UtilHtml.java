@@ -29,11 +29,16 @@ public class UtilHtml {
         out.println("</head>");
         out.println("<body>");
         out.println("<a href=\"http://localhost:8080/eshoppeweb/catalogue\" "
-                + "target=\"_parent\"><h1>image ici</h1></a>");//////////a changer
-        
-        
+                + "target=\"_parent\"><h1>BANNIERE</h1></a>");//////////a changer
     }
-    
+    static protected void afficherErreurPage(PrintWriter out, HttpSession session)
+    {   
+        String message = (String)session.getAttribute("Erreur");
+        if(!message.equals(""))
+        {
+            out.println("Erreur: " + session.getAttribute("Erreur"));
+        }
+    }
     static protected void barreDeMenu(PrintWriter out, HttpSession session ){
             out.println("<table class='entete_catalogue'>");
                 out.println("  <tr><td id='logo'><img src=\"logo.png\" alt=\"\" />"
@@ -74,7 +79,8 @@ public class UtilHtml {
         out.println("<td id='inscription'><form action='inscription' method='get'>"
                 + "<input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\" /></form></td>");
     }
-    static protected void piedsDePage(PrintWriter out){
+    static protected void piedsDePage(PrintWriter out, HttpSession session){
+        session.removeAttribute("Erreur");
         out.println("</body>");
         out.println("</html>");
     }    

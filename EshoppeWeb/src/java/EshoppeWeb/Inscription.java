@@ -101,7 +101,7 @@ public class Inscription extends HttpServlet {
                 out.println("</div>");
             out.println("</form>");
            
-            UtilHtml.piedsDePage(out);
+            UtilHtml.piedsDePage(out, session);
         
     }
     

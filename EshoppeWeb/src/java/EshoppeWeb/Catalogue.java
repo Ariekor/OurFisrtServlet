@@ -43,7 +43,8 @@ public class Catalogue extends HttpServlet {
                 
         response.setContentType("text/html;charset=UTF-8");         
         try { 
-            UtilHtml.enteteHtml(out, "Catalogue");//serait bien de récupérer le webServlet name            
+            UtilHtml.enteteHtml(out, "Catalogue");//serait bien de récupérer le webServlet name     
+            
             UtilHtml.barreDeMenu(out, session);            
         }
       //  catch()
@@ -62,7 +63,7 @@ public class Catalogue extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");  
         try {        
             barreNavigation(out);    
-            UtilHtml.piedsDePage(out);
+            UtilHtml.piedsDePage(out, session);
         }
       //  catch()
         finally
@@ -169,6 +170,9 @@ public class Catalogue extends HttpServlet {
                     liste += "<option>"+g+"</option>";
                 }
             }
+     /*       rst.close();
+            stm.close();*/
+            oradb.deconnecter();
             liste += "</select>";
         }
         catch (SQLException e){/*faire quelquechose ici*/}        
@@ -228,8 +232,10 @@ public class Catalogue extends HttpServlet {
                             + "<input type=\"submit\" value=\"Ajouter\" class=\"b_submit\"/></td>" );
                     out.println( "</tr>" );
                 }  
+                  stm.close();
             }
-            rst.close();    
+            rst.close(); 
+            
         }
         catch( SQLException se ) 
         {
