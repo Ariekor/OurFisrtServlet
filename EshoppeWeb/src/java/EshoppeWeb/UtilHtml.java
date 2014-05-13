@@ -60,11 +60,13 @@ public class UtilHtml {
                  + "</td>");////récupérer la valeur réelle pour le joueur
         
         //mettre form ici pour déconnecter (session.invalidate() et appel catalogue avec connecté == false
-        out.println("<td id='deconnecter'><form action='profil' method='post'><input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" /></form>"
+        out.println("<td id='deconnecter'><form action='logout' method='post'>"
+                + "<input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" /></form>"
                   + "</td>");
         
         /*<form action='panier' method='post'>*/
-        out.println("\"<td id='panier'><input type=\"submit\" value=\"Panier\" class=\"b_submit\" />"
+        out.println("\"<td id='panier'><form action='panier' method='post'>"
+                + "<input type=\"submit\" value=\"Panier\" class=\"b_submit\" /></form>"
                   + "</td>");   
     }
     static protected void enteteVisiteur(PrintWriter out){
