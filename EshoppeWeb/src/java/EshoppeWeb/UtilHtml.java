@@ -29,7 +29,7 @@ public class UtilHtml {
         out.println("</head>");
         out.println("<body>");
         out.println("<a href='http://localhost:8080/eshoppeweb/catalogue' target='_parent'>"//laisser ce href pour lier au catalogue
-                + "<h1>BANNIERE</h1>" //////////a changer
+                + "<img src=\"bann.png\" alt=\"\" />" //////////a changer
                 + "</a>");  //a laisser là...
     }
     static protected void afficherErreurPage(PrintWriter out, HttpSession session)
