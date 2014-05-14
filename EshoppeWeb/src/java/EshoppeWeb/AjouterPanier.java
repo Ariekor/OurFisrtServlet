@@ -9,7 +9,9 @@ package EshoppeWeb;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -128,27 +130,97 @@ public class AjouterPanier extends HttpServlet {
     private String ajouterPanier(String nomUser, int numItem, int quantite)
     {
         String erreur = "";
+        if(estDejaDansPanier(nomUser,numItem))
+        {
+            modifierQte(nomUser,numItem,quantite);
+        }
+        else
+        {
+            try{
+                ConnectionOracle odc = new ConnectionOracle();
+                odc.setConnection("kellylea", "oracle2");
+                odc.connecter();
+
+                CallableStatement stm = odc.getConnection().prepareCall("{call GESTION_PANIER.INSERTION( ? , ? , ? )}");
+                stm.setString(1, nomUser);
+                stm.setInt(2, numItem);
+                stm.setInt(3, quantite);
+                int ajout = stm.executeUpdate();
+                if (ajout == 0)
+                {
+                    erreur += "\n L'item n'est pas ajouté...\n ";
+                }
+
+                stm.close();
+                odc.deconnecter();
+            }
+            catch(SQLException sqe){erreur += sqe.getMessage();}
+        }
         
+        return erreur;
+    }
+    private boolean estDejaDansPanier(String nom , int numItem)
+    {
+        boolean valide = false;
+        String sqlLogin = "select nomusager from panier where nomusager = '"+nom+"' and numitem = '"+numItem+"'";
+        try
+        {        
+            ConnectionOracle oradb = new ConnectionOracle();
+            oradb.setConnection("kellylea", "oracle2");
+            oradb.connecter();  
+            Statement stm = oradb.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rst = stm.executeQuery(sqlLogin);
+            if(rst.first())
+            {
+                valide = true;
+            }
+            rst.close();
+            stm.close();
+            oradb.deconnecter();
+        }
+        catch (SQLException e){/*faire quelquechose ici*/} 
+        
+        return valide;
+    }
+    
+    
+    
+    private int obtenirQtePanier (String nom , int numItem)
+    {
+        int Qte = 0;
+        String Sql= "Select QUANTITEITEM FROM panier where nomusager='"+nom+"' and numitem='"+numItem+"'";
+        try
+        {
+            ConnectionOracle oradb = new ConnectionOracle();
+            oradb.setConnection("kellylea", "oracle2");
+            oradb.connecter();
+            Statement stm = oradb.getConnection().createStatement();
+            ResultSet rst = stm.executeQuery(Sql);
+            rst.getInt(1);
+            oradb.deconnecter();
+        }
+        catch(SQLException s){/* do something */}
+        return Qte;
+    }
+    
+    private void modifierQte(String nom , int numItem , int quantite)
+    {
         try{
             ConnectionOracle odc = new ConnectionOracle();
             odc.setConnection("kellylea", "oracle2");
             odc.connecter();
             
-            CallableStatement stm = odc.getConnection().prepareCall("{call GESTION_PANIER.INSERTION( ? , ? , ? )}");
-            stm.setString(1, nomUser);
+            CallableStatement stm = odc.getConnection().prepareCall("{call GESTION_PANIER.MODIFIERQUANTITE( ? , ? , ? )}");
+            stm.setString(1,nom);
             stm.setInt(2, numItem);
-            stm.setInt(3, quantite);
-            int ajout = stm.executeUpdate();
-            if (ajout == 0)
-            {
-                erreur += "\n L'item n'est pas ajouté...\n ";
-            }
-                              
+            stm.setInt(3, quantite + obtenirQtePanier(nom,quantite) );
+            stm.executeUpdate();
+            
+            
             stm.close();
             odc.deconnecter();
         }
-        catch(SQLException sqe){erreur += sqe.getMessage();}
-        return erreur;
+        catch(SQLException s){/* do something */}
     }
 
     /**
