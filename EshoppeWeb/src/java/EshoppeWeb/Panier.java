@@ -31,7 +31,7 @@ public class Panier extends HttpServlet {
     
     private String nomUser;
     private int capUser = 100;
-    private int total = 0;
+    private int total = 0;//total du panier
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -112,7 +112,7 @@ public class Panier extends HttpServlet {
         String nomitem;
         int qte;
         int prixUnitaire;
-        int prixCalcule ;
+        int prixCalcule ;       
         
         out.println( "<div id='listePanier'><table class='zeCatable'>" );
         //entête panier
@@ -147,6 +147,7 @@ public class Panier extends HttpServlet {
                 qte = (Integer)panier.getInt("QUANTITEITEM");
                 prixUnitaire = (Integer)panier.getInt("PRIX");
                 prixCalcule =  ((Integer)panier.getInt("QUANTITEITEM"))*((Integer)panier.getInt("PRIX"));
+                total += prixCalcule;
                 //chaque ligne est un form qui permet de retirer un objet du panier
                 out.println("<form action='panier' method='post'>");
                 out.println( "<input type=\"hidden\" name=\"numitem\" value=\""
@@ -175,13 +176,13 @@ public class Panier extends HttpServlet {
     {
         out.println("<div id='menuPanier'><table class='zeCatable'>");
         out.println("<tr><td>Votre capital:</td></tr>"
-                + "<tr><td><input type='text' name='cap' value='"+capUser+"'></td></tr>"
+                + "<tr><td><input type='hidden' name='cap' value='"+capUser+"'>"+capUser+"</td></tr>"
                 + "<tr><td></td></tr>"
                 + "<tr><td></td></tr>"
                 + "<tr><td></td></tr>"
                 + "<tr><td></td></tr>"
                 + "<tr><td>Total panier:</td></tr>"
-                + "<tr><td><input type='text' name='total' value='"+total+"'></td></tr>"
+                + "<tr><td><input type='hidden' name='total' value='"+total+"'>"+total+"</td></tr>"
                 + "<tr><td></td></tr>"
                 + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Mettre à jour\" name=\"update\" /></td></tr>"
                 + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Acheter\" name=\"achat\" /></td></tr>"
