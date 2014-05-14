@@ -8,6 +8,8 @@ package EshoppeWeb;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.CallableStatement;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -77,9 +79,11 @@ public class AjouterPanier extends HttpServlet {
             throws ServletException, IOException {
         String retourUrl = "http://localhost:8080/eshoppeweb/panier";
         HttpSession session = request.getSession();
-        if ( session == null || session.getAttribute("Nom_Joueur") != null)
+        String nomUser = (String)session.getAttribute("Nom_Joueur");
+        
+        if ( nomUser == null)//session ne sera jamais null, seul le user a vérifier
         {
-            session.setAttribute("Erreur", "Impossible d'éffectuer d'ajouter au panier si vous n'êtes pas connecter");
+            session.setAttribute("Erreur", "Vous devez être connecté pour ajouter au panier");
             retourUrl = "http://localhost:8080/eshoppeweb/catalogue";
         }
         else
@@ -87,17 +91,64 @@ public class AjouterPanier extends HttpServlet {
             try
             {
                 int numItem = Integer.parseInt(request.getParameter("numitem"));
+                int stock = Integer.parseInt(request.getParameter("stock")); 
                 int quantite = Integer.parseInt(request.getParameter("qte"));
+                String nomItem = request.getParameter("nomItem");
+                               
+                if(quantite > stock)
+                {
+                    session.setAttribute("Erreur", "Stock maximum disponible pour: "+nomItem+" = "+ stock );
+                    retourUrl = "http://localhost:8080/eshoppeweb/catalogue";
+                }
+                else
+                {
+                    //ajouter au panier
+                    String resultat = ajouterPanier(nomUser,numItem,quantite);
+                    if (!resultat.equals(""))
+                    {
+                        session.setAttribute("Erreur", resultat);
+                        retourUrl = "http://localhost:8080/eshoppeweb/catalogue";
+                    }
+                    else
+                    {
+                        retourUrl = "http://localhost:8080/eshoppeweb/panier";
+                    }
+                }
             }
             catch(NumberFormatException E){
                     session.setAttribute("Erreur", "Il faut entrer une quantité au bouton ajouter correspondant");
                     retourUrl = "http://localhost:8080/eshoppeweb/catalogue";
             }
-
         }
         response.sendRedirect(retourUrl);
         
         
+    }
+    
+    private String ajouterPanier(String nomUser, int numItem, int quantite)
+    {
+        String erreur = "";
+        
+        try{
+            ConnectionOracle odc = new ConnectionOracle();
+            odc.setConnection("kellylea", "oracle2");
+            odc.connecter();
+            
+            CallableStatement stm = odc.getConnection().prepareCall("{call GESTION_PANIER.INSERTION( ? , ? , ? )}");
+            stm.setString(1, nomUser);
+            stm.setInt(2, numItem);
+            stm.setInt(3, quantite);
+            int ajout = stm.executeUpdate();
+            if (ajout == 0)
+            {
+                erreur += "\n L'item n'est pas ajouté...\n ";
+            }
+                              
+            stm.close();
+            odc.deconnecter();
+        }
+        catch(SQLException sqe){erreur += sqe.getMessage();}
+        return erreur;
     }
 
     /**

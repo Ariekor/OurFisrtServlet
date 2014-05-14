@@ -72,7 +72,7 @@ public class UtilHtml {
         
         /*<form action='login' method='post'>*/
         out.println("<td id='login'><form action='login' method='post'>"
-                + "Alias: <input type=\"text\" name=\"user\" value=\"nom usager\" class='marge' />"
+                + "Alias: <input type=\"text\" name=\"user\" class='marge' />"
                 + " Mot de passe: <input type=\"password\" class='marge' name=\"motdepasse\"/>"
                 + "<input type=\"submit\" value=\"Login\" class=\"b_submit\"/>"
                 + "</form></td>");

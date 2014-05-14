@@ -162,6 +162,7 @@ public class Inscription extends HttpServlet {
         }
         return Error;
     }
+    //ajout de l'inscription à la BD.
     private String JDBCPart(String Error , List<String> param)
     {
         try{
@@ -176,6 +177,10 @@ public class Inscription extends HttpServlet {
             stm.setString(4, param.get(3));
             stm.setInt(5, departSolde);
             stm.executeUpdate();
+            
+            
+            stm.close();
+            odc.deconnecter();
         }
         catch(SQLException sqe){Error += "\n Le nom d'utilisateur existe déjà utilisez en un autre SVP \n";}
         return Error;

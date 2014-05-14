@@ -136,7 +136,7 @@ public class Catalogue extends HttpServlet {
         out.print("<div class='entete_catalogue'>"
                         + "<form action='catalogue' method='post'>"
                         + "     Rechercher dans:  ");
-        out.println(genrerListeGenres(g));
+        out.println(genererListeGenres(g));
         
         out.println("Mot clé: <input type=\"text\" name=\"nomCle\" class=\"marge\" />"
                         + "<input type=\"submit\" value=\"Afficher\" class=\"b_submit\" />"
@@ -144,7 +144,7 @@ public class Catalogue extends HttpServlet {
                    + "</div>");
     }
     
-    private String genrerListeGenres(String genre){
+    private String genererListeGenres(String genre){
         String SQLGenre = "Select Distinct Genre From Catalogue";
         String liste ="<select name=\"genre\" />";
         String g;
@@ -213,8 +213,7 @@ public class Catalogue extends HttpServlet {
                   int i = 0;
                   // parcours du ResultSet
                   while( rst.next() )
-                  {
-                    /*NOMITEM, QUANTITE, PRIX, POIDS, GENRE*/
+                  {                    
                     out.println( "<tr class='zeCatalogueRow'>" );
                     out.println("<form action='ajouterpanier' method='post'>");
                     numitem = ((Integer)rst.getInt("NUMITEM")).toString();
@@ -223,16 +222,18 @@ public class Catalogue extends HttpServlet {
                     prix = ((Integer)rst.getInt("PRIX")).toString();
                     poids = ((Integer)rst.getInt("POIDS")).toString();
                     genreItem = rst.getString( "GENRE" );
-
+                     //affichage d'une ligne = 1 item
                     out.println( "<input type=\"hidden\" name=\"numitem\" value=\"" 
-                            + numitem + "\"/><td class='zeCatalogueCell' >" 
+                            + numitem + "\"/><td class='zeCatalogueCell' >"
+                            + "<input type=\"hidden\" name=\"nomItem\" value=\"" + nomitem + "\"/>"//pour récupérer la valeur....
                             + nomitem + "</td><td class='zeCatalogueCell'>" 
-                            + qte + "</td><td class='zeCatalogueCell'>"
+                            + "<input type=\"hidden\" name=\"stock\" value=\"" + qte + "\"/>"//pour récupérer la valeur....
+                            + qte +"</td><td class='zeCatalogueCell'>"
                             + prix + "</td><td class='zeCatalogueCell'>" 
                             + poids + "</td><td class='zeCatalogueCell'>" 
                             + genreItem + "</td><td class='zeCatalogueCell'>"
                             + "<input type=\"text\" name='qte' size='2' class='marge' onkeyup=\"ConstrainToDigit(event);\" >"
-                            + "<input type=\"submit\" value=\"Ajouter\" class=\"b_submit\"/></td>" );
+                            + "<input type=\"submit\" value=\"Ajouter\" class=\"b_submit\"/></td>" );//btn ajouter associé à un seul item.
                     out.println("</form>");
                     out.println( "</tr>" );
                     ++i;
