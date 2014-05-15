@@ -196,7 +196,7 @@ public class AjouterPanier extends HttpServlet {
             oradb.connecter();
             Statement stm = oradb.getConnection().createStatement();
             ResultSet rst = stm.executeQuery(Sql);
-            rst.getInt(1);
+            Qte = rst.getInt(1);
             oradb.deconnecter();
         }
         catch(SQLException s){/* do something */}
@@ -213,7 +213,7 @@ public class AjouterPanier extends HttpServlet {
             CallableStatement stm = odc.getConnection().prepareCall("{call GESTION_PANIER.MODIFIERQUANTITE( ? , ? , ? )}");
             stm.setString(1,nom);
             stm.setInt(2, numItem);
-            stm.setInt(3, quantite + obtenirQtePanier(nom,quantite) );
+            stm.setInt(3, quantite + obtenirQtePanier(nom,numItem) );
             stm.executeUpdate();
             
             
