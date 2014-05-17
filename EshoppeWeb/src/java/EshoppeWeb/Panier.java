@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +33,7 @@ public class Panier extends HttpServlet {
     private String nomUser;
     private int capUser = 100;
     private int total = 0;//total du panier
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,7 +48,7 @@ public class Panier extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         session = request.getSession();// session ne sera jamais null
         nomUser = (String)session.getAttribute( "Nom_Joueur" );
-        
+        loadCapItem();
         try (PrintWriter out = response.getWriter()) {
             
             UtilHtml.enteteHtml(out,"Panier");
@@ -64,6 +65,21 @@ public class Panier extends HttpServlet {
             
             UtilHtml.piedsDePage(out, session);
         }
+    }
+    
+    private void loadCapItem()
+    {
+        try
+        {
+        String SQL = "Select CAPITAL From JoueursRpg where NOMUSAGER='"+nomUser+"'";
+        ConnectionOracle connBd = new ConnectionOracle();
+        connBd.setConnection("kellylea", "oracle2");
+        connBd.connecter();
+        Statement stm =connBd.getConnection().createStatement();
+        ResultSet rst = stm.executeQuery(SQL);
+        capUser = rst.getInt(0);
+        }
+        catch(SQLException e){}
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
