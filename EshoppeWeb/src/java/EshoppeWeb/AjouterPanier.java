@@ -27,6 +27,8 @@ import javax.websocket.Session;
 @WebServlet(name = "AjouterPanier", urlPatterns = {"/ajouterpanier"})
 public class AjouterPanier extends HttpServlet {
 
+    HttpSession session ;
+    String erreur;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -75,12 +77,12 @@ public class AjouterPanier extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     */
+     */ 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String retourUrl = "http://localhost:8080/eshoppeweb/panier";
-        HttpSession session = request.getSession();
+        session = request.getSession();
         String nomUser = (String)session.getAttribute("Nom_Joueur");
         
         if ( nomUser == null)//session ne sera jamais null, seul le user a vérifier
@@ -108,7 +110,7 @@ public class AjouterPanier extends HttpServlet {
                     String resultat = ajouterPanier(nomUser,numItem,quantite);
                     if (!resultat.equals(""))
                     {
-                        session.setAttribute("Erreur", resultat);
+                        session.setAttribute("Erreur", resultat + "\n");
                         retourUrl = "http://localhost:8080/eshoppeweb/catalogue";
                     }
                     else
@@ -121,7 +123,8 @@ public class AjouterPanier extends HttpServlet {
                     session.setAttribute("Erreur", "Il faut entrer une quantité au bouton ajouter correspondant");
                     retourUrl = "http://localhost:8080/eshoppeweb/catalogue";
             }
-        }
+        }      
+        
         response.sendRedirect(retourUrl);
         
         
@@ -129,7 +132,7 @@ public class AjouterPanier extends HttpServlet {
     
     private String ajouterPanier(String nomUser, int numItem, int quantite)
     {
-        String erreur = "";
+        String err = "";
         if(estDejaDansPanier(nomUser,numItem))
         {
             modifierQte(nomUser,numItem,quantite);
@@ -148,16 +151,16 @@ public class AjouterPanier extends HttpServlet {
                 int ajout = stm.executeUpdate();
                 if (ajout == 0)
                 {
-                    erreur += "\n L'item n'est pas ajouté...\n ";
+                    err += "\n L'item n'est pas ajouté...\n ";
                 }
 
                 stm.close();
                 odc.deconnecter();
             }
-            catch(SQLException sqe){erreur += sqe.getMessage();}
+            catch(SQLException sqe){session.setAttribute("Erreur", sqe.getMessage()+ "\n");}
         }
         
-        return erreur;
+        return err;
     }
     private boolean estDejaDansPanier(String nom , int numItem)
     {
@@ -178,7 +181,7 @@ public class AjouterPanier extends HttpServlet {
             stm.close();
             oradb.deconnecter();
         }
-        catch (SQLException e){/*faire quelquechose ici*/} 
+        catch (SQLException e){session.setAttribute("Erreur", e.getMessage()+ "\n");} 
         
         return valide;
     }
@@ -187,7 +190,7 @@ public class AjouterPanier extends HttpServlet {
     
     private int obtenirQtePanier (String nom , int numItem)
     {
-        int Qte = 0;
+        int qte = 0;
         String Sql= "Select QUANTITEITEM FROM panier where nomusager='"+nom+"' and numitem='"+numItem+"'";
         try
         {
@@ -196,11 +199,14 @@ public class AjouterPanier extends HttpServlet {
             oradb.connecter();
             Statement stm = oradb.getConnection().createStatement();
             ResultSet rst = stm.executeQuery(Sql);
-            Qte = rst.getInt(1);
+            if (rst.next())
+            {
+                qte = rst.getInt(1);
+            }            
             oradb.deconnecter();
         }
-        catch(SQLException s){/* do something */}
-        return Qte;
+        catch(SQLException s){session.setAttribute("Erreur", s.getMessage() + "\n");}
+        return qte;
     }
     
     private void modifierQte(String nom , int numItem , int quantite)
@@ -211,16 +217,19 @@ public class AjouterPanier extends HttpServlet {
             odc.connecter();
             
             CallableStatement stm = odc.getConnection().prepareCall("{call GESTION_PANIER.MODIFIERQUANTITE( ? , ? , ? )}");
-            stm.setString(1,nom);
-            stm.setInt(2, numItem);
+            stm.setInt(1, numItem);
+            stm.setString(2,nom);
             stm.setInt(3, quantite + obtenirQtePanier(nom,numItem) );
-            stm.executeUpdate();
-            
+            int modifie = stm.executeUpdate();
+            if (modifie == 0)
+            {
+                session.setAttribute("Erreur", "Quantité non ajustée.");
+            }
             
             stm.close();
             odc.deconnecter();
         }
-        catch(SQLException s){/* do something */}
+        catch(SQLException s){session.setAttribute("Erreur", s.getMessage()+ "\n");}
     }
 
     /**

@@ -28,9 +28,9 @@ public class UtilHtml {
         out.println("<script type=\"text/javascript\" src=\"./FiltresChamp.js\"></script>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<a href='http://localhost:8080/eshoppeweb/catalogue' target='_parent'>"//laisser ce href pour lier au catalogue
-                + "<img src=\"bann.png\" alt=\"\" />" //////////a changer
-                + "</a>");  //a laisser là...
+        out.println("<a href='http://localhost:8080/eshoppeweb/catalogue' target='_parent'>"
+                + "<img src='bann.png' alt='' />"
+                + "</a>"); 
     }
     static protected void afficherErreurPage(PrintWriter out, HttpSession session)
     {   
@@ -64,7 +64,7 @@ public class UtilHtml {
                 + "<input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" /></form>"
                   + "</td>");
         //Section menu donnant accès au panier.
-        out.println("\"<td id='panier'><form action='panier' method='post'>"
+        out.println("<td id='panier'><form action='panier' method='post'>"
                 + "<input type=\"submit\" value=\"Panier\" class=\"b_submit\" /></form>"
                   + "</td>");   
     }

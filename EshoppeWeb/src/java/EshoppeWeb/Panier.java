@@ -29,7 +29,7 @@ public class Panier extends HttpServlet {
     
     private HttpSession session;
     //à récupérer du cookie
-    
+    private String erreur = "";    
     private String nomUser;
     private int capUser = 100;
     private int total = 0;//total du panier
@@ -48,6 +48,7 @@ public class Panier extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         session = request.getSession();// session ne sera jamais null
         nomUser = (String)session.getAttribute( "Nom_Joueur" );
+        erreur = (String)session.getAttribute("Erreur");
         loadCapItem();
         try (PrintWriter out = response.getWriter()) {
             
@@ -55,6 +56,7 @@ public class Panier extends HttpServlet {
             UtilHtml.barreDeMenu(out, session);
             
             out.println("<h1>Panier</h1>");
+            UtilHtml.afficherErreurPage(out, session);
             out.println("<form action='catalogue' method='post'><div class='zeCatalogueDiv'>");
             
             listeItems(out);// bouton retirer item inclus
@@ -62,9 +64,11 @@ public class Panier extends HttpServlet {
             menuPanier(out); //colonne de droite, menu
             
             out.println("</div></form>");
+         //   out.println("<div>"+erreur+"</div>");
             
             UtilHtml.piedsDePage(out, session);
         }
+        session.setAttribute("Erreur", erreur);
     }
     
     private void loadCapItem()
@@ -75,11 +79,18 @@ public class Panier extends HttpServlet {
         ConnectionOracle connBd = new ConnectionOracle();
         connBd.setConnection("kellylea", "oracle2");
         connBd.connecter();
-        Statement stm =connBd.getConnection().createStatement();
+        Statement stm = connBd.getConnection().createStatement();
         ResultSet rst = stm.executeQuery(SQL);
-        capUser = rst.getInt(0);
+        if (rst.next())
+        {
+            capUser = rst.getInt(1);
+        } 
+        rst.close();
+        stm.close();
+        
+        connBd.deconnecter();
         }
-        catch(SQLException e){}
+        catch(SQLException e){erreur = e.getMessage();}
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -94,6 +105,7 @@ public class Panier extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //session.setAttribute("Erreur", "");
         processRequest(request, response);
     }
     
@@ -128,7 +140,8 @@ public class Panier extends HttpServlet {
         String nomitem;
         int qte;
         int prixUnitaire;
-        int prixCalcule ;       
+        int prixCalcule ; 
+        total = 0;
         
         out.println( "<div id='listePanier'><table class='zeCatable'>" );
         //entête panier
@@ -172,7 +185,7 @@ public class Panier extends HttpServlet {
                         + "<input type=\"text\" name='qte' value =\""+qte+"\" size='3'></td><td class='zeCatalogueCell'>"
                         + prixUnitaire + "</td><td class='zeCatalogueCell'>"
                         + prixCalcule + "</td><td class='zeCatalogueCell'>"
-                        + "<input type=\"submit\" value=\"X\" class=\"b_submit\"/></td>" );////doit appeler supprimer item/panier
+                        + "<input type=\"submit\" value='X' class=\"b_submit\"/></td>" );////doit appeler supprimer item/panier
                 
                 out.println("</form>");
                 out.println( "</tr>" );                
