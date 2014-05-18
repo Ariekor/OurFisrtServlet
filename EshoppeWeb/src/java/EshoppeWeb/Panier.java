@@ -58,14 +58,9 @@ public class Panier extends HttpServlet {
             out.println("<h1>Panier</h1>");
             UtilHtml.afficherErreurPage(out, session);
             out.println("<div class='zeCatalogueDiv'>");
-            
             listeItems(out);// bouton retirer item inclus
-            
             menuPanier(out); //colonne de droite, menu
-            
-            out.println("</div>");
-         //   out.println("<div>"+erreur+"</div>");
-            
+            out.println("</div>"); 
             UtilHtml.piedsDePage(out, session);
         }
         session.setAttribute("Erreur", erreur);
