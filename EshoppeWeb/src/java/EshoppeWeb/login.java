@@ -109,11 +109,11 @@ public class login extends HttpServlet {
     {
         boolean valide = false;
         String sqlLogin = "select nomusager from joueursrpg where nomusager = '"+nom+"' and motdepasse = '"+mdp+"'";
+        ConnectionOracle oradb = new ConnectionOracle();
+        oradb.setConnection("kellylea", "oracle2");
+        oradb.connecter(); 
         try
-        {        
-            ConnectionOracle oradb = new ConnectionOracle();
-            oradb.setConnection("kellylea", "oracle2");
-            oradb.connecter();  
+        {    
             Statement stm = oradb.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rst = stm.executeQuery(sqlLogin);
             if(rst.first())
@@ -121,10 +121,10 @@ public class login extends HttpServlet {
                 valide = true;
             }
             rst.close();
-            stm.close();
-            oradb.deconnecter();
+            stm.close();            
         }
         catch (SQLException e){/*faire quelquechose ici*/} 
+        finally{oradb.deconnecter();}
         
         return valide;
     }
