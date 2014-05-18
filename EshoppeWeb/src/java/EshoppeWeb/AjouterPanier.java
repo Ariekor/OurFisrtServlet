@@ -139,11 +139,11 @@ public class AjouterPanier extends HttpServlet {
         }
         else
         {
+            ConnectionOracle odc = new ConnectionOracle();
+            odc.setConnection("kellylea", "oracle2");
+            odc.connecter();
+            
             try{
-                ConnectionOracle odc = new ConnectionOracle();
-                odc.setConnection("kellylea", "oracle2");
-                odc.connecter();
-
                 CallableStatement stm = odc.getConnection().prepareCall("{call GESTION_PANIER.INSERTION( ? , ? , ? )}");
                 stm.setString(1, nomUser);
                 stm.setInt(2, numItem);
@@ -153,24 +153,23 @@ public class AjouterPanier extends HttpServlet {
                 {
                     err += "\n L'item n'est pas ajouté...\n ";
                 }
-
-                stm.close();
-                odc.deconnecter();
+                stm.close();                
             }
             catch(SQLException sqe){session.setAttribute("Erreur", sqe.getMessage()+ "\n");}
-        }
-        
+            finally{odc.deconnecter();}
+        }        
         return err;
     }
     private boolean estDejaDansPanier(String nom , int numItem)
     {
         boolean valide = false;
         String sqlLogin = "select nomusager from panier where nomusager = '"+nom+"' and numitem = '"+numItem+"'";
+        ConnectionOracle oradb = new ConnectionOracle();
+        oradb.setConnection("kellylea", "oracle2");
+        oradb.connecter(); 
         try
         {        
-            ConnectionOracle oradb = new ConnectionOracle();
-            oradb.setConnection("kellylea", "oracle2");
-            oradb.connecter();  
+             
             Statement stm = oradb.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rst = stm.executeQuery(sqlLogin);
             if(rst.first())
@@ -178,11 +177,10 @@ public class AjouterPanier extends HttpServlet {
                 valide = true;
             }
             rst.close();
-            stm.close();
-            oradb.deconnecter();
+            stm.close();            
         }
         catch (SQLException e){session.setAttribute("Erreur", e.getMessage()+ "\n");} 
-        
+        finally {oradb.deconnecter();}
         return valide;
     }
     
@@ -192,29 +190,32 @@ public class AjouterPanier extends HttpServlet {
     {
         int qte = 0;
         String Sql= "Select QUANTITEITEM FROM panier where nomusager='"+nom+"' and numitem='"+numItem+"'";
+        ConnectionOracle oradbPanier = new ConnectionOracle();
+        oradbPanier.setConnection("kellylea", "oracle2");
+        oradbPanier.connecter();
         try
         {
-            ConnectionOracle oradb = new ConnectionOracle();
-            oradb.setConnection("kellylea", "oracle2");
-            oradb.connecter();
-            Statement stm = oradb.getConnection().createStatement();
+            Statement stm = oradbPanier.getConnection().createStatement();
             ResultSet rst = stm.executeQuery(Sql);
             if (rst.next())
             {
                 qte = rst.getInt(1);
-            }            
-            oradb.deconnecter();
+            }
+            rst.close();
+            stm.close();
         }
         catch(SQLException s){session.setAttribute("Erreur", s.getMessage() + "\n");}
+        finally{oradbPanier.deconnecter();}
         return qte;
     }
     
     private void modifierQte(String nom , int numItem , int quantite)
     {
+        ConnectionOracle odc = new ConnectionOracle();
+        odc.setConnection("kellylea", "oracle2");
+        odc.connecter();
         try{
-            ConnectionOracle odc = new ConnectionOracle();
-            odc.setConnection("kellylea", "oracle2");
-            odc.connecter();
+            
             
             CallableStatement stm = odc.getConnection().prepareCall("{call GESTION_PANIER.MODIFIERQUANTITE( ? , ? , ? )}");
             stm.setInt(1, numItem);
@@ -224,12 +225,11 @@ public class AjouterPanier extends HttpServlet {
             if (modifie == 0)
             {
                 session.setAttribute("Erreur", "Quantité non ajustée.");
-            }
-            
-            stm.close();
-            odc.deconnecter();
+            }            
+            stm.close();            
         }
         catch(SQLException s){session.setAttribute("Erreur", s.getMessage()+ "\n");}
+        finally{odc.deconnecter();}
     }
 
     /**
