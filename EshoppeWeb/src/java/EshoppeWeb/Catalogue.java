@@ -228,7 +228,8 @@ public class Catalogue extends HttpServlet {
                     out.println( "<input type=\"hidden\" name=\"numitem\" value=\"" 
                             + numitem + "\"/><td class='zeCatalogueCell' >"
                             + "<input type=\"hidden\" name=\"nomItem\" value=\"" + nomitem + "\"/>"//pour récupérer la valeur....
-                            + nomitem + "</td><td class='zeCatalogueCell'>" 
+                            + "<a href=\"http://localhost:8080/eshoppeweb/detailitem?numitem="+numitem+"&genre="+genreItem+"\">"
+                            + nomitem + "</a></td><td class='zeCatalogueCell'>" 
                             + "<input type=\"hidden\" name=\"stock\" value=\"" + qte + "\"/>"//pour récupérer la valeur....
                             + qte +"</td><td class='zeCatalogueCell'>"
                             + prix + "</td><td class='zeCatalogueCell'>" 

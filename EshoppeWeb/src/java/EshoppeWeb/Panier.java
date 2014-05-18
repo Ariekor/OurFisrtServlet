@@ -171,16 +171,21 @@ public class Panier extends HttpServlet {
                 prixCalcule =  ((Integer)panier.getInt("QUANTITEITEM"))*((Integer)panier.getInt("PRIX"));
                 total += prixCalcule;
                 //chaque ligne est un form qui permet de retirer un objet du panier
-                out.println("<form action='retirerpanier' method='post'>");
-                out.println( "<input type=\"hidden\" name=\"numitem\" value=\""
+                out.println("<form action='modifierqtepanier' method='post'>"
+                        + "<input type=\"hidden\" name=\"numitem\" value=\""
                         + numitem + "\"/><td class='zeCatalogueCell'>"
-                        + nomitem + "</td><td class='zeCatalogueCell'>"
-                        + "<input type=\"text\" name='qte' value =\""+qte+"\" size='3'></td><td class='zeCatalogueCell'>"
+                        + nomitem + "</td><td class='zeCatalogueCell'>"                        
+                        + "<input type=\"text\" name='qte' value =\""+qte+"\" size='3'>"
+                        + "<input type=\"submit\" class=\"b_submit\" value=\"Mettre à jour\" name=\"update\" />"//bouton mettre a jour
+                        + "</form></td><td class='zeCatalogueCell'>"
+                        
                         + prixUnitaire + "</td><td class='zeCatalogueCell'>"
                         + prixCalcule + "</td><td class='zeCatalogueCell'>"
-                        + "<input type=\"submit\" value='X' class=\"b_submit\"/></td>" );////doit appeler supprimer item/panier
-                
-                out.println("</form>");
+                        
+                        + "<form action='retirerpanier' method='post'><input type=\"hidden\" name=\"numitem\" value=\""
+                        + numitem + "\"/>"
+                        + "<input type=\"submit\" value='X' class=\"b_submit\"/></form></td>" );////doit appeler supprimer item/panier
+         
                 out.println( "</tr>" );                
             }
             panier.close(); 
@@ -206,7 +211,7 @@ public class Panier extends HttpServlet {
                 + "<tr><td>Total panier:</td></tr>"
                 + "<tr><td><input type='hidden' name='total' value='"+total+"'>"+total+"</td></tr>"
                 + "<tr><td></td></tr>"
-                + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Mettre à jour\" name=\"update\" /></td></tr>"
+                + "<tr><td></td></tr>"
                 
                 //bouton pour acheter le contenu entier du panier 
                 + "<tr><td><form action='acheterpanier' method='post'>"
