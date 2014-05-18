@@ -210,6 +210,8 @@ public class Panier extends HttpServlet {
                 
                 //bouton pour acheter le contenu entier du panier 
                 + "<tr><td><form action='acheterpanier' method='post'>"
+                + "<input type='hidden' name='cap' value='"+capUser+"'>"
+                + "<input type='hidden' name='total' value='"+total+"'>"
                 + "<input type=\"submit\" class=\"b_submit\" value=\"Acheter\" name=\"achat\" />"
                 + "</form></td></tr>"
                 
