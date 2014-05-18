@@ -151,7 +151,7 @@ public class Panier extends HttpServlet {
                 + "<td class='zeCatEntete'>Prix calculé</td>"
                 + "<td class='zeCatEntete'>Retirer du panier</td>");
         
-// connexion à la base de données
+        // connexion à la base de données
         ConnectionOracle oradb = new ConnectionOracle();
         oradb.setConnection("kellylea", "oracle2");
         oradb.connecter();

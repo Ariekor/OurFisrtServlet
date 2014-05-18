@@ -8,11 +8,14 @@ package EshoppeWeb;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.CallableStatement;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -21,6 +24,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "RetirerPanier", urlPatterns = {"/retirerpanier"})
 public class RetirerPanier extends HttpServlet {
 
+    private HttpSession session;
+    //à récupérer du cookie
+    private String erreur = "";    
+    private String nomUser;
+    private String numItem;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,18 +41,14 @@ public class RetirerPanier extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RetirerPanier</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RetirerPanier at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        session = request.getSession();// session ne sera jamais null
+        nomUser = (String)session.getAttribute( "Nom_Joueur" );        
+        numItem = request.getParameter("numitem");
+        
+        retirerPanier(nomUser, numItem);        
+        session.setAttribute("Erreur", erreur);
+        response.sendRedirect("http://localhost:8080/eshoppeweb/panier");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -74,6 +78,29 @@ public class RetirerPanier extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+    }
+    
+    private void retirerPanier(String nomUser, String numItem)
+    {
+        //GESTION_PANIER.SUPPRIMER(numItem,nomUsage)
+        ConnectionOracle oradbRetirer = new ConnectionOracle();
+            oradbRetirer.setConnection("kellylea", "oracle2");
+            oradbRetirer.connecter();
+            try{
+                CallableStatement stm = oradbRetirer.getConnection().prepareCall("{call GESTION_PANIER.SUPPRIMER( ? , ? )}");
+                stm.setInt(1, Integer.parseInt(numItem));
+                stm.setString(2, nomUser);
+                               
+                int retrait = stm.executeUpdate();
+                if (retrait == 0)
+                {
+                    erreur += "\n L'item n'a pas été retiré...\n ";
+                }
+                stm.close();                
+            }
+            catch(SQLException sqe){session.setAttribute("Erreur", sqe.getMessage()+ "\n");}
+            finally{oradbRetirer.deconnecter();}     
+        
     }
 
     /**
