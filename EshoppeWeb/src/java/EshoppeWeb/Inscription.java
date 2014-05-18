@@ -165,24 +165,21 @@ public class Inscription extends HttpServlet {
     //ajout de l'inscription à la BD.
     private String JDBCPart(String Error , List<String> param)
     {
+        ConnectionOracle odc = new ConnectionOracle();
+        odc.setConnection("kellylea", "oracle2");
+        odc.connecter();
         try{
-            ConnectionOracle odc = new ConnectionOracle();
-            odc.setConnection("kellylea", "oracle2");
-            odc.connecter();
-            
             CallableStatement stm = odc.getConnection().prepareCall("{call GESTION_USERS.INSERTION( ? , ? , ? , ? , ? )}");
             stm.setString(1, param.get(0));
             stm.setString(2, param.get(1));
             stm.setString(3, param.get(2));
             stm.setString(4, param.get(3));
             stm.setInt(5, departSolde);
-            stm.executeUpdate();
-            
-            
+            stm.executeUpdate();   
             stm.close();
-            odc.deconnecter();
         }
         catch(SQLException sqe){Error += "\n Le nom d'utilisateur existe déjà utilisez en un autre SVP \n";}
+        finally{odc.deconnecter();}
         return Error;
     }
     
