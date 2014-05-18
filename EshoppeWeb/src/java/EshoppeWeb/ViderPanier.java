@@ -64,10 +64,10 @@ public class ViderPanier extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // session = request.getSession();
-        //nomUsager = (String)session.getAttribute("Nom_Joueur");
-        //erreur = (String)session.getAttribute("Erreur");
-       // viderLePanier();
+        session = request.getSession();
+        nomUsager = (String)session.getAttribute("Nom_Joueur");
+        erreur = (String)session.getAttribute("Erreur");
+       viderLePanier();
         response.sendRedirect("http://localhost:8080/eshoppeweb/catalogue");
         //PrintWriter out = response.getWriter();
         //UtilHtml.enteteHtml(out, "viderpanier");
