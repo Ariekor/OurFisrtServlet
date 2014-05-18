@@ -55,18 +55,19 @@ public class UtilHtml {
     }
     static protected void enteteJoueur(PrintWriter out, String nomUser){
         //Section menu donnant acces au profil
-        out.println("<td id='profil'><form action='profil' method='post'>"
-                        + "<input type=\"submit\" value=\"Profil\" class=\"b_submit\" />"
-                        + nomUser +"</form>"
+        out.println("<td id='profil'><form action='profil' method='post' class='zePosRight'>"
+                        + nomUser + " " + "<input type=\"submit\" value=\"Profil\" class=\"b_submit\" /></form>"
                  + "</td>");
-        //Section menu permettant la validation du membre du catalogue
-        out.println("<td id='deconnecter'><form action='logout' method='post'>"
-                + "<input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" /></form>"
-                  + "</td>");
+        
         //Section menu donnant accès au panier.
-        out.println("<td id='panier'><form action='panier' method='post'>"
+        out.println("<td id='panier'><form action='panier' method='post' class='zePosLeft'>"
                 + "<input type=\"submit\" value=\"Panier\" class=\"b_submit\" /></form>"
-                  + "</td>");   
+                  + "</td>"); 
+        
+        //Section menu permettant la validation du membre du catalogue
+        out.println("<td id='deconnecter'><form action='logout' method='post' class='zePosRight'>"
+                + "<input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" /></form>"
+                  + "</td>");  
     }
     static protected void enteteVisiteur(PrintWriter out){
         

@@ -52,43 +52,40 @@ public class Inscription extends HttpServlet {
     protected void generatePage(PrintWriter out, String Erreur) throws ServletException , IOException{
        
             out.println("<form action='inscription' method='post'>");
-            UtilHtml.enteteHtml(out, "Catalogue");
+            UtilHtml.enteteHtml(out, "Inscription");
                 out.println("<div id='mainInscriptionDiv'>");
                     out.println("<table id='zeInscritpion'>");
 
-                        out.println("<tr id='zePresentationRowInscritpion'>");
-                            out.println("<td id='zeTitreTabInscription' colspan='4'>Inscription </td>");
+                        out.println("<tr class='rowHeigh'>");
+                            out.println("<td class='zeTitre' colspan='4'>Inscription </td>");
                         out.println("</tr>");
 
                         out.println("<tr>");
-                            out.println("<td colspan='2' class='inscriptionLabelRow'>Nom Usager : </td>");
-                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Username\" value=\"\"/></td>");
-
-                        out.println("</tr>");
-
-                        out.println("<tr>");
-                            out.println("<td colspan='2' class='inscriptionLabelRow'>Mot de passe : </td>");
-                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"MotDePasse\" value=\"\"/> </td>");
+                            out.println("<td colspan='2' class='labelRow'>Nom Usager : </td>");
+                            out.println("<td colspan='2' class='zeChampTexte'><input type=\"text\" name=\"Username\" value=\"\"/></td>");
 
                         out.println("</tr>");
 
                         out.println("<tr>");
-                            out.println("<td colspan='2' class='inscriptionLabelRow'>Nom : </td>");
-                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Nom\" value=\"\"/> </td>");
+                            out.println("<td colspan='2' class='labelRow'>Mot de passe : </td>");
+                            out.println("<td colspan='2' class='zeChampTexte'><input type=\"text\" name=\"MotDePasse\" value=\"\"/> </td>");
 
                         out.println("</tr>");
 
                         out.println("<tr>");
-                            out.println("<td colspan='2' class='inscriptionLabelRow'>Prénom : </td>");
-                            out.println("<td colspan='2' class='zeChampTexteInsc'><input type=\"text\" name=\"Prenom\" value=\"\"/> </td>");
+                            out.println("<td colspan='2' class='labelRow'>Nom : </td>");
+                            out.println("<td colspan='2' class='zeChampTexte'><input type=\"text\" name=\"Nom\" value=\"\"/> </td>");
 
                         out.println("</tr>");
 
-                        out.println("<tr class='zeOtherRow'>");
-                            out.println("<td > </td>");
-                            out.println("<td > </td>");
-                            out.println("<td> </td>");
-                            out.println("<td class='zeChampTexteInsc'><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\"/> </td>");
+                        out.println("<tr>");
+                            out.println("<td colspan='2' class='labelRow'>Prénom : </td>");
+                            out.println("<td colspan='2' class='zeChampTexte'><input type=\"text\" name=\"Prenom\" value=\"\"/> </td>");
+
+                        out.println("</tr>");
+
+                        out.println("<tr>");
+                            out.println("<td colspan='4' class='b_modif'><input type=\"submit\" value=\"S'inscrire\" class=\"b_submit\"/> </td>");
                         out.println("</tr>");
 
                     out.println("</table>");

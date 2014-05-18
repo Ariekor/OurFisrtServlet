@@ -27,7 +27,7 @@ td{
     margin: auto;
     height:80%;
 }
-#zeTitreTabInscription{
+.zeTitre{
     width: 80%;
     color: #4A402D;
     font-size: 35px;
@@ -35,18 +35,13 @@ td{
     font-style: oblique;
 }
 
-#zeTitreTabInscriptionFiller{
-    width: 90%;
-    
-}
-
-.inscriptionLabelRow{
+.labelRow{
     font-size: 18px;
     font-style: italic;
     text-align: right;
 }
 
-#zePresentationRowInscritpion{
+.rowHeigh{
     height: 5%;
 }
 #mainInscriptionDiv{
@@ -54,6 +49,35 @@ td{
     text-align: center;
     width: 80%;
     height: 80%;
+}
+
+.zePosRight {
+   text-align: right;
+}
+
+.zePosLeft {
+   text-align: left;
+}
+
+#mainProfilDiv {
+    margin: auto;
+    margin-top: 20px;
+    text-align: center;
+    width: 80%;
+    height: 80%;
+}
+
+#zeProfil{
+    border: 5px #9c9276 solid;
+    border-radius: 5px;
+    background-color: #ddccae;
+    width: 40%;
+    margin: auto;
+    height:80%;
+}
+
+.b_modif {
+   margin: auto;
 }
 
 table{
@@ -129,12 +153,12 @@ table{
 /////logo, login et inscription = 3 div de barre menu visiteur
 #logo{
     width: 15%;
-    /*float: left;*/
+    float: left;
     display: inline;
 }
 
 #login{
-    width: 80%;
+    width: 100%;
     display: inline-block;
 }
 
@@ -169,7 +193,7 @@ body {
     background-color: #b6a089;
 }
 
-.zeChampTexteInsc {
+.zeChampTexte {
     text-align: left;
 }
 
