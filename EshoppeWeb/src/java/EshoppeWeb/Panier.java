@@ -176,7 +176,7 @@ public class Panier extends HttpServlet {
                 prixCalcule =  ((Integer)panier.getInt("QUANTITEITEM"))*((Integer)panier.getInt("PRIX"));
                 total += prixCalcule;
                 //chaque ligne est un form qui permet de retirer un objet du panier
-                out.println("<form action='panier' method='post'>");
+                out.println("<form action='retirerpanier' method='post'>");
                 out.println( "<input type=\"hidden\" name=\"numitem\" value=\""
                         + numitem + "\"/><td class='zeCatalogueCell'>"
                         + nomitem + "</td><td class='zeCatalogueCell'>"
@@ -213,7 +213,11 @@ public class Panier extends HttpServlet {
                 + "<tr><td></td></tr>"
                 + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Mettre à jour\" name=\"update\" /></td></tr>"
                 + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Acheter\" name=\"achat\" /></td></tr>"
-                + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Vider\" name=\"vider\" /></td></tr>"
+                
+                //bouton pour vider le panier
+                + "<tr><td><form action='viderpanier' method='post'>"
+                + "<input type=\"submit\" class=\"b_submit\" value=\"Vider\" name=\"vider\" />"
+                + "</form></td></tr>"
                 
                 //bouton pour fermer le panier et retourner au catalogue
                 + "<tr><td><form action='catalogue' method='get'>"
