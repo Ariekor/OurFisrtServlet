@@ -73,24 +73,24 @@ public class Panier extends HttpServlet {
     
     private void loadCapItem()
     {
-        try
-        {
-        String SQL = "Select CAPITAL From JoueursRpg where NOMUSAGER='"+nomUser+"'";
         ConnectionOracle connBd = new ConnectionOracle();
         connBd.setConnection("kellylea", "oracle2");
         connBd.connecter();
-        Statement stm = connBd.getConnection().createStatement();
-        ResultSet rst = stm.executeQuery(SQL);
-        if (rst.next())
+        try
         {
-            capUser = rst.getInt(1);
-        } 
-        rst.close();
-        stm.close();
-        
-        connBd.deconnecter();
+            String SQL = "Select CAPITAL From JoueursRpg where NOMUSAGER='"+nomUser+"'";
+
+            Statement stm = connBd.getConnection().createStatement();
+            ResultSet rst = stm.executeQuery(SQL);
+            if (rst.next())
+            {
+                capUser = rst.getInt(1);
+            } 
+            rst.close();
+            stm.close();              
         }
         catch(SQLException e){erreur = e.getMessage();}
+        finally{connBd.deconnecter();}
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -151,15 +151,13 @@ public class Panier extends HttpServlet {
                 + "<td class='zeCatEntete'>Prix calculé</td>"
                 + "<td class='zeCatEntete'>Retirer du panier</td>");
         
+// connexion à la base de données
+        ConnectionOracle oradb = new ConnectionOracle();
+        oradb.setConnection("kellylea", "oracle2");
+        oradb.connecter();
         try
-        {
-            // connexion à la base de données
-            ConnectionOracle oradb = new ConnectionOracle();
-            oradb.setConnection("kellylea", "oracle2");
-            oradb.connecter();
-            
+        {            
             ResultSet panier;
-            
             CallableStatement stmP = oradb.getConnection().prepareCall("{ ? = call Gestion_Panier.lister(?)}" );
             stmP.registerOutParameter(1, OracleTypes.CURSOR);
             stmP.setString( 2, nomUser );
@@ -191,13 +189,13 @@ public class Panier extends HttpServlet {
                 out.println( "</tr>" );                
             }
             panier.close(); 
-            stmP.close();
-            oradb.deconnecter();
+            stmP.close();            
         }
         catch( SQLException se )
         {
             out.println( se.getMessage() + "  Panier vide."  );
         }
+        finally {oradb.deconnecter();}
         out.println( "</table></div>" );
     }
     
