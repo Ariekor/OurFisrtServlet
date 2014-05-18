@@ -148,12 +148,13 @@ public class Catalogue extends HttpServlet {
         String SQLGenre = "Select Distinct Genre From Catalogue";
         String liste ="<select name=\"genre\" />";
         String g;
+        ConnectionOracle oradbListe = new ConnectionOracle();
+        oradbListe.setConnection("kellylea", "oracle2");
+        oradbListe.connecter();  
         try
         {
-            ConnectionOracle oradb = new ConnectionOracle();
-            oradb.setConnection("kellylea", "oracle2");
-            oradb.connecter();  
-            Statement stm = oradb.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            
+            Statement stm = oradbListe.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rst = stm.executeQuery(SQLGenre); 
             
             if(!genre.equals("Tout le catalogue")){
@@ -173,10 +174,11 @@ public class Catalogue extends HttpServlet {
             }
      /*       rst.close();
             stm.close();*/
-            oradb.deconnecter();
+            
             liste += "</select>";
         }
-        catch (SQLException e){/*faire quelquechose ici*/}        
+        catch (SQLException e){/*faire quelquechose ici*/}   
+        finally{ oradbListe.deconnecter();}
         return liste;
     }
     
@@ -247,8 +249,12 @@ public class Catalogue extends HttpServlet {
         {
            out.println( se.getMessage() );
         }
+        finally
+        {
+            oradb.deconnecter(); 
+        }
         out.println( "</table></div>" );
-        oradb.deconnecter(); 
+        
     }
     
     
