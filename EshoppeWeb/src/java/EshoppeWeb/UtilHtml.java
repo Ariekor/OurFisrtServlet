@@ -37,7 +37,7 @@ public class UtilHtml {
         String message = (String)session.getAttribute("Erreur");
         if(message != null && !message.equals(""))
         {
-            out.println("<span class='erreur'>Erreur: " + session.getAttribute("Erreur")+"</span>");
+            out.println("<span class='erreur'>Attention: " + session.getAttribute("Erreur")+"</span>");
         }
     }
     static protected void barreDeMenu(PrintWriter out, HttpSession session ){

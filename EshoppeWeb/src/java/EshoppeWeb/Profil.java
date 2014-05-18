@@ -58,8 +58,9 @@ public class Profil extends HttpServlet {
    protected void generatePageProfil(PrintWriter out, String Erreur)
            throws ServletException , IOException{
       
-          UtilHtml.enteteHtml(out,"Profil");
+          UtilHtml.enteteHtml(out,"Profil");          
           UtilHtml.barreDeMenu(out, session);
+          UtilHtml.afficherErreurPage(out, session);
           out.println("<form action='profil' method='post'>");
             out.println("<div id='mainProfilDiv'>");
                   out.print("<table id='zeProfil'>");
@@ -73,15 +74,17 @@ public class Profil extends HttpServlet {
 
                         out.println("</tr>");
 
-                        out.println("<tr>");
-                            out.println("<td colspan='2' class='labelRow'>Mot de passe : </td>");
-                            out.println("<td colspan='2' class='zeChampTexte'><input type=\"text\" name=\"MotDePasse\" value=\"" + motDePasse + "\"/> </td>");
+                        out.println("<form action='modifiermdp' method='post'>");
+                           out.println("<tr>");
+                               out.println("<td colspan='2' class='labelRow'>Mot de passe : </td>");
+                               out.println("<td colspan='2' class='zeChampTexte'><input type=\"text\" name=\"MotDePasse\" value=\"" + motDePasse + "\"/> </td>");
 
-                        out.println("</tr>");
-                        
-                        out.println("<tr class='zeOtherRow'>");
-                            out.println("<td colspan='4' class='b_modif'><input type=\"submit\" value=\"Modifier\" class=\"b_submit\"/> </td>");
-                        out.println("</tr>");
+                           out.println("</tr>");
+
+                           out.println("<tr class='zeOtherRow'>");
+                               out.println("<td colspan='4' class='b_modif'><input type=\"submit\" value=\"Modifier\" class=\"b_submit\"/> </td>");
+                           out.println("</tr>");
+                        out.println("</form>");
 
                         out.println("<tr>");
                             out.println("<td colspan='2' class='labelRow'>Nom : </td>");
@@ -95,15 +98,17 @@ public class Profil extends HttpServlet {
 
                         out.println("</tr>");
                         
-                        out.println("<tr>");
-                            out.println("<td colspan='2' class='labelRow'>Capital : </td>");
-                            out.println("<td colspan='2' class='zeChampTexte'><input type=\"text\" name=\"Capital\" value=\"" + capUser + "\"/> </td>");
+                        out.println("<form action='modifiercapital' method='post'>");
+                           out.println("<tr>");
+                               out.println("<td colspan='2' class='labelRow'>Capital : </td>");
+                               out.println("<td colspan='2' class='zeChampTexte'><input type=\"text\" name=\"Capital\" value=\"" + capUser + "\"/> </td>");
 
-                        out.println("</tr>");
+                           out.println("</tr>");
 
-                        out.println("<tr>");
-                            out.println("<td colspan='4' class='b_modif'><input type=\"submit\" value=\"Modifier\" class=\"b_submit\"/> </td>");
-                        out.println("</tr>");
+                           out.println("<tr>");
+                               out.println("<td colspan='4' class='b_modif'><input type=\"submit\" value=\"Modifier\" class=\"b_submit\"/> </td>");
+                           out.println("</tr>");
+                        out.println("</form>");
 
                     out.println("</table>");
                 out.println("</div>");
@@ -112,24 +117,9 @@ public class Profil extends HttpServlet {
             UtilHtml.piedsDePage(out, session);
    }
    
-   protected void processRequestDebut(HttpServletRequest request, HttpServletResponse response, PrintWriter out)
-            throws ServletException, IOException {
-        
-        session = request.getSession();
-        nomUser = (String)session.getAttribute( "Nom_Joueur" );
-        
-        response.setContentType("text/html;charset=UTF-8");         
-        try { 
-            UtilHtml.enteteHtml(out, "Catalogue");          
-            UtilHtml.barreDeMenu(out, session);            
-        }
-
-        finally {} 
-    }
-   
     protected void obtenirInfosProfil()
     {
-        String sqlProfil = "select MOTDEPASSE, NOM, PRENO, CAPITAL from joueursrpg where nomusager = '"+ nomUser + "'";
+        String sqlProfil = "select MOTDEPASSE, NOM, PRENOM, CAPITAL from joueursrpg where nomusager = '"+ nomUser + "'";
         ConnectionOracle oradb = new ConnectionOracle();
         oradb.setConnection("kellylea", "oracle2");
         oradb.connecter(); 
@@ -164,10 +154,7 @@ public class Profil extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
               response.setContentType("text/html;charset=UTF-8");
-        session = request.getSession();
-        try (PrintWriter out = response.getWriter()) {
-            generatePageProfil(out, "");
-        }
+              processRequest(request, response);
    }
 
    /**
