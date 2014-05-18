@@ -78,7 +78,7 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("http://localhost:8080/eshoppeweb/catalogue");
     }
 
     /**
