@@ -207,9 +207,13 @@ public class Panier extends HttpServlet {
                 + "<tr><td><input type='hidden' name='total' value='"+total+"'>"+total+"</td></tr>"
                 + "<tr><td></td></tr>"
                 + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Mettre à jour\" name=\"update\" /></td></tr>"
-                + "<tr><td><input type=\"submit\" class=\"b_submit\" value=\"Acheter\" name=\"achat\" /></td></tr>"
                 
-                //bouton pour vider le panier
+                //bouton pour acheter le contenu entier du panier 
+                + "<tr><td><form action='acheterpanier' method='post'>"
+                + "<input type=\"submit\" class=\"b_submit\" value=\"Acheter\" name=\"achat\" />"
+                + "</form></td></tr>"
+                
+                //bouton pour vider le panier et retourner au catalogue
                 + "<tr><td><form action='viderpanier' method='post'>"
                 + "<input type=\"submit\" class=\"b_submit\" value=\"Vider\" name=\"vider\" />"
                 + "</form></td></tr>"
