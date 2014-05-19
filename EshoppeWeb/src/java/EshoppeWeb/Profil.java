@@ -102,7 +102,7 @@ public class Profil extends HttpServlet {
                         out.println("<form action='modifiercapital' method='post'>");
                            out.println("<tr>");
                                out.println("<td colspan='2' class='labelRow'>Capital : </td>");
-                               out.println("<td colspan='2' class='zeChampTexte'><input type=\"text\" name=\"Capital\" value=\"" + capUser + "\"/> </td>");
+                               out.println("<td colspan='2' class='zeChampTexte'><input type=\"text\" name=\"Capital\" value=\"" + capUser + "\" onkeyup=\"ConstrainToDigit(event);\" /> </td>");
 
                            out.println("</tr>");
 

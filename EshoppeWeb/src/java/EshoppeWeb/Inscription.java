@@ -53,6 +53,9 @@ public class Inscription extends HttpServlet {
        
             out.println("<form action='inscription' method='post'>");
             UtilHtml.enteteHtml(out, "Inscription");
+            UtilHtml.barreDeMenu(out, session);
+            UtilHtml.gererErreurs(session, Erreur);
+            UtilHtml.afficherErreurPage(out, session);
                 out.println("<div id='mainInscriptionDiv'>");
                     out.println("<table id='zeInscritpion'>");
 
@@ -89,11 +92,6 @@ public class Inscription extends HttpServlet {
                         out.println("</tr>");
 
                     out.println("</table>");
-                    out.println("<div id='zePreContenant>");
-                        out.println("<pre id='zeError'>");
-                            out.println(Erreur);
-                        out.println("</pre>");
-                    out.println("</div>");
                 out.println("</div>");
             out.println("</form>");
            

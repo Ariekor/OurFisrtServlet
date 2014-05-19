@@ -11,12 +11,28 @@ and open the template in the editor.
 td{
     border: 1px #634600;
 }
+.zeDetailCellLeft
+{
+    font-size: 18px;
+    font-style: italic;
+    text-align: right;
+    width: 50%;
+    margin: auto;
+}
+.zeDetailCellRight
+{
+    width: 50%;
+    text-align: left;
+    margin: auto;
+}
+
 /*bande de message d'erreur entre baniere et barre menu*/
 .erreur{
     background-color: white;
     color: black;  
     font-size: 35px;
-    
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #zeInscritpion{
@@ -148,6 +164,7 @@ table{
     margin-right: auto;
     margin-top: 5px;
     position: relative;
+    margin-bottom: 5px;
 }
 
 /////logo, login et inscription = 3 div de barre menu visiteur

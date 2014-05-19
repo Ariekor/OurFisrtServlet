@@ -175,7 +175,7 @@ public class Panier extends HttpServlet {
                         + "<input type=\"hidden\" name=\"numitem\" value=\""
                         + numitem + "\"/><td class='zeCatalogueCell'>"
                         + nomitem + "</td><td class='zeCatalogueCell'>"                        
-                        + "<input type=\"text\" name='qte' value =\""+qte+"\" size='3'>"
+                        + "<input type=\"text\" name='qte' value =\""+qte+"\" size='3' onkeyup=\"ConstrainToDigit(event);\">"
                         + "<input type=\"submit\" class=\"b_submit\" value=\"Mettre à jour\" name=\"update\" />"//bouton mettre a jour
                         + "</form></td><td class='zeCatalogueCell'>"
                         

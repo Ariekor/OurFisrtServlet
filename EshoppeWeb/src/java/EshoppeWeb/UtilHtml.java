@@ -39,6 +39,18 @@ public class UtilHtml {
         if(message != null && !message.equals(""))
         {
             out.println("<span class='erreur'>Attention: " + session.getAttribute("Erreur")+"</span>");
+            session.removeAttribute("Erreur");
+        }
+    }
+    static void gererErreurs(HttpSession session, String erreur)
+    {
+        if (erreur != null && !erreur.equals("null"))
+        {
+            session.setAttribute("Erreur", erreur);
+        }
+        else 
+        {
+            session.setAttribute("Erreur", "");
         }
     }
     static protected void barreDeMenu(PrintWriter out, HttpSession session ){

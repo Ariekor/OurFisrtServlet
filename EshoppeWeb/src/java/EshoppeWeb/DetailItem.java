@@ -29,8 +29,7 @@ public class DetailItem extends HttpServlet {
 
      /////a récupérer de session Tomcat...
     String nomUser;
-    HttpSession session;
-    String erreur;
+    HttpSession session;    
     int numItem;
     String genre;
     /**
@@ -53,24 +52,18 @@ public class DetailItem extends HttpServlet {
 
         response.setContentType("text/html;charset=UTF-8");         
         UtilHtml.enteteHtml(out, "Catalogue");//serait bien de récupérer le webServlet name     
-        UtilHtml.barreDeMenu(out, session); 
         UtilHtml.afficherErreurPage(out, session);
+        UtilHtml.barreDeMenu(out, session); 
         
         //contenu page
         out.println("<div id='mainInscriptionDiv'>");
-                    out.println("<table id='zeInscritpion'>");
+            out.println("<table id='zeInscritpion'>");
 
-                        out.println("<tr class='rowHeigh'>");
-                        
-                        afficherGeneral(out);
-                        afficherDetails(out);
-                        
-                    out.println("</table>");
-                    out.println("<div id='zePreContenant>");
-                        out.println("<pre id='zeError'>");                            
-                        out.println("</pre>");
-                    out.println("</div>");
-                out.println("</div>");
+                afficherGeneral(out);
+                afficherDetails(out);
+
+            out.println("</table>");
+        out.println("</div>");
                 
         UtilHtml.piedsDePage(out, session);
         out.close();
@@ -104,10 +97,11 @@ public class DetailItem extends HttpServlet {
             rst.close();
             stm.close();  
         }
-        catch(SQLException e){erreur = e.getMessage();}
+        catch(SQLException e){session.setAttribute("Erreur", e.getMessage());}
         finally{connBd.deconnecter();}
-        out.println("<td class='zeTitre' colspan='4'>"+genre+ " : " +nomitem+" </td>"); 
-            out.println("</tr>");
+        out.println("<tr class='rowHeigh'>");
+            out.println("<td class='zeTitre' colspan='2'>"+genre+ " : " +nomitem+" </td>"); 
+        out.println("</tr>");
         //mettre en page les données communes
         attributsCommuns(out, prix, quantite, poids);  
     }
@@ -115,57 +109,67 @@ public class DetailItem extends HttpServlet {
     private void attributsCommuns(PrintWriter out, int prix, int quantite, int poids)
     {
         out.println("<tr>");
-            out.println("<td colspan='2' class='labelRow'>Prix : </td>");
-            out.println("<td colspan='2' class='zeChampTexte'>"+prix+"</td>");
+            out.println("<td  class='zeDetailCellLeft'>PRIX : </td>");
+            out.println("<td  class='zeDetailCellRight'>"+prix+"</td>");
         out.println("</tr>");
         out.println("<tr>");
-            out.println("<td colspan='2' class='labelRow'>Stock : </td>");
-            out.println("<td colspan='2' class='zeChampTexte'>"+quantite+"</td>");
+            out.println("<td  class='zeDetailCellLeft'>STOCK : </td>");
+            out.println("<td  class='zeDetailCellRight'>"+quantite+"</td>");
         out.println("</tr>");
         out.println("<tr>");
-            out.println("<td colspan='2' class='labelRow'>Poids : </td>");
-            out.println("<td colspan='2' class='zeChampTexte'>"+poids+"</td>");
+            out.println("<td  class='zeDetailCellLeft'>POIDS : </td>");
+            out.println("<td  class='zeDetailCellRight'>"+poids+"</td>");
         out.println("</tr>");        
     }
     private void afficherDetails(PrintWriter out)
-    {
-        //liste des différents champs possibles:
-        int efficacite;     //arme, armure
-        String composition; //arme, armure
-        int mains;          //arme
-        String taille;      //armure
-        String description;  //habilete
-        String effetattendu; //potion
-        int duréeeffet;      //potion
-         
+    {        
         ConnectionOracle connBd = new ConnectionOracle();
         connBd.setConnection("kellylea", "oracle2");
         connBd.connecter();
         try
         {  
+            String leGenre = genre + "s";
             //récupérer les données et metadata des tables genre
-            String SQL = "Select * From "+genre+"s where numitem='"+numItem+"'";
+            String SQLDetail = "Select * From "+leGenre+" where numitem='"+numItem+"'";
 
-            Statement stm = connBd.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rst = stm.executeQuery(SQL);
-            ResultSetMetaData rstMD = rst.getMetaData();
-            while  (rst.next())
+            Statement stmDetail = connBd.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            
+            ResultSet rstDetail = stmDetail.executeQuery(SQLDetail);  
+            ResultSetMetaData rstMD = rstDetail.getMetaData();
+            int nbCol = rstMD.getColumnCount();
+             
+            while (rstDetail.next())
             {
-               efficacite = (rst.getInt("efficacite"));               
-               //etc...
+                
+                String nomCol;
+                String val="";
+                int typeCol;
+                
+                for (int i=2; i <= nbCol; ++i)
+                {
+                    
+                    nomCol = rstMD.getColumnName(i);   
+                    typeCol = rstMD.getColumnType(i);
+                    if(typeCol == 4 || typeCol == 2)
+                    {
+                        val = "" + rstDetail.getInt(i);
+                    }
+                    else if ( typeCol == 12 || typeCol == -16 || typeCol == -1)
+                    {
+                        val = rstDetail.getString(i);
+                    }                    
+                    out.println("<tr>");
+                        out.println("<td  class='zeDetailCellLeft'>"+nomCol+" : </td>");
+                        out.println("<td  class='zeDetailCellRight'>"+val+"</td>");
+                    out.println("</tr>");
+                }                 
             } 
-            rst.close();
-            stm.close();              
+            rstDetail.close();
+            stmDetail.close();              
         }
-        catch(SQLException e){erreur = e.getMessage();}
+        catch(SQLException e){session.setAttribute("Erreur", e.getMessage()); }
         finally{connBd.deconnecter();}
-        //générer une page avec les infos.
-            //pour chaque ligne: 
-                /*out.println("<tr>");
-                    out.println("<td colspan='2' class='labelRow'>Prix : </td>");
-                    out.println("<td colspan='2' class='zeChampTexte'>"+prix+"</td>");
-                out.println("</tr>");*/
-    }
+    }   
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

@@ -76,15 +76,8 @@ public class AcheterPanier extends HttpServlet {
         nomUsager = (String)session.getAttribute("Nom_Joueur");
         capUser = Integer.parseInt( request.getParameter("cap"));
         facture = Integer.parseInt( request.getParameter("total"));
-        acheterPanier();        
-        if (!erreur.equals("null") && erreur != null)
-        {
-            session.setAttribute("Erreur", erreur);
-        }
-        else 
-        {
-            session.setAttribute("Erreur", "");
-        }
+        acheterPanier();   
+        UtilHtml.gererErreurs(session, erreur);
         response.sendRedirect(URL);
     }
     
@@ -120,8 +113,7 @@ public class AcheterPanier extends HttpServlet {
                     int prixCalcule =  prixUnitaire*qte;
                     int stock = (Integer)rstPanier.getInt("STOCK");
                     
-                    //si stock > qte
-                    if (stock > qte)
+                    if (stock >= qte && qte != 0)
                     {
                         //ajouter à inventaire
                         erreur += ajouterInventaire(nomUsager,numitem,qte);
@@ -138,7 +130,8 @@ public class AcheterPanier extends HttpServlet {
                     //sinon
                     else
                     {
-                        //ajouter erreur item x , qte non disponible
+                        erreur += "La quantité n'est pas valide\n";
+                        URL = "http://localhost:8080/eshoppeweb/panier";
                     }
                 }
             }
