@@ -1,5 +1,6 @@
 package EshoppeWeb;
 
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpSession;
 
@@ -64,6 +65,11 @@ public class UtilHtml {
                 + "<input type=\"submit\" value=\"Panier\" class=\"b_submit\" /></form>"
                   + "</td>"); 
         
+        //Section menu donnant accès au panier.
+        out.println("<td id='inventaire'><form action='inventairejoueur' method='post' class='zePosLeft'>"
+                + "<input type=\"submit\" value=\"Inventaire\" class=\"b_submit\" /></form>"
+                  + "</td>"); 
+        
         //Section menu permettant la validation du membre du catalogue
         out.println("<td id='deconnecter'><form action='logout' method='post' class='zePosRight'>"
                 + "<input type=\"submit\" value=\"Se déconnecter\" class=\"b_submit\" /></form>"
@@ -86,4 +92,12 @@ public class UtilHtml {
         out.println("</body>");
         out.println("</html>");
     }    
+
+   static void barreDeMenu(PrintStream out, HttpSession session) {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   }
+
+   static void enteteHtml(PrintStream out, String profil) {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   }
 }
