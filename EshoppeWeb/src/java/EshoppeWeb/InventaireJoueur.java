@@ -23,7 +23,8 @@ import javax.servlet.http.HttpSession;
 public class InventaireJoueur extends HttpServlet {
 
    private HttpSession session;
-   private String nomUser = "";
+   private String nomUser ="";
+   private String erreur ="";
    
    /**
     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,6 +45,14 @@ public class InventaireJoueur extends HttpServlet {
       try (PrintWriter out = response.getWriter()) {
           UtilHtml.enteteHtml(out,"InventaireJoueur");          
           UtilHtml.barreDeMenu(out, session);
+          UtilHtml.gererErreurs(session, erreur);
+          
+          
+          //inventaire ici
+          //copier de panier...
+          
+          
+          
           UtilHtml.piedsDePage(out, session);
       }
    }

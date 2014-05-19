@@ -55,12 +55,15 @@ public class Panier extends HttpServlet {
             UtilHtml.enteteHtml(out,"Panier");
             UtilHtml.barreDeMenu(out, session);
             
+            // début de code pour inventaire
             out.println("<h1>Panier</h1>");
             UtilHtml.afficherErreurPage(out, session);
             out.println("<div class='zeCatalogueDiv'>");
             listeItems(out);// bouton retirer item inclus
+            //fin de code pour inventaire
+            
             menuPanier(out); //colonne de droite, menu
-            out.println("</div>"); 
+            out.println("</div>"); ///////inclure pour inventaire
             UtilHtml.piedsDePage(out, session);
         }
         session.setAttribute("Erreur", erreur);
