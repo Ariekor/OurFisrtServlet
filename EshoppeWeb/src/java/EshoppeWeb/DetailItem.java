@@ -54,11 +54,24 @@ public class DetailItem extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");         
         UtilHtml.enteteHtml(out, "Catalogue");//serait bien de récupérer le webServlet name     
         UtilHtml.barreDeMenu(out, session); 
+        UtilHtml.afficherErreurPage(out, session);
         
         //contenu page
-        afficherGeneral(out);
-        afficherDetails(out);
-        
+        out.println("<div id='mainInscriptionDiv'>");
+                    out.println("<table id='zeInscritpion'>");
+
+                        out.println("<tr class='rowHeigh'>");
+                        
+                        afficherGeneral(out);
+                        afficherDetails(out);
+                        
+                    out.println("</table>");
+                    out.println("<div id='zePreContenant>");
+                        out.println("<pre id='zeError'>");                            
+                        out.println("</pre>");
+                    out.println("</div>");
+                out.println("</div>");
+                
         UtilHtml.piedsDePage(out, session);
         out.close();
     }
@@ -66,10 +79,10 @@ public class DetailItem extends HttpServlet {
     private void afficherGeneral(PrintWriter out)
     {
         //récupérer nom item et image et autres données non affichées dans catalogue
-        String nomitem="un genre d'épée";
-        int prix;
-        int quantite;
-        int poids;
+        String nomitem ="";
+        int prix=0;
+        int quantite=0;
+        int poids=0;
         //String urlImage;//mettre glogal si on n'affiche pas dans l'ordre...
         
         ConnectionOracle connBd = new ConnectionOracle();
@@ -89,13 +102,30 @@ public class DetailItem extends HttpServlet {
                poids = (rst.getInt("poids"));               
             } 
             rst.close();
-            stm.close();              
+            stm.close();  
         }
         catch(SQLException e){erreur = e.getMessage();}
         finally{connBd.deconnecter();}
-        out.println("<h1>"+genre+ " : " +nomitem+"</h1>");
-        //mettre en page les données communes 
-        
+        out.println("<td class='zeTitre' colspan='4'>"+genre+ " : " +nomitem+" </td>"); 
+            out.println("</tr>");
+        //mettre en page les données communes
+        attributsCommuns(out, prix, quantite, poids);  
+    }
+    
+    private void attributsCommuns(PrintWriter out, int prix, int quantite, int poids)
+    {
+        out.println("<tr>");
+            out.println("<td colspan='2' class='labelRow'>Prix : </td>");
+            out.println("<td colspan='2' class='zeChampTexte'>"+prix+"</td>");
+        out.println("</tr>");
+        out.println("<tr>");
+            out.println("<td colspan='2' class='labelRow'>Stock : </td>");
+            out.println("<td colspan='2' class='zeChampTexte'>"+quantite+"</td>");
+        out.println("</tr>");
+        out.println("<tr>");
+            out.println("<td colspan='2' class='labelRow'>Poids : </td>");
+            out.println("<td colspan='2' class='zeChampTexte'>"+poids+"</td>");
+        out.println("</tr>");        
     }
     private void afficherDetails(PrintWriter out)
     {
@@ -121,7 +151,7 @@ public class DetailItem extends HttpServlet {
             ResultSetMetaData rstMD = rst.getMetaData();
             while  (rst.next())
             {
-               efficacite = (rst.getInt("efficacite"));
+               efficacite = (rst.getInt("efficacite"));               
                //etc...
             } 
             rst.close();
@@ -131,6 +161,10 @@ public class DetailItem extends HttpServlet {
         finally{connBd.deconnecter();}
         //générer une page avec les infos.
             //pour chaque ligne: 
+                /*out.println("<tr>");
+                    out.println("<td colspan='2' class='labelRow'>Prix : </td>");
+                    out.println("<td colspan='2' class='zeChampTexte'>"+prix+"</td>");
+                out.println("</tr>");*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
