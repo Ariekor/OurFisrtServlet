@@ -211,8 +211,7 @@ public class Catalogue extends HttpServlet {
                   stm.setString( 2, genre );
                   stm.setString(3, cle+"%");
                   stm.execute();
-                  rst = (ResultSet)stm.getObject(1);
-                  int i = 0;
+                  rst = (ResultSet)stm.getObject(1);                  
                   // parcours du ResultSet
                   while( rst.next() )
                   {                    
@@ -238,8 +237,7 @@ public class Catalogue extends HttpServlet {
                             + "<input type=\"text\" name='qte' size='2' class='marge' onkeyup=\"ConstrainToDigit(event);\" >"
                             + "<input type=\"submit\" value=\"Ajouter\" class=\"b_submit\"/></td>" );//btn ajouter associé à un seul item.
                     out.println("</form>");
-                    out.println( "</tr>" );
-                    ++i;
+                    out.println( "</tr>" );                    
                 }  
                   stm.close();
             }

@@ -67,10 +67,35 @@ public class DetailItem extends HttpServlet {
     {
         //récupérer nom item et image et autres données non affichées dans catalogue
         String nomitem="un genre d'épée";
+        int prix;
+        int quantite;
         int poids;
-        String urlImage;//mettre glogal si on n'affiche pas dans l'ordre...
+        //String urlImage;//mettre glogal si on n'affiche pas dans l'ordre...
+        
+        ConnectionOracle connBd = new ConnectionOracle();
+        connBd.setConnection("kellylea", "oracle2");
+        connBd.connecter();
+        try
+        {  
+            String SQL = "Select nomitem, prix, quantite, poids  From catalogue where numitem='"+numItem+"'";
+
+            Statement stm = connBd.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rst = stm.executeQuery(SQL);            
+            if  (rst.next())
+            {
+               nomitem = rst.getString("nomitem");
+               prix = (rst.getInt("prix"));    
+               quantite = (rst.getInt("quantite"));    
+               poids = (rst.getInt("poids"));               
+            } 
+            rst.close();
+            stm.close();              
+        }
+        catch(SQLException e){erreur = e.getMessage();}
+        finally{connBd.deconnecter();}
         out.println("<h1>"+genre+ " : " +nomitem+"</h1>");
-        //mettre en page les données communes
+        //mettre en page les données communes 
+        
     }
     private void afficherDetails(PrintWriter out)
     {
@@ -89,7 +114,7 @@ public class DetailItem extends HttpServlet {
         try
         {  
             //récupérer les données et metadata des tables genre
-            String SQL = "Select * From "+genre+" where numitem='"+numItem+"'";
+            String SQL = "Select * From "+genre+"s where numitem='"+numItem+"'";
 
             Statement stm = connBd.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rst = stm.executeQuery(SQL);

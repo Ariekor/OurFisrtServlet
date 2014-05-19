@@ -27,6 +27,7 @@ public class ModifierMdp extends HttpServlet {
       private HttpSession session;
       private String nomUser = "";
       private String motDePasse = "";
+      private String erreur;
 
    /**
     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,6 +45,7 @@ public class ModifierMdp extends HttpServlet {
       session = request.getSession();
       nomUser = (String)session.getAttribute( "Nom_Joueur" );
       motDePasse = request.getParameter("MotDePasse");
+      erreur = (String)session.getAttribute("Erreur");
       modifMotDePasse();
       response.sendRedirect("http://localhost:8080/eshoppeweb/profil");
    }
@@ -99,7 +101,7 @@ public class ModifierMdp extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      processRequest(request, response);
+        processRequest(request, response);
    }
 
    /**
