@@ -32,6 +32,7 @@ public class Catalogue extends HttpServlet {
     /////a récupérer de session Tomcat...
     String nomUser;
     HttpSession session;
+    String ordre;
     
     ///debut du process cummun
     protected void processRequestDebut(HttpServletRequest request, HttpServletResponse response, PrintWriter out)
@@ -40,6 +41,11 @@ public class Catalogue extends HttpServlet {
         // création de la session
         session = request.getSession();// session ne sera jamais null
         nomUser = (String)session.getAttribute( "Nom_Joueur" );
+        ordre = request.getParameter("ordre");
+        if( ordre == null)
+        {
+            ordre = "nomitem";
+        }
                 
         response.setContentType("text/html;charset=UTF-8");         
         try { 
@@ -196,20 +202,21 @@ public class Catalogue extends HttpServlet {
         oradb.connecter();  
         out.println( "<div class='zeCatalogue'><table class='zeCatable'>" );
            //entête
-        out.println( "<tr><td class='zeCatEntete'>Nom d'item</td>"
-                   + "<td class='zeCatEntete'>En stock</td>"
-                   + "<td class='zeCatEntete'>Prix</td>"
-                   + "<td class='zeCatEntete'>Poids</td>"
-                   + "<td class='zeCatEntete'>Genre</td>"
+        out.println( "<tr><td class='zeCatEntete'><a href=\"http://localhost:8080/eshoppeweb/catalogue?ordre=NOMITEM\">Nom d'item</a></td>"
+                   + "<td class='zeCatEntete'> <a href=\"http://localhost:8080/eshoppeweb/catalogue?ordre=QUANTITE\">En stock</a></td>"
+                   + "<td class='zeCatEntete'><a href=\"http://localhost:8080/eshoppeweb/catalogue?ordre=PRIX\">Prix</a></td>"
+                   + "<td class='zeCatEntete'><a href=\"http://localhost:8080/eshoppeweb/catalogue?ordre=POIDS\">Poids</a></td>"
+                   + "<td class='zeCatEntete'><a href=\"http://localhost:8080/eshoppeweb/catalogue?ordre=GENRE\">Genre</a></td>"
                    + "<td class='zeCatEntete'>Ajouter au panier</td></tr>" );
 
         try
         {
             ResultSet rst;
-              try (CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Catalogue.recherchecatalogue(?,?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY )) {
+              try (CallableStatement stm = oradb.getConnection().prepareCall("{ ? = call Gestion_Catalogue.recherchecatalogue(?,?,?)}", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY )) {
                   stm.registerOutParameter(1, OracleTypes.CURSOR);
                   stm.setString( 2, genre );
                   stm.setString(3, cle+"%");
+                  stm.setString(4, ordre);
                   stm.execute();
                   rst = (ResultSet)stm.getObject(1);                  
                   // parcours du ResultSet
