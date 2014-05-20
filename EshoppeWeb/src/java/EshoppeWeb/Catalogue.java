@@ -44,7 +44,7 @@ public class Catalogue extends HttpServlet {
         ordre = request.getParameter("ordre");
         if( ordre == null)
         {
-            ordre = "nomitem";
+            ordre = "NOMITEM";
         }
                 
         response.setContentType("text/html;charset=UTF-8");         

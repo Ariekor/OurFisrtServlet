@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import oracle.jdbc.OracleTypes;
+import org.eclipse.jdt.internal.compiler.classfmt.ClassFileConstants;
 
 /**
  *
@@ -76,7 +77,11 @@ public class AcheterPanier extends HttpServlet {
         nomUsager = (String)session.getAttribute("Nom_Joueur");
         capUser = Integer.parseInt( request.getParameter("cap"));
         facture = Integer.parseInt( request.getParameter("total"));
-        acheterPanier();   
+        acheterPanier();
+        if ( erreur.equals(""))
+        {
+            erreur = "Achat réussi votre # de confirmation est :"+  (int)(Math.random() * (20000000 - 10000000));
+        }
         UtilHtml.gererErreurs(session, erreur);
         response.sendRedirect(URL);
     }
