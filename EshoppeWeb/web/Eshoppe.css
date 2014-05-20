@@ -104,6 +104,12 @@ table{
     width: 85%;
     float:left;
 }
+
+#listeItemsJoueur {
+    width: 85%;
+    margin: auto;
+}
+
 #menuPanier{
     width: 15%;
     float: right;
@@ -132,6 +138,12 @@ table{
 .b_submit:active {
 	position:relative;
         top:2px;
+}
+
+h1 {
+    font-size: 35px;
+    text-shadow: 2px 2px 5px #302A23;
+    color: #F0E9D8;
 }
 
 .zeCatalogueDiv{

@@ -172,8 +172,8 @@ public class Catalogue extends HttpServlet {
                     liste += "<option>"+g+"</option>";
                 }
             }
-     /*       rst.close();
-            stm.close();*/
+            rst.close();
+            stm.close();
             
             liste += "</select>";
         }
