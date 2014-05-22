@@ -53,10 +53,10 @@ public class InventaireJoueur extends HttpServlet {
           UtilHtml.gererErreurs(session, erreur);
           
           out.println("<h1>Inventaire du joueur</h1>");
+          listeItems(out);
           out.println("<form action='catalogue' method='get'>"
                   + "<input type=\"submit\" value=\"Fermer\" class=\"b_submit\" name='fermerinventaire' />"
                   + "</form>");
-          listeItems(out);
           
           UtilHtml.piedsDePage(out, session);
       }
