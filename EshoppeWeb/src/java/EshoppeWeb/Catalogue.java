@@ -151,7 +151,7 @@ public class Catalogue extends HttpServlet {
     }
     
     private String genererListeGenres(String genre){
-        String SQLGenre = "Select Distinct Genre From Catalogue";
+    //    String SQLGenre = "Select Distinct Genre From Catalogue";
         String liste ="<select name=\"genre\" />";
         String g;
         ConnectionOracle oradbListe = new ConnectionOracle();
@@ -160,8 +160,12 @@ public class Catalogue extends HttpServlet {
         try
         {
             
-            Statement stm = oradbListe.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rst = stm.executeQuery(SQLGenre); 
+       /*     Statement stm = oradbListe.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rst = stm.executeQuery(SQLGenre); */
+            CallableStatement stm = oradbListe.getConnection().prepareCall("{ ? = call Gestion_Catalogue.listergenres }" );
+            stm.registerOutParameter(1, OracleTypes.CURSOR);
+            stm.execute(); 
+            ResultSet rst = (ResultSet)stm.getObject(1);
             
             if(!genre.equals("Tout le catalogue")){
                 liste += "<option>"+"Tout le catalogue"+"</option>";

@@ -76,10 +76,12 @@ public class Panier extends HttpServlet {
         connBd.connecter();
         try
         {
-            String SQL = "Select CAPITAL From JoueursRpg where NOMUSAGER='"+nomUser+"'";
-
-            Statement stm = connBd.getConnection().createStatement();
-            ResultSet rst = stm.executeQuery(SQL);
+            CallableStatement stm = connBd.getConnection().prepareCall("{ ? = call Gestion_Users.listerCapital(?) }");
+            stm.registerOutParameter(1, OracleTypes.CURSOR);
+            stm.setString(2, nomUser);
+            stm.execute();
+            ResultSet rst = (ResultSet)stm.getObject(1); 
+            
             if (rst.next())
             {
                 capUser = rst.getInt(1);
