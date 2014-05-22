@@ -77,16 +77,10 @@ public class Profil extends HttpServlet {
                         
                            out.println("<tr>");
                                out.println("<td colspan='2' class='labelRow'>Mot de passe : </td>");
-                               out.println("<td colspan='2' class='zeChampTexte'><input type=\"text\" name=\"MotDePasse\" value=\"" + motDePasse + "\"/> </td>");
+                               out.println("<td colspan='2' class='zeChampTexte'>" + motDePasse + "</td>");
 
                            out.println("</tr>");
-
-                           out.println("<tr class='zeOtherRow'>");    
-                               out.println("<td colspan='4' class='b_modif'><form action='modifiermdp' method='post'>"
-                                       + "<input type='hidden' name='MotDePasse' value='" + motDePasse + "'/><input type=\"submit\" value=\"Modifier\" class=\"b_submit\"/> </td>");
-                           out.println("</tr>");
-                        out.println("</form>");
-
+                           
                         out.println("<tr>");
                             out.println("<td colspan='2' class='labelRow'>Nom : </td>");
                             out.println("<td colspan='2' class='zeChampTexte'>" + nom + "</td>");
@@ -108,7 +102,7 @@ public class Profil extends HttpServlet {
                            out.println("</tr>");
 
                            out.println("<tr>");
-                               out.println("<td colspan='4' class='b_modif'><input type=\"submit\" value=\"Modifier\" class=\"b_submit\"/> </td>");
+                               out.println("<td colspan='4' class='b_modif'><input type=\"submit\" value=\"Modifier mon capital\" class=\"b_submit\"/> </td>");
                            out.println("</tr>");
                         out.println("</form>");
 
