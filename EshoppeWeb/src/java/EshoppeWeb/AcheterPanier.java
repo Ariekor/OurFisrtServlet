@@ -43,8 +43,8 @@ public class AcheterPanier extends HttpServlet {
    String URL = "http://localhost:8080/eshoppeweb/catalogue";
    ResultSet rstPanier;
    int capUser;
-   int facture;
-   int depense;
+   int facture=0;
+   int depense=0;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -121,16 +121,13 @@ public class AcheterPanier extends HttpServlet {
                     if (stock >= qte && qte != 0)
                     {
                         //ajouter à inventaire
-                        erreur += ajouterInventaire(nomUsager,numitem,qte);
+                        ajouterInventaire(nomUsager,numitem,qte);
                         //update qte du catalogue
                         mettreAJourCatalogue(numitem,qte,stock);
                         //retirer du panier
                         retirerPanier(nomUsager,numitem);
                         //augment la dépense += prix*qte
-                        if (erreur.equals(""))
-                        {
-                            depense += prixCalcule;                            
-                        }                        
+                        depense += prixCalcule;   
                     }
                     //sinon
                     else
@@ -146,7 +143,7 @@ public class AcheterPanier extends HttpServlet {
             }
             finally { oradb.deconnecter(); }
             //update capital -= depense
-            ajusterCapital(nomUsager, capUser - depense);
+            ajusterCapital(nomUsager, capUser - facture);
         }
     }
     
@@ -240,7 +237,7 @@ public class AcheterPanier extends HttpServlet {
                 }
                 stm.close();                
             }
-            catch(SQLException sqe){ erreur += sqe.getMessage()+ "\n";}
+            catch(SQLException sqe){ erreur = sqe.getMessage()+ "\n";}
             finally{odc.deconnecter();}
         }        
         return err;
