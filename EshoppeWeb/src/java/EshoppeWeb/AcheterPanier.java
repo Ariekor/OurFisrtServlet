@@ -248,14 +248,14 @@ public class AcheterPanier extends HttpServlet {
     private boolean estDejaDansInventaire(String nom , int numItem)
     {
         boolean valide = false;
-        String sqlLogin = "select nomusager from inventairejoueur where nomusager = '"+nom+"' and numitem = '"+numItem+"'";
+        String sqlItem = "select nomusager from inventairejoueur where nomusager = '"+nom+"' and numitem = '"+numItem+"'";
         ConnectionOracle oradb = new ConnectionOracle();
         oradb.setConnection("kellylea", "oracle2");
         oradb.connecter(); 
         try
         {   
             Statement stm = oradb.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rst = stm.executeQuery(sqlLogin);
+            ResultSet rst = stm.executeQuery(sqlItem);
             if(rst.first())
             {
                 valide = true;

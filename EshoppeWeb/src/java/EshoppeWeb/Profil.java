@@ -61,7 +61,7 @@ public class Profil extends HttpServlet {
           UtilHtml.enteteHtml(out,"Profil");          
           UtilHtml.barreDeMenu(out, session);
           UtilHtml.afficherErreurPage(out, session);
-          out.println("<form action='profil' method='post'>");
+  //        out.println("<form action='profil' method='post'>");
             out.println("<div id='mainProfilDiv'>");
                   out.print("<table id='zeProfil'>");
                         out.println("<tr class='rowHeigh'>");
@@ -99,7 +99,8 @@ public class Profil extends HttpServlet {
 
                         out.println("</tr>");
                         
-                        out.println("<form action='modifiercapital' method='post'>");
+                        out.println("<form action='modifier"
+                                + "capital' method='post'>");
                            out.println("<tr>");
                                out.println("<td colspan='2' class='labelRow'>Capital : </td>");
                                out.println("<td colspan='2' class='zeChampTexte'><input type=\"text\" name=\"Capital\" value=\"" + capUser + "\" onkeyup=\"ConstrainToDigit(event);\" /> </td>");
@@ -113,7 +114,7 @@ public class Profil extends HttpServlet {
 
                     out.println("</table>");
                 out.println("</div>");
-            out.println("</form>");
+      //      out.println("</form>");
            
             UtilHtml.piedsDePage(out, session);
    }
