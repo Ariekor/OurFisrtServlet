@@ -195,6 +195,14 @@ public class AjouterPanier extends HttpServlet {
         oradbPanier.connecter();
         try
         {
+            /*
+            CallableStatement stm = oradbPanier.getConnection().prepareCall("{ ? = call (? , ?) }");
+            stm.registerOutParameter(1, OracleTypes.CURSOR);
+            stm.setString(2, nom);
+            stm.setInt(3,numItem);
+            stm.execute();
+            ResultSet rst = (ResultSet)stm.getObject(1);
+            */
             Statement stm = oradbPanier.getConnection().createStatement();
             ResultSet rst = stm.executeQuery(Sql);
             if (rst.next())
