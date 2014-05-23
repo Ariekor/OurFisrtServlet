@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -123,15 +124,18 @@ public class ModifierQtePanier extends HttpServlet {
     
     private int obtenirQteCatalogue (int numItem)
     {
-        int qte = 0;
-        String Sql= "Select QUANTITE FROM catalogue where numitem='"+numItem+"'";
+        int qte = 0;     
         ConnectionOracle oradbPanier = new ConnectionOracle();
         oradbPanier.setConnection("kellylea", "oracle2");
         oradbPanier.connecter();
         try
         {
-            Statement stm = oradbPanier.getConnection().createStatement();
-            ResultSet rst = stm.executeQuery(Sql);
+            CallableStatement stm = oradbPanier.getConnection().prepareCall("{ ? = call GESTION_CATALOGUE.LISTERQTE(?) }");
+            stm.registerOutParameter(1, OracleTypes.CURSOR);
+            stm.setInt(2, numItem);
+            stm.execute();
+            ResultSet rst = (ResultSet)stm.getObject(1);
+            
             if (rst.next())
             {
                 qte = rst.getInt(1);
