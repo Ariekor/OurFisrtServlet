@@ -131,8 +131,11 @@ public class InventaireJoueur extends HttpServlet {
         oradbListe.connecter();  
         try
         {  
-            Statement stm = oradbListe.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rst = stm.executeQuery(SQLGenre); 
+            CallableStatement stmList = oradbListe.getConnection().prepareCall("{ ? = call GESTION_CATALOGUE.LISTERGENREUNIQUE(?) }" );
+            stmList.registerOutParameter(1, OracleTypes.CURSOR);
+            stmList.setInt(2, numitem);
+            stmList.execute();
+            ResultSet rst = (ResultSet)stmList.getObject(1);
                         
             while(rst.next())
             {
@@ -140,7 +143,7 @@ public class InventaireJoueur extends HttpServlet {
             }
             
             rst.close();
-            stm.close();
+            stmList.close();
         }
         catch (SQLException e){/*faire quelquechose ici*/}   
         finally{ oradbListe.deconnecter();}
