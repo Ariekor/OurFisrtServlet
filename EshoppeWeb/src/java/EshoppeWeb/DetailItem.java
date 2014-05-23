@@ -9,6 +9,7 @@ package EshoppeWeb;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -82,11 +84,13 @@ public class DetailItem extends HttpServlet {
         connBd.setConnection("kellylea", "oracle2");
         connBd.connecter();
         try
-        {  
-            String SQL = "Select nomitem, prix, quantite, poids  From catalogue where numitem='"+numItem+"'";
-
-            Statement stm = connBd.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rst = stm.executeQuery(SQL);            
+        { 
+            CallableStatement stm = connBd.getConnection().prepareCall("{ ? = call gestion_catalogue.listercatalogue(?) }");
+            stm.registerOutParameter(1, OracleTypes.CURSOR);
+            stm.setInt(2, numItem);
+            stm.execute();
+            ResultSet rst = (ResultSet)stm.getObject(1);
+                        
             if  (rst.next())
             {
                nomitem = rst.getString("nomitem");
@@ -131,23 +135,29 @@ public class DetailItem extends HttpServlet {
             String leGenre = genre + "s";
             //récupérer les données et metadata des tables genre
             String SQLDetail = "Select * From "+leGenre+" where numitem='"+numItem+"'";
-
             Statement stmDetail = connBd.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            
             ResultSet rstDetail = stmDetail.executeQuery(SQLDetail);  
+            
+            //La fonction stockée ne fonctionne pas avec les "méta-datas"
+    /*        CallableStatement stmDetail = connBd.getConnection().prepareCall("{ ? = call GESTION_CATALOGUE.listerInfosGenre(?,?) }");
+            stmDetail.registerOutParameter(1, OracleTypes.CURSOR);
+            stmDetail.setString(2, leGenre);
+            stmDetail.setInt(3, numItem);
+            
+            stmDetail.execute();
+            ResultSet rstDetail = (ResultSet)stmDetail.getObject(1);*/
+            
             ResultSetMetaData rstMD = rstDetail.getMetaData();
             int nbCol = rstMD.getColumnCount();
              
             while (rstDetail.next())
-            {
-                
+            {                
                 String nomCol;
                 String val="";
                 int typeCol;
                 
                 for (int i=2; i <= nbCol; ++i)
-                {
-                    
+                {                    
                     nomCol = rstMD.getColumnName(i);   
                     typeCol = rstMD.getColumnType(i);
                     if(typeCol == 4 || typeCol == 2)
